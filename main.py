@@ -26,8 +26,20 @@ def search_item_by_id_or_name(dataframe, query):
         results = dataframe[dataframe['item_name'].str.contains(query, case=False, na=False)]
     return results
 
+def get_categories(menu_dataframe):
+    return menu_dataframe['category'].unique().tolist()
 
+def display_item_details(item_series):
+    print(f"\n--- Details for: {item_series['item_name']} ---")
+    details_to_show = [
+        'serving_size', 'calories', 'fat', 'sat_fat', 'trans_fat', 
+        'cholesterol', 'sodium', 'carbs', 'fiber', 'sugar', 'protein'
+    ]
+    for column in details_to_show:
+        if column in item_series:
+            print(f"{column.replace('_', ' ').capitalize()}: {item_series[column]}")
 
+# Interactive Terminal App 
 
 def start_app():
     file_path = 'nutritional_data.csv'
@@ -37,6 +49,7 @@ def start_app():
         print(f"ERROR: The file '{file_path}' was not found.")
         return
 
+    # Restaurant Selection
     all_restaurants = get_all_restaurants(menu_df)
     print("Welcome to the Fast Food Meal Planner!")
     print("--- Please choose a restaurant ---")
@@ -64,8 +77,21 @@ def start_app():
         print("Invalid choice. Exiting.")
         return
 
+    if action_choice == 1: # View by Category
+        categories = get_categories(chosen_menu)
+        print("\n--- Please choose a category ---")
+        for i, cat in enumerate(categories):
+            print(f"{i + 1}: {cat}")
+        
+        try:
+            cat_choice_num = int(input("Enter the number of the category: ")) - 1
+            chosen_category = categories[cat_choice_num]
+            display_menu = chosen_menu[chosen_menu['category'] == chosen_category]
+        except (ValueError, IndexError):
+            print("Invalid category choice. Exiting.")
+            return
 
-    elif action_choice == 2:
+    elif action_choice == 2: # Search for an Item
         collected_items = []
         while True:
             query = input("\nEnter the name or ID of the item to search for: ")
@@ -88,7 +114,7 @@ def start_app():
              print("No items were found to build a meal from.")
              return
 
-    elif action_choice == 3: 
+    elif action_choice == 3: # View Full Menu
         display_menu = chosen_menu
     else:
         print("Invalid choice. Exiting.")
