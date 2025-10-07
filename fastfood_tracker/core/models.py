@@ -20,6 +20,7 @@ class Restaurant(models.Model):
 # ADAPTED: This is the new, more detailed version of our MenuItem model.
 class MenuItem(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='menu_items')
+    
     name = models.CharField(max_length=255)
     category = models.CharField(max_length=100, blank=True, null=True)
     serving_size = models.CharField(max_length=100, blank=True, null=True)
