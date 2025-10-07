@@ -4,40 +4,45 @@ import { useState, useEffect } from 'react';
 import './App.css';
 
 // --- Define our data structures (TypeScript types) ---
+// NEW: The MenuItem interface is now updated with all the nutritional fields.
 interface MenuItem {
   id: number;
-  name: string; // Corrected from 'item_name'
+  name: string;
   category: string;
+  serving_size: string;
   calories: number;
-  protein: number;
   fat: number;
+  sat_fat: number;
+  trans_fat: number;
+  cholesterol: number;
+  sodium: number;
   carbohydrates: number;
+  fiber: number;
+  sugar: number;
+  protein: number;
 }
 
 interface Restaurant {
   id: number;
   name: string;
-  menu_items: MenuItem[]; // Note: we changed the model to send this as menu_items
+  menu_items: MenuItem[];
 }
 
-// NEW: A type for menu items grouped by category
 interface GroupedMenu {
   [category: string]: MenuItem[];
 }
 
 function App() {
-  // --- State Variables ---
+  // (State variables and functions are the same as before)
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null);
   const [groupedMenu, setGroupedMenu] = useState<GroupedMenu>({});
-  const [activeItem, setActiveItem] = useState<MenuItem | null>(null); // NEW: To track the expanded item
+  const [activeItem, setActiveItem] = useState<MenuItem | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // --- Effect to fetch the initial list of restaurants ---
   useEffect(() => {
     async function fetchRestaurants() {
-      // (This function is the same as before)
       try {
         const response = await fetch('http://127.0.0.1:8000/api/restaurants/');
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -52,7 +57,6 @@ function App() {
     fetchRestaurants();
   }, []);
 
-  // --- Function to handle clicking on a restaurant ---
   const handleRestaurantSelect = async (restaurant: Restaurant) => {
     setLoading(true);
     setError(null);
@@ -62,7 +66,6 @@ function App() {
       const data: Restaurant = await response.json();
       setSelectedRestaurant(data);
 
-      // NEW: Group the fetched menu items by category
       const grouped = data.menu_items.reduce((acc, item) => {
         const category = item.category || 'Other';
         if (!acc[category]) {
@@ -79,10 +82,8 @@ function App() {
       setLoading(false);
     }
   };
-  
-  // NEW: Function to toggle showing item details
+
   const handleItemClick = (item: MenuItem) => {
-    // If the clicked item is already active, close it. Otherwise, open it.
     setActiveItem(activeItem?.id === item.id ? null : item);
   };
 
@@ -105,7 +106,6 @@ function App() {
           <h2>Menu for {selectedRestaurant.name}</h2>
           {loading && <p>Loading menu...</p>}
           
-          {/* NEW: Render by category */}
           {Object.entries(groupedMenu).map(([category, items]) => (
             <div key={category} className="category-section">
               <h3>{category}</h3>
@@ -116,12 +116,19 @@ function App() {
                       <span>{item.name}</span>
                       <span>{item.calories} cal</span>
                     </div>
-                    {/* NEW: Conditionally render details if this is the active item */}
                     {activeItem?.id === item.id && (
+                      // NEW: The details section now displays all nutritional data.
                       <div className="menu-item-details">
+                        <p><strong>Serving Size:</strong> {item.serving_size || 'N/A'}</p>
+                        <p><strong>Total Fat:</strong> {item.fat}g</p>
+                        <p><strong>Saturated Fat:</strong> {item.sat_fat}g</p>
+                        <p><strong>Trans Fat:</strong> {item.trans_fat}g</p>
+                        <p><strong>Cholesterol:</strong> {item.cholesterol}mg</p>
+                        <p><strong>Sodium:</strong> {item.sodium}mg</p>
+                        <p><strong>Carbohydrates:</strong> {item.carbohydrates}g</p>
+                        <p><strong>Fiber:</strong> {item.fiber}g</p>
+                        <p><strong>Sugar:</strong> {item.sugar}g</p>
                         <p><strong>Protein:</strong> {item.protein}g</p>
-                        <p><strong>Fat:</strong> {item.fat}g</p>
-                        <p><strong>Carbs:</strong> {item.carbohydrates}g</p>
                       </div>
                     )}
                   </div>
@@ -132,6 +139,7 @@ function App() {
         </div>
       ) : (
         // --- RESTAURANT LIST VIEW ---
+        // (This section is the same as before)
         <div>
           <h2>Select a Restaurant</h2>
           {loading && <p>Loading...</p>}

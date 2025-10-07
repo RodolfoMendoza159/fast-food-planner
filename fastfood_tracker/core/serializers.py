@@ -28,7 +28,11 @@ class MenuItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = MenuItem
         # You can add or remove fields here as needed
-        fields = ['id', 'name', 'category', 'calories', 'protein', 'fat', 'carbohydrates']
+        fields = [
+            'id', 'name', 'category', 'serving_size', 'calories', 'fat',
+            'sat_fat', 'trans_fat', 'cholesterol', 'sodium',
+            'carbohydrates', 'fiber', 'sugar', 'protein'
+        ]
 
 class RestaurantSerializer(serializers.ModelSerializer):
     # This automatically includes the menu items when fetching a restaurant's details
