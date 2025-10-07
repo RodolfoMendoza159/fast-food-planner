@@ -8,6 +8,7 @@ from .models import User, Restaurant, MenuItem, Profile, MacroTracker
 from .serializers import UserSerializer, RestaurantSerializer, MenuItemSerializer, ProfileSerializer, MacroTrackerSerializer
 from django.shortcuts import get_object_or_404
 from datetime import date
+from django.views.generic import TemplateView
 
 # --- User Management Views ---
 
@@ -54,7 +55,8 @@ class RestaurantViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
+    #permission_classes = [IsAuthenticated]
 
 # --- Core App Logic ---
 
@@ -97,3 +99,6 @@ def log_meal(request):
     
     serializer = MacroTrackerSerializer(tracker)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+class IndexView(TemplateView):
+    template_name = 'index.html'
