@@ -9,6 +9,7 @@ from .serializers import UserSerializer, RestaurantSerializer, MenuItemSerialize
 from django.shortcuts import get_object_or_404
 from datetime import date
 from django.views.generic import TemplateView
+from django.db.models import F
 
 # --- User Management Views ---
 
@@ -76,7 +77,8 @@ def get_daily_tracker(request):
 def log_meal(request):
     """
     Logs a meal by adding its nutritional values to the daily tracker.
-    Expects a list of menu item IDs in the request: {'menu_item_ids': [1, 5, 12]}
+    Expects a list of menu item IDs: {'menu_item_ids': [1, 5, 12]}
+    Returns the updated daily tracker.
     """
     menu_item_ids = request.data.get('menu_item_ids', [])
     if not menu_item_ids:
@@ -84,19 +86,28 @@ def log_meal(request):
 
     items_to_log = MenuItem.objects.filter(id__in=menu_item_ids)
     
-    total_calories = sum(item.calories for item in items_to_log)
-    total_protein = sum(item.protein for item in items_to_log)
-    total_carbs = sum(item.carbs for item in items_to_log)
-    total_fats = sum(item.fats for item in items_to_log)
+    # Calculate totals from the selected items
+    totals = items_to_log.aggregate(
+        total_calories=models.Sum('calories'),
+        total_protein=models.Sum('protein'),
+        total_carbs=models.Sum('carbohydrates'),
+        total_fat=models.Sum('fat')
+    )
 
+    # Get or create the tracker for today
     tracker, created = MacroTracker.objects.get_or_create(user=request.user, date=date.today())
     
-    tracker.calories_consumed += total_calories
-    tracker.protein_consumed += total_protein
-    tracker.carbs_consumed += total_carbs
-    tracker.fats_consumed += total_fats
+    # Update the tracker's values efficiently
+    tracker.calories_consumed = F('calories_consumed') + (totals['total_calories'] or 0)
+    tracker.protein_consumed = F('protein_consumed') + (totals['total_protein'] or 0)
+    tracker.carbs_consumed = F('carbs_consumed') + (totals['total_carbs'] or 0)
+    tracker.fat_consumed = F('fat_consumed') + (totals['total_fat'] or 0)
     tracker.save()
     
+    # Refresh the tracker from the DB to get the updated values
+    tracker.refresh_from_db()
+
+    # Return the updated tracker data to the frontend
     serializer = MacroTrackerSerializer(tracker)
     return Response(serializer.data, status=status.HTTP_200_OK)
 

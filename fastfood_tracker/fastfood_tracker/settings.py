@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #added app
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders', #Added this for CORS
     'core',
 ]
