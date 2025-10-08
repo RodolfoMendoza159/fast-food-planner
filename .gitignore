@@ -1,29 +1,17 @@
-# Python
+# Django / Python
 __pycache__/
-*.py[cod]
-*$py.class
-
-# Django
+*.pyc
 db.sqlite3
-*.sqlite3
-media/
-staticfiles/
 .env
-.env.local
 
-# Virtualenvs
+# Virtual Environment
 venv/
 env/
-.venv/
-ENV/
 
-# IDEs
-.vscode/
-.idea/
-
-# Node
+# Frontend / Node.js
 node_modules/
-
-# OS files
+dist/
 .DS_Store
-Thumbs.db
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
