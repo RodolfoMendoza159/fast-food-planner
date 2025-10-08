@@ -144,8 +144,8 @@ const handleAuth = async (event: React.FormEvent<HTMLFormElement>, endpoint: 'lo
   const addToMeal = (item: MenuItem) => {
     setCurrentMeal(prevMeal => [...prevMeal, item]);
   };
-  const removeFromMeal = (itemId: number) => {
-    setCurrentMeal(prevMeal => prevMeal.filter(item => item.id !== itemId));
+  const removeFromMeal = (indexToRemove: number) => {
+  setCurrentMeal(prevMeal => prevMeal.filter((_, index) => index !== indexToRemove));
   };
   const handleLogMeal = async () => {
     if (currentMeal.length === 0) return;
@@ -268,7 +268,7 @@ const handleAuth = async (event: React.FormEvent<HTMLFormElement>, endpoint: 'lo
                 {currentMeal.map((item, index) => (
                   <li key={`${item.id}-${index}`}>
                     <span>{item.name}</span>
-                    <button onClick={() => removeFromMeal(item.id)}>X</button>
+                    <button onClick={() => removeFromMeal(index)}>X</button>
                   </li>
                 ))}
               </ul>

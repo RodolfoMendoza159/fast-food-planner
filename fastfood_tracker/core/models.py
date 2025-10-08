@@ -60,7 +60,7 @@ class MacroTracker(models.Model):
     calories_consumed = models.IntegerField(default=0)
     protein_consumed = models.FloatField(default=0)
     carbs_consumed = models.FloatField(default=0)
-    fats_consumed = models.FloatField(default=0)
+    fat_consumed = models.FloatField(default=0)
     
     def __str__(self):
         return f"Tracker for {self.user.username} on {self.date}"
