@@ -10,6 +10,7 @@ from django.shortcuts import get_object_or_404
 from datetime import date
 from django.views.generic import TemplateView
 from django.db.models import F
+from django.db import models
 
 # --- User Management Views ---
 
