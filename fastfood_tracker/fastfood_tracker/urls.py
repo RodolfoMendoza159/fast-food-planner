@@ -1,26 +1,22 @@
-"""
-URL configuration for fastfood_tracker project.
+# In fastfood_tracker/urls.py
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path, include
 from core.views import IndexView 
 
 
 urlpatterns = [
+    # 1. The Admin Panel: Any URL starting with /admin/ gets sent to Django's built-in admin site.
     path('admin/', admin.site.urls),
-    path('api/', include('core.urls')), 
-    path('', IndexView.as_view(), name='index'), 
+
+    # 2. The API: I decided to prefix all my API endpoints with /api/.
+    # This line tells Django to hand off any request for '/api/...' to the
+    # url patterns defined in my 'core' app's urls.py file.
+    path('api/', include('core.urls')),
+
+    # 3. The Frontend App: This is a catch-all route. If the URL doesn't match
+    # '/admin/' or '/api/', it will be handled by the IndexView. The IndexView's
+    # only job is to serve the main index.html file of our React application.
+    # This is what allows React to take over and handle all the frontend routing.
+    path('', IndexView.as_view(), name='index'),
 ]

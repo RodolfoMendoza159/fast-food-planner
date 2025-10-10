@@ -2,30 +2,34 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 
-# The standard User model for handling accounts and authentication.
-# We keep this as is.
+# The standard Django's User model for handling accounts and authentication.
+# R: Decided to keep Django's build-in one and extend it. 
 class User(AbstractUser):
     pass
 
-# NEW: A model to store the different fast-food chains.
+# R: A model to stores the different fast-food restaurant chains. Crucial for
+# data structure, names gathered from CSV import script.
 class Restaurant(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    # You could add more fields later, like 'logo_url' or 'website'.
-    
+    # R: (FUTURE PLAN) We could add more fields later, like 'logo_url' or 'website'.
+    # to make the frontend more appealing.
     def __str__(self):
         return self.name
 
-# ADAPTED: This replaces the old 'Recipe' model. It's now focused on
-# a single menu item belonging to a specific restaurant.
-# ADAPTED: This is the new, more detailed version of our MenuItem model.
+# R: A model to store individual menu items from each restaurant.
+# Each item is linked to a Restaurant via a ForeignKey relationship.
 class MenuItem(models.Model):
+    # R: This ForeignKey basically links that if a restaurant is deleted, then all
+    # its menu items get deleted too. 
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='menu_items')
     
     name = models.CharField(max_length=255)
     category = models.CharField(max_length=100, blank=True, null=True)
     serving_size = models.CharField(max_length=100, blank=True, null=True)
     
-    # Nutritional Information
+    # Nutritional Information 
+    # R: I updated them to be very detailed to fulfill the goal of
+    # probading full nutritional data for each item.
     calories = models.IntegerField(default=0)
     fat = models.FloatField(default=0)
     sat_fat = models.FloatField(default=0)
@@ -40,24 +44,23 @@ class MenuItem(models.Model):
     def __str__(self):
         return f"{self.name} ({self.restaurant.name})"
     
-# ADAPTED: A simplified profile linked to each user.
-# We've removed fields like budget, activity, etc., and added a user-set calorie goal.
+# A simple profile linked to each user via a OnetoOneField.
+# R: This was a key part of the important upgrade to Django for storing user-specific data.
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     calorie_goal = models.IntegerField(default=2000)
-    # Basic info can be added here as needed, e.g., age, weight, etc.
-    
+    # R: (FUTURE PLAN) We can easily add more user-specific info here later,
+    # like age, weight, or dietary preferences, to give personalized feedback.
     def __str__(self):
         return self.user.username
 
-# KEPT: This model is perfect for tracking daily nutritional intake against goals.
-# The logic for updating it will change in views.py, but the model itself is the same.
+# This model tracks a user's daily nutritional intake.
+# A new entry is created for each user for each day they log a meal.
 class MacroTracker(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
     
-    # Consumed amounts for the day
-    calories_consumed = models.IntegerField(default=0)
+    # These fields will be updated every time a user logs a meal.    calories_consumed = models.IntegerField(default=0)
     protein_consumed = models.FloatField(default=0)
     carbs_consumed = models.FloatField(default=0)
     fat_consumed = models.FloatField(default=0)

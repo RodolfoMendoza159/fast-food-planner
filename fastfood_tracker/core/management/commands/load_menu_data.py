@@ -18,7 +18,7 @@ class Command(BaseCommand):
             with open(csv_file_path, mode='r', encoding='utf-8') as file:
                 reader = csv.DictReader(file)
                 
-                # --- DEBUG: Print the headers the script is seeing ---
+                #  DEBUG: Print the headers the script is seeing ---
                 self.stdout.write(f"CSV Headers found: {reader.fieldnames}")
 
                 restaurants = {}
