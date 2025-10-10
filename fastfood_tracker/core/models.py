@@ -60,7 +60,8 @@ class MacroTracker(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
     
-    # These fields will be updated every time a user logs a meal.    calories_consumed = models.IntegerField(default=0)
+    # These fields will be updated every time a user logs a meal.    
+    calories_consumed = models.IntegerField(default=0)
     protein_consumed = models.FloatField(default=0)
     carbs_consumed = models.FloatField(default=0)
     fat_consumed = models.FloatField(default=0)
