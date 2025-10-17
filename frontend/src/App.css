@@ -332,3 +332,36 @@ header {
   margin: 0;
   font-size: 1rem;
 }
+
+/* --- UPDATED Meal History Card Styling --- */
+.history-card-body {
+  display: flex; /* Changed to flex for better layout */
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.history-macros {
+  flex: 1;
+  min-width: 180px;
+}
+
+.history-items {
+  flex: 2;
+  min-width: 250px;
+}
+
+.history-items h4 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+.history-items ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin: 0;
+}
+
+.history-items li {
+  margin-bottom: 0.25rem;
+}

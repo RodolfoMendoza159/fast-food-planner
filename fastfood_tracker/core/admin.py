@@ -5,9 +5,9 @@ from .models import User, Restaurant, MenuItem, Profile, MacroTracker
 # in the Django admin dashboard. It's a simple way to get a powerful
 # data management interface for free.
 admin.site.register(User)
+admin.site.register(Profile)
 admin.site.register(Restaurant)
 admin.site.register(MenuItem)
-admin.site.register(Profile)
 admin.site.register(MacroTracker)
 
 # R: (FUTURE PLAN) If I need more control over how models are displayed in the admin

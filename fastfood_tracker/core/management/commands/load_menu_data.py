@@ -1,3 +1,5 @@
+# In core/management/commands/load_menu_data.py
+
 import csv
 from django.core.management.base import BaseCommand
 from core.models import Restaurant, MenuItem
@@ -7,36 +9,29 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         csv_file_path = 'core/Restaurant_data.csv'
-        
         self.stdout.write(self.style.SUCCESS('--- STARTING DATA LOAD SCRIPT ---'))
         
-        MenuItem.objects.all().delete()
+        # R: This is the fix. We only need to delete the restaurants.
+        # Deleting the restaurants will automatically cascade and delete all
+        # of their associated menu items, which avoids the error.
         Restaurant.objects.all().delete()
         self.stdout.write('Cleared existing Restaurant and MenuItem data.')
 
         try:
             with open(csv_file_path, mode='r', encoding='utf-8') as file:
                 reader = csv.DictReader(file)
-                
-                #  DEBUG: Print the headers the script is seeing ---
-                self.stdout.write(f"CSV Headers found: {reader.fieldnames}")
-
                 restaurants = {}
                 item_count = 0
                 
-                for i, row in enumerate(reader):
+                for row in reader:
                     restaurant_name = row.get('Restaurant') or row.get('rest_name')
                     item_name = row.get('Item') or row.get('item_name')
 
-                    # --- DEBUG: Print the first 3 rows to see the data ---
-                    if i < 3:
-                        self.stdout.write(f"Processing Row {i+1}: {row}")
-
                     if not restaurant_name or not item_name:
-                        self.stdout.write(self.style.WARNING(f"Skipping row {i+1} due to missing restaurant or item name."))
                         continue
 
                     if restaurant_name not in restaurants:
+                        # R: Using get_or_create is safer than just create.
                         restaurant, created = Restaurant.objects.get_or_create(name=restaurant_name)
                         restaurants[restaurant_name] = restaurant
                     
@@ -47,7 +42,8 @@ class Command(BaseCommand):
                         name=item_name,
                         category=row.get('category'),
                         serving_size=row.get('serving_size'),
-                        calories=int(float(row.get('calories', 0))),
+                        # R: Second fix. The model expects a float, not an int.
+                        calories=float(row.get('calories', 0)),
                         fat=float(row.get('fat', 0)),
                         sat_fat=float(row.get('sat_fat', 0)),
                         trans_fat=float(row.get('trans_fat', 0)),
