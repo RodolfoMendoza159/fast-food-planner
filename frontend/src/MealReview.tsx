@@ -2,48 +2,33 @@
 
 import { useMemo } from 'react';
 
-// --- Interface Definitions ---
-// R: Using the full MenuItem definition to display all data
-interface MenuItem {
-  id: number; name: string; category: string; serving_size: string;
-  calories: number; fat: number; sat_fat: number; trans_fat: number;
-  cholesterol: number; sodium: number; carbohydrates: number;
-  fiber: number; sugar: number; protein: number;
-}
-
+// --- INTERFACES ---
+interface MealItem { item: MenuItem; quantity: number; }
+interface MenuItem { id: number; name: string; category: string; serving_size: string; calories: number; fat: number; sat_fat: number; trans_fat: number; cholesterol: number; sodium: number; carbohydrates: number; fiber: number; sugar: number; protein: number; }
 interface MealReviewProps {
-  currentMeal: MenuItem[];
+  currentMeal: MealItem[];
   calorieGoal: number;
   dailyCaloriesConsumed: number;
   authToken: string | null;
-  onLogMeal: () => void;      // Function to trigger after successful log
-  onNavigate: (view: 'dashboard' | 'history') => void; // Function for navigation
+  onLogMeal: () => void;
+  onNavigate: (view: 'dashboard' | 'history') => void;
 }
 
-// R: A helper function to format numbers nicely
-const formatNumber = (num: number, digits: number = 1) => num.toFixed(digits);
+const formatNumber = (num: number, digits: number = 0) => num.toFixed(digits);
 
 function MealReview({ currentMeal, calorieGoal, dailyCaloriesConsumed, authToken, onLogMeal, onNavigate }: MealReviewProps) {
 
-  // R: useMemo is great here. It only recalculates the totals if the currentMeal changes.
   const mealTotals = useMemo(() => {
-    const totals = {
-      calories: 0, fat: 0, sat_fat: 0, trans_fat: 0, cholesterol: 0,
-      sodium: 0, carbohydrates: 0, fiber: 0, sugar: 0, protein: 0
-    };
-    currentMeal.forEach(item => {
-      totals.calories += item.calories;
-      totals.fat += item.fat;
-      totals.sat_fat += item.sat_fat;
-      totals.trans_fat += item.trans_fat;
-      totals.cholesterol += item.cholesterol;
-      totals.sodium += item.sodium;
-      totals.carbohydrates += item.carbohydrates;
-      totals.fiber += item.fiber;
-      totals.sugar += item.sugar;
-      totals.protein += item.protein;
-    });
-    return totals;
+    return currentMeal.reduce((totals, mealItem) => {
+      const { item, quantity } = mealItem;
+      totals.calories += item.calories * quantity;
+      totals.protein += item.protein * quantity;
+      totals.fat += item.fat * quantity;
+      totals.carbohydrates += item.carbohydrates * quantity;
+      totals.sugar += item.sugar * quantity;
+      totals.sodium += item.sodium * quantity;
+      return totals;
+    }, { calories: 0, protein: 0, fat: 0, carbohydrates: 0, sugar: 0, sodium: 0 });
   }, [currentMeal]);
 
   const predictedTotalCalories = dailyCaloriesConsumed + mealTotals.calories;
@@ -51,26 +36,15 @@ function MealReview({ currentMeal, calorieGoal, dailyCaloriesConsumed, authToken
 
   const handleFinalLog = async () => {
     if (currentMeal.length === 0 || !authToken) return;
-
-    const itemIds = currentMeal.map(item => item.id);
+    const itemIds = currentMeal.flatMap(mealItem => Array(mealItem.quantity).fill(mealItem.item.id));
     try {
       const response = await fetch('http://127.0.0.1:8000/api/log-meal/', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Token ${authToken}`
-        },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Token ${authToken}` },
         body: JSON.stringify({ item_ids: itemIds })
       });
-
-      if (!response.ok) {
-        throw new Error('Failed to log meal from review page.');
-      }
-      
-      // R: Instead of handling navigation here, we call the function passed in props.
-      // This keeps our components reusable.
+      if (!response.ok) throw new Error('Failed to log meal.');
       onLogMeal();
-
     } catch (error) {
       console.error(error);
       alert("There was an error logging your meal.");
@@ -84,6 +58,7 @@ function MealReview({ currentMeal, calorieGoal, dailyCaloriesConsumed, authToken
         <table className="meal-review-table">
           <thead>
             <tr>
+              <th>Qty</th>
               <th>Item Name</th>
               <th>Cals</th>
               <th>Protein (g)</th>
@@ -94,43 +69,38 @@ function MealReview({ currentMeal, calorieGoal, dailyCaloriesConsumed, authToken
             </tr>
           </thead>
           <tbody>
-            {currentMeal.map((item, index) => (
-              <tr key={`${item.id}-${index}`}>
+            {currentMeal.map(({ item, quantity }) => (
+              <tr key={item.id}>
+                <td>{quantity}</td>
                 <td>{item.name}</td>
-                <td>{formatNumber(item.calories, 0)}</td>
-                <td>{formatNumber(item.protein)}</td>
-                <td>{formatNumber(item.fat)}</td>
-                <td>{formatNumber(item.carbohydrates)}</td>
-                <td>{formatNumber(item.sugar)}</td>
-                <td>{formatNumber(item.sodium, 0)}</td>
+                <td>{formatNumber(item.calories * quantity)}</td>
+                <td>{formatNumber(item.protein * quantity, 1)}</td>
+                <td>{formatNumber(item.fat * quantity, 1)}</td>
+                <td>{formatNumber(item.carbohydrates * quantity, 1)}</td>
+                <td>{formatNumber(item.sugar * quantity, 1)}</td>
+                <td>{formatNumber(item.sodium * quantity)}</td>
               </tr>
             ))}
           </tbody>
           <tfoot>
             <tr>
               <td><strong>Total</strong></td>
-              <td><strong>{formatNumber(mealTotals.calories, 0)}</strong></td>
-              <td><strong>{formatNumber(mealTotals.protein)}</strong></td>
-              <td><strong>{formatNumber(mealTotals.fat)}</strong></td>
-              <td><strong>{formatNumber(mealTotals.carbohydrates)}</strong></td>
-              <td><strong>{formatNumber(mealTotals.sugar)}</strong></td>
-              <td><strong>{formatNumber(mealTotals.sodium, 0)}</strong></td>
+              <td>-</td>
+              <td><strong>{formatNumber(mealTotals.calories)}</strong></td>
+              <td><strong>{formatNumber(mealTotals.protein, 1)}</strong></td>
+              <td><strong>{formatNumber(mealTotals.fat, 1)}</strong></td>
+              <td><strong>{formatNumber(mealTotals.carbohydrates, 1)}</strong></td>
+              <td><strong>{formatNumber(mealTotals.sugar, 1)}</strong></td>
+              <td><strong>{formatNumber(mealTotals.sodium)}</strong></td>
             </tr>
           </tfoot>
         </table>
       </div>
-
       <div className="meal-review-summary">
         <h3>Calorie Impact</h3>
-        <p>
-          After this meal, your new daily total will be <strong>{predictedTotalCalories.toFixed(0)} calories</strong>.
-        </p>
-        <p className="final-message">
-          You will still get to enjoy <strong>{remainingCalories.toFixed(0)} calories</strong> for today.
-        </p>
-        <button className="log-button-review" onClick={handleFinalLog}>
-          Confirm & Log Meal
-        </button>
+        <p>After this meal, your new daily total will be <strong>{formatNumber(predictedTotalCalories)} calories</strong>.</p>
+        <p className="final-message">You will still have <strong>{formatNumber(remainingCalories)} calories</strong> remaining for today.</p>
+        <button className="log-button-review" onClick={handleFinalLog}>Confirm & Log Meal</button>
       </div>
     </div>
   );
