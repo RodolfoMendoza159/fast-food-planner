@@ -17,6 +17,7 @@ function Dashboard({ authToken, onNavigate }: DashboardProps) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [activeItem, setActiveItem] = useState<MenuItem | null>(null);
   const [currentMeal, setCurrentMeal] = useState<MealItem[]>([]);
+  const [lastLoggedMeal, setLastLoggedMeal] = useState<MealItem[] | null>(null);
   const [calorieGoal, setCalorieGoal] = useState<number>(2000);
   const [dailyCaloriesConsumed, setDailyCaloriesConsumed] = useState<number>(0);
   const [viewMode, setViewMode] = useState<'browsing' | 'reviewing' | 'success'>('browsing');
@@ -46,11 +47,11 @@ function Dashboard({ authToken, onNavigate }: DashboardProps) {
   }, [authToken]);
 
   const handleSaveFavorite = async () => {
-    if (currentMeal.length === 0 || !authToken) return;
+    if (!lastLoggedMeal || lastLoggedMeal.length === 0 || !authToken) return;
     const mealName = prompt("Please enter a name for this favorite meal:");
     if (!mealName) return; 
 
-    const itemIds = currentMeal.flatMap(mealItem => Array(mealItem.quantity).fill(mealItem.item.id));
+    const itemIds = lastLoggedMeal.flatMap(mealItem => Array(mealItem.quantity).fill(mealItem.item.id));
 
     try {
       const response = await fetch('http://127.0.0.1:8000/api/favorites/', {
@@ -94,6 +95,7 @@ function Dashboard({ authToken, onNavigate }: DashboardProps) {
   }, { calories: 0 }), [currentMeal]);
 
   const handleMealLogged = () => {
+    setLastLoggedMeal(currentMeal);
     setViewMode('success');
     setCurrentMeal([]);
     const fetchTrackerData = async () => {
@@ -108,6 +110,7 @@ function Dashboard({ authToken, onNavigate }: DashboardProps) {
     setSelectedRestaurant(null);
     setSelectedCategory(null);
     setActiveItem(null);
+    setLastLoggedMeal(null);
     setViewMode('browsing');
   };
   
@@ -156,6 +159,9 @@ function Dashboard({ authToken, onNavigate }: DashboardProps) {
         <div className="navigation-buttons">
           <button onClick={() => onNavigate('history')}>See History</button>
           <button onClick={handleStartNewMeal}>Log New Meal</button>
+          {lastLoggedMeal && (
+            <button className="save-button-success" onClick={handleSaveFavorite}>Save as Favorite</button>
+          )}
         </div>
       </div>
     );
@@ -235,10 +241,9 @@ function Dashboard({ authToken, onNavigate }: DashboardProps) {
               <h3>Totals:</h3>
               <p><strong>Calories:</strong> {mealTotals.calories.toFixed(0)}</p>
             </div>
-            <div className="sidebar-actions">
-                <button className="log-button" onClick={() => setViewMode('reviewing')}>Review</button>
-                <button className="save-button" onClick={handleSaveFavorite}>Save</button>
-            </div>
+            <button className="log-button" onClick={() => setViewMode('reviewing')}>
+              Review Meal ({currentMeal.reduce((total, mi) => total + mi.quantity, 0)})
+            </button>
           </>
         )}
       </div>

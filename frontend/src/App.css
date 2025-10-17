@@ -434,6 +434,63 @@ header {
 }
 
 /* --- Favorites Page Styling --- */
+.favorites-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.favorites-list {
+  display: grid;
+  gap: 1rem;
+}
+.favorite-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.favorite-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+.favorite-card-header h3 {
+  margin: 0;
+}
+.favorite-card-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+.favorite-card-actions button {
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+}
+.favorite-card-actions button.delete {
+  background-color: #dc3545;
+}
+.favorite-card-body {
+  padding: 1rem;
+}
+.favorite-card-body ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin: 0;
+}
+.success-message {
+  color: green;
+  font-weight: bold;
+  text-align: center;
+  padding: 1rem;
+  background-color: #e8f5e9;
+  border-radius: 4px;
+}
+
+
+/* --- Favorites Page Styling --- */
 .favorites-container { max-width: 900px; margin: 0 auto; }
 .favorites-list { display: grid; gap: 1rem; }
 .favorite-card { background: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
@@ -452,3 +509,4 @@ header {
   background-color: #e8f5e9;
   border-radius: 4px;
 }
+
