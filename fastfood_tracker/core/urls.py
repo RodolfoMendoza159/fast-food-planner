@@ -20,10 +20,13 @@ urlpatterns = [
     path('register/', views.register_user, name='register'),
     path('login/', views.login_user, name='login'),
 
+    # --- NEW: Profile management endpoint ---
+    path('profile/', views.manage_user_profile, name='manage-profile'),
+
     # Core logic endpoints for the tracker
     path('tracker/', views.get_daily_tracker, name='get-daily-tracker'),
     path('log-meal/', views.log_meal, name='log-meal'),
 
-    # R: (FUTURE PLAN) If I add a view to update a user's profile,
-    # I would add its path here, like: path('profile/update/', ...),
+    # --- NEW: Meal History endpoint ---
+    path('history/', views.get_meal_history, name='get-meal-history'),
 ]

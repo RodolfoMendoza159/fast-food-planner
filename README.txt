@@ -9,7 +9,7 @@ or any other method of choice for Github setup.
 (I recommend installing the Github extension on Visual Studio Code)
 
 CURENT ACTIVE BRANCH:
-Version 3
+Version 3.2
 
 # Go to the project
 //
@@ -36,11 +36,6 @@ python -m venv venv
 .\venv\Scripts\activate
 //
 
-# Activate it (Mac/Linux)
-//
-source venv/bin/activate
-//
-
 # Install the required Python packages using the requirements.txt file:
 //
 pip install -r requirements.txt
@@ -60,8 +55,8 @@ Load the initial data.
 python manage.py load_menu_data
 //
 
-Create a superuser, this is the admin account, name it User1, use User1@email.com
-and password 123456( or anything you want)
+Create a superuser, this is the admin account, name it userMaster, use master@email.com
+and password 123456( or anything you want )
 
 //
 python manage.py createsuperuser
