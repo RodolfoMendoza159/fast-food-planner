@@ -8,10 +8,9 @@ interface MealItem { item: MenuItem; quantity: number; }
 interface MenuItem { id: number; name: string; category: string; serving_size: string; calories: number; fat: number; sat_fat: number; trans_fat: number; cholesterol: number; sodium: number; carbohydrates: number; fiber: number; sugar: number; protein: number; }
 interface Restaurant { id: number; name: string; menu_items: MenuItem[]; }
 interface GroupedMenu { [category: string]: MenuItem[]; }
-interface DashboardProps { authToken: string | null; onNavigate: (view: 'dashboard' | 'profile' | 'history') => void; }
+interface DashboardProps { authToken: string | null; onNavigate: (view: 'dashboard' | 'profile' | 'history' | 'favorites') => void; }
 
 function Dashboard({ authToken, onNavigate }: DashboardProps) {
-  // --- STATE MANAGEMENT ---
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null);
   const [groupedMenu, setGroupedMenu] = useState<GroupedMenu>({});
@@ -24,7 +23,6 @@ function Dashboard({ authToken, onNavigate }: DashboardProps) {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // --- DATA FETCHING ---
   useEffect(() => {
     const fetchInitialData = async () => {
       if (!authToken) { setLoading(false); return; }
@@ -47,31 +45,27 @@ function Dashboard({ authToken, onNavigate }: DashboardProps) {
     fetchInitialData();
   }, [authToken]);
 
-  // --- EVENT HANDLERS ---
-  const handleRestaurantSelect = async (restaurant: Restaurant) => {
-    setLoading(true);
-    setError(null);
+  const handleSaveFavorite = async () => {
+    if (currentMeal.length === 0 || !authToken) return;
+    const mealName = prompt("Please enter a name for this favorite meal:");
+    if (!mealName) return; 
+
+    const itemIds = currentMeal.flatMap(mealItem => Array(mealItem.quantity).fill(mealItem.item.id));
+
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/restaurants/${restaurant.id}/`, {
-        headers: { 'Authorization': `Token ${authToken!}` }
+      const response = await fetch('http://127.0.0.1:8000/api/favorites/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Token ${authToken}` },
+        body: JSON.stringify({ name: mealName, item_ids: itemIds })
       });
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      const data: Restaurant = await response.json();
-      setSelectedRestaurant(data);
-      const grouped = data.menu_items.reduce((acc, item) => {
-        const category = item.category || 'Other';
-        if (!acc[category]) acc[category] = [];
-        acc[category].push(item);
-        return acc;
-      }, {} as GroupedMenu);
-      setGroupedMenu(grouped);
-    } catch (e) {
-      if (e instanceof Error) setError(e.message);
-    } finally {
-      setLoading(false);
+      if (!response.ok) throw new Error('Failed to save favorite.');
+      alert(`Meal "${mealName}" saved successfully!`);
+      onNavigate('favorites');
+    } catch (err) {
+      setError('Failed to save favorite meal.');
     }
   };
-  
+
   const addToMeal = (itemToAdd: MenuItem) => {
     setCurrentMeal(prevMeal => {
       const existingItem = prevMeal.find(mealItem => mealItem.item.id === itemToAdd.id);
@@ -117,6 +111,30 @@ function Dashboard({ authToken, onNavigate }: DashboardProps) {
     setViewMode('browsing');
   };
   
+  const handleRestaurantSelect = async (restaurant: Restaurant) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/api/restaurants/${restaurant.id}/`, {
+        headers: { 'Authorization': `Token ${authToken!}` }
+      });
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      const data: Restaurant = await response.json();
+      setSelectedRestaurant(data);
+      const grouped = data.menu_items.reduce((acc, item) => {
+        const category = item.category || 'Other';
+        if (!acc[category]) acc[category] = [];
+        acc[category].push(item);
+        return acc;
+      }, {} as GroupedMenu);
+      setGroupedMenu(grouped);
+    } catch (e) {
+      if (e instanceof Error) setError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
   const handleItemClick = (item: MenuItem) => { setActiveItem(activeItem?.id === item.id ? null : item); };
   
   const handleBack = () => {
@@ -124,7 +142,6 @@ function Dashboard({ authToken, onNavigate }: DashboardProps) {
     else if (selectedRestaurant) { setSelectedRestaurant(null); setGroupedMenu({}); }
   };
   
-  // --- RENDER LOGIC ---
   if (loading) return <p>Loading your dashboard...</p>;
 
   if (viewMode === 'reviewing') {
@@ -218,9 +235,10 @@ function Dashboard({ authToken, onNavigate }: DashboardProps) {
               <h3>Totals:</h3>
               <p><strong>Calories:</strong> {mealTotals.calories.toFixed(0)}</p>
             </div>
-            <button className="log-button" onClick={() => setViewMode('reviewing')}>
-              Review Meal ({currentMeal.reduce((total, mi) => total + mi.quantity, 0)})
-            </button>
+            <div className="sidebar-actions">
+                <button className="log-button" onClick={() => setViewMode('reviewing')}>Review</button>
+                <button className="save-button" onClick={handleSaveFavorite}>Save</button>
+            </div>
           </>
         )}
       </div>

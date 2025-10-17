@@ -54,3 +54,14 @@ class MacroTracker(models.Model):
 
     def __str__(self):
         return f"Tracker for {self.user.username} on {self.date}"
+    
+# --- NEW MODEL: Add this at the end of the file ---
+# R: This model represents a user's saved "favorite" meal.
+# It's stored permanently and is separate from the daily tracker.
+class FavoriteMeal(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    items = models.ManyToManyField(MenuItem)
+
+    def __str__(self):
+        return f"'{self.name}' by {self.user.username}"

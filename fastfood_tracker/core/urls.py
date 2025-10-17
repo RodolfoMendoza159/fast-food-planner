@@ -10,6 +10,9 @@ from . import views
 router = DefaultRouter()
 router.register(r'restaurants', views.RestaurantViewSet, basename='restaurant')
 
+# --- NEW: Register the FavoriteMeal ViewSet ---
+router.register(r'favorites', views.FavoriteMealViewSet, basename='favorite')
+
 # The API URLs are now determined automatically by the router.
 # We still need to manually add the paths for our function-based views.
 urlpatterns = [

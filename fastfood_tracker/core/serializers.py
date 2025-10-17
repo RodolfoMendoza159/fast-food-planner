@@ -1,8 +1,10 @@
 # In core/serializers.py
-from rest_framework import serializers
-from .models import User, Restaurant, MenuItem, Profile, MacroTracker
 
-# --- (User, Profile, and Restaurant Serializers are unchanged) ---
+from rest_framework import serializers
+# R: Make sure FavoriteMeal is included in this import list
+from .models import User, Restaurant, MenuItem, Profile, MacroTracker, FavoriteMeal
+
+# --- User & Profile Serializers ---
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -14,6 +16,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = ['calorie_goal']
 
+# --- Restaurant & Menu Serializers ---
 class MenuItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = MenuItem
@@ -25,13 +28,18 @@ class RestaurantSerializer(serializers.ModelSerializer):
         model = Restaurant
         fields = ['id', 'name', 'menu_items']
 
-
-# --- UPDATED TRACKER SERIALIZER ---
+# --- Tracker & History Serializer ---
 class MacroTrackerSerializer(serializers.ModelSerializer):
-    # R: This now directly includes the list of menu items for the day.
-    # This is much cleaner than the previous nested approach.
     items = MenuItemSerializer(many=True, read_only=True)
-    
     class Meta:
         model = MacroTracker
         fields = ['id', 'date', 'calories_consumed', 'protein_consumed', 'fat_consumed', 'carbs_consumed', 'items']
+
+
+# --- Favorite Meal Serializer ---
+class FavoriteMealSerializer(serializers.ModelSerializer):
+    items = MenuItemSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = FavoriteMeal # This line requires the import at the top of the file
+        fields = ['id', 'name', 'items']

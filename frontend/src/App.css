@@ -365,3 +365,90 @@ header {
 .history-items li {
   margin-bottom: 0.25rem;
 }
+
+/* --- UPDATED Meal History Card Styling --- */
+.history-card-body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.history-macros {
+  flex: 1;
+  min-width: 180px;
+}
+
+.history-items {
+  flex: 2;
+  min-width: 250px;
+}
+
+.history-items h4 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: #555;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+/* This makes the item list scrollable */
+.history-items ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin: 0;
+  max-height: 200px; /* The list will not grow taller than this */
+  overflow-y: auto; /* A scrollbar appears if the list is too long */
+  border: 1px solid #f0f0f0;
+  border-radius: 4px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.history-items li {
+  margin-bottom: 0.25rem;
+  padding-right: 10px;
+}
+
+/* --- Sidebar Actions --- */
+.sidebar-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 1rem;
+}
+.save-button {
+  flex: 1;
+  padding: 10px;
+  background-color: #17a2b8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.save-button:hover {
+  background-color: #138496;
+}
+.log-button {
+  flex: 1;
+}
+
+/* --- Favorites Page Styling --- */
+.favorites-container { max-width: 900px; margin: 0 auto; }
+.favorites-list { display: grid; gap: 1rem; }
+.favorite-card { background: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+.favorite-card-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-bottom: 1px solid #eee; }
+.favorite-card-header h3 { margin: 0; }
+.favorite-card-actions { display: flex; gap: 0.5rem; }
+.favorite-card-actions button { padding: 5px 10px; border-radius: 4px; border: none; cursor: pointer; background-color: #007bff; color: white; }
+.favorite-card-actions button.delete { background-color: #dc3545; }
+.favorite-card-body { padding: 1rem; }
+.favorite-card-body ul { list-style-type: disc; padding-left: 20px; margin: 0; }
+.success-message {
+  color: green;
+  font-weight: bold;
+  text-align: center;
+  padding: 1rem;
+  background-color: #e8f5e9;
+  border-radius: 4px;
+}
