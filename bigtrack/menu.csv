@@ -1,0 +1,414 @@
+restaurant,category,item,calories,protein,carbs,fat
+Chick-fil-A,breakfast,Chick-fil-A® Chicken Biscuit (153g),460.0,19.0,45.0,23.0
+Chick-fil-A,breakfast,Spicy Chicken Biscuit (153g),450.0,19.0,44.0,22.0
+Chick-fil-A,breakfast,Chick-fil-A Chick-n-Minis® (127g),360.0,20.0,41.0,13.0
+Chick-fil-A,breakfast,4 ct Chick-fil-A Chick-n-Minis® (127g),360.0,20.0,41.0,13.0
+Chick-fil-A,breakfast,10 ct Chick-fil-A Chick-n-Minis® (318g),910.0,49.0,103.0,34.0
+Chick-fil-A,breakfast,Egg White Grill (172g),300.0,27.0,29.0,8.0
+Chick-fil-A,breakfast,Hash Brown Scramble Burrito (304g),700.0,34.0,51.0,40.0
+Chick-fil-A,breakfast,Hash Brown Scramble Burrito w/ Nuggets (304g),700.0,34.0,51.0,40.0
+Chick-fil-A,breakfast,Hash Brown Scramble Burrito w/ Sausage (283g),720.0,28.0,46.0,47.0
+Chick-fil-A,breakfast,Hash Brown Scramble Burrito w/ Grilled Filet (304g),650.0,36.0,46.0,36.0
+Chick-fil-A,breakfast,Hash Brown Scramble Burrito w/ Spicy Chicken (266g),660.0,28.0,54.0,37.0
+Chick-fil-A,breakfast,Hash Brown Scramble Burrito w/ Bacon (271g),680.0,30.0,46.0,42.0
+Chick-fil-A,breakfast,Hash Brown Scramble Burrito w/ No Meat (251g),580.0,22.0,47.0,34.0
+Chick-fil-A,breakfast,Hash Brown Scramble Burrito w/ Nuggets - no hash browns (261g),550.0,33.0,38.0,30.0
+Chick-fil-A,breakfast,Hash Brown Scramble Burrito w/ Sausage - no hash browns (240g),570.0,26.0,34.0,37.0
+Chick-fil-A,breakfast,Hash Brown Scramble Burrito w/ Grilled Filet - no hash brown (261g),500.0,35.0,34.0,26.0
+Chick-fil-A,breakfast,Hash Brown Scramble Burrito w/ Spicy Chicken - no hash browns (234g),530.0,31.0,40.0,27.0
+Chick-fil-A,breakfast,Hash Brown Scramble Burrito w/ Bacon - no hash browns (228g),540.0,27.0,34.0,32.0
+Chick-fil-A,breakfast,Hash Brown Scramble Burrito w/ No Meat - no hash browns (208g),440.0,21.0,35.0,24.0
+Chick-fil-A,breakfast,Hash Brown Scramble Bowl (233g),470.0,29.0,19.0,30.0
+Chick-fil-A,breakfast,Hash Brown Scramble Bowl w/ Nuggets (233g),470.0,29.0,19.0,30.0
+Chick-fil-A,breakfast,Hash Brown Scramble Bowl w/ Sausage (212g),480.0,23.0,15.0,37.0
+Chick-fil-A,breakfast,Hash Brown Scramble Bowl w/ Grilled Filet (233g),420.0,31.0,15.0,26.0
+Chick-fil-A,breakfast,Hash Brown Scramble Bowl w/ Spicy Chicken (251g),500.0,32.0,21.0,32.0
+Chick-fil-A,breakfast,Hash Brown Scramble Bowl w/ Bacon (200g),450.0,23.0,15.0,32.0
+Chick-fil-A,breakfast,Hash Brown Scramble Bowl w/ No Meat (180g),350.0,17.0,16.0,24.0
+Chick-fil-A,breakfast,Hash Brown Scramble Bowl w/ Nuggets - no hash browns (190g),320.0,28.0,7.0,20.0
+Chick-fil-A,breakfast,Hash Brown Scramble Bowl w/ Sausage - no hash browns (169g),340.0,21.0,2.0,27.0
+Chick-fil-A,breakfast,Hash Brown Scramble Bowl w/ Grilled Filet - no hash browns (190g),270.0,30.0,2.0,16.0
+Chick-fil-A,breakfast,Hash Brown Scramble Bowl w/ Spicy Chicken - no hash browns (208g),350.0,31.0,9.0,22.0
+Chick-fil-A,breakfast,Hash Brown Scramble Bowl w/ Bacon - no hash browns (158g),300.0,22.0,2.0,22.0
+Chick-fil-A,breakfast,Hash Brown Scramble Bowl w/ No Meat - no hash browns (137g),200.0,16.0,3.0,14.0
+Chick-fil-A,breakfast,"Chicken, Egg & Cheese Biscuit (211g)",550.0,27.0,48.0,28.0
+Chick-fil-A,breakfast,"Bacon, Egg & Cheese Biscuit (145g)",420.0,15.0,38.0,23.0
+Chick-fil-A,breakfast,"Sausage, Egg & Cheese Biscuit (192g)",620.0,22.0,38.0,42.0
+Chick-fil-A,breakfast,"Chicken, Egg & Cheese Muffin (187g)",410.0,27.0,36.0,18.0
+Chick-fil-A,breakfast,"Bacon, Egg & Cheese Muffin (126g)",300.0,16.0,28.0,13.0
+Chick-fil-A,breakfast,"Sausage, Egg & Cheese Muffin (173g)",490.0,23.0,29.0,32.0
+Chick-fil-A,breakfast,Hash Browns (77g),270.0,3.0,23.0,18.0
+Chick-fil-A,breakfast,Small Hash Browns (77g),270.0,3.0,23.0,18.0
+Chick-fil-A,breakfast,Large Hash Browns (121g),420.0,4.0,35.0,29.0
+Chick-fil-A,breakfast,Berry Parfait (206g),270.0,13.0,35.0,9.0
+Chick-fil-A,breakfast,Berry Parfait w/ Cookie Crumbs (195g),240.0,12.0,31.0,8.0
+Chick-fil-A,breakfast,Berry Parfait w/ Granola (206g),270.0,13.0,35.0,9.0
+Chick-fil-A,breakfast,Fruit Cup (125g),70.0,1.0,16.0,0.0
+Chick-fil-A,breakfast,Small Fruit Cup (107g),60.0,1.0,14.0,0.0
+Chick-fil-A,breakfast,Medium Fruit Cup (125g),70.0,1.0,16.0,0.0
+Chick-fil-A,breakfast,Large Fruit Cup (215g),120.0,1.0,28.0,0.0
+Chick-fil-A,breakfast,Breakfast Breads (81g),290.0,4.0,37.0,15.0
+Chick-fil-A,breakfast,Buttery Biscuit (81g),290.0,4.0,37.0,15.0
+Chick-fil-A,breakfast,English Muffin (58g),140.0,5.0,27.0,1.0
+Chick-fil-A,breakfast,4 ct Mini Yeast Rolls (70g),240.0,6.0,36.0,8.0
+Chick-fil-A,entree,Pretzel Cheddar Club Sandwich w/ Chick-fil-A® Filet (283g),690.0,39.0,55.0,34.0
+Chick-fil-A,entree,Pretzel Cheddar Club Sandwich w/ Spicy Filet (288g),720.0,38.0,59.0,35.0
+Chick-fil-A,entree,Pretzel Cheddar Club Sandwich w/ Grilled Filet (252g),550.0,36.0,44.0,24.0
+Chick-fil-A,entree,Chick-fil-A® Chicken Sandwich (183g),420.0,29.0,41.0,18.0
+Chick-fil-A,entree,Chick-fil-A® Deluxe Sandwich (247g),490.0,32.0,43.0,22.0
+Chick-fil-A,entree,Chick-fil-A® Deluxe Sandwich w/ American (247g),490.0,32.0,43.0,22.0
+Chick-fil-A,entree,Chick-fil-A® Deluxe Sandwich w/ Colby Jack (254g),510.0,34.0,43.0,24.0
+Chick-fil-A,entree,Chick-fil-A® Deluxe Sandwich w/ Pepper Jack (254g),520.0,35.0,43.0,24.0
+Chick-fil-A,entree,Chick-fil-A® Deluxe Sandwich w/ No Cheese (233g),430.0,29.0,43.0,18.0
+Chick-fil-A,entree,Spicy Chicken Sandwich (188g),450.0,28.0,45.0,19.0
+Chick-fil-A,entree,Spicy Deluxe Sandwich (259g),540.0,34.0,47.0,26.0
+Chick-fil-A,entree,Spicy Deluxe Sandwich w/ Pepper Jack (259g),540.0,34.0,47.0,26.0
+Chick-fil-A,entree,Spicy Deluxe Sandwich w/ American (252g),510.0,31.0,47.0,23.0
+Chick-fil-A,entree,Spicy Deluxe Sandwich w/ Colby Jack (259g),540.0,34.0,47.0,26.0
+Chick-fil-A,entree,Spicy Deluxe Sandwich w/ No Cheese (238g),460.0,28.0,46.0,19.0
+Chick-fil-A,entree,Grilled Chicken Sandwich (206g),390.0,28.0,45.0,11.0
+Chick-fil-A,entree,Chick-fil-A® Grilled Chicken Club Sandwich (237g),520.0,37.0,45.0,22.0
+Chick-fil-A,entree,Grilled Chicken Club w/ Colby Jack (237g),520.0,37.0,45.0,22.0
+Chick-fil-A,entree,Grilled Chicken Club w/ American (230g),490.0,34.0,45.0,19.0
+Chick-fil-A,entree,Grilled Chicken Club w/ Pepper Jack (237g),520.0,37.0,45.0,22.0
+Chick-fil-A,entree,Grilled Chicken Club w/ No Cheese (216g),440.0,31.0,45.0,15.0
+Chick-fil-A,entree,Chick-fil-A® Nuggets (113g),250.0,27.0,11.0,11.0
+Chick-fil-A,entree,5 ct Chick-fil-A® Nuggets (71g),160.0,17.0,7.0,7.0
+Chick-fil-A,entree,8 ct Chick-fil-A® Nuggets (113g),250.0,27.0,11.0,11.0
+Chick-fil-A,entree,12 ct Chick-fil-A® Nuggets (170g),380.0,40.0,16.0,17.0
+Chick-fil-A,entree,30 ct Chick-fil-A® Nuggets (425g),950.0,100.0,41.0,43.0
+Chick-fil-A,entree,Grilled Nuggets (95g),130.0,25.0,1.0,3.0
+Chick-fil-A,entree,5 ct Grilled Nuggets (59g),80.0,16.0,1.0,2.0
+Chick-fil-A,entree,8 ct Grilled Nuggets (95g),130.0,25.0,1.0,3.0
+Chick-fil-A,entree,12 ct Grilled Nuggets (142g),200.0,38.0,2.0,4.5
+Chick-fil-A,entree,30 ct Grilled Nuggets (369g),510.0,98.0,4.0,11.0
+Chick-fil-A,entree,Chick-fil-A Chick-n-Strips® (136g),310.0,29.0,16.0,14.0
+Chick-fil-A,entree,2 ct Chick-fil-A Chick-n-Strips® (91g),200.0,19.0,11.0,9.0
+Chick-fil-A,entree,3 ct Chick-fil-A Chick-n-Strips® (136g),310.0,29.0,16.0,14.0
+Chick-fil-A,entree,4 ct Chick-fil-A Chick-n-Strips® (181g),410.0,39.0,22.0,19.0
+Chick-fil-A,entree,10 ct Chick-fil-A Chick-n-Strips® (452g),1020.0,96.0,54.0,46.0
+Chick-fil-A,entree,Chick-fil-A Cool Wrap® (231g),660.0,43.0,32.0,45.0
+Chick-fil-A,entree,Hot Brown (354g),740.0,48.0,38.0,42.0
+Chick-fil-A,entree,Hot Brown w/ Nuggets (354g),740.0,48.0,38.0,42.0
+Chick-fil-A,entree,Hot Brown w/ Spicy Breakfast Filet (372g),750.0,50.0,41.0,41.0
+Chick-fil-A,entree,Hot Brown w/ Grilled Breakfast Filet (373g),770.0,49.0,42.0,43.0
+Chick-fil-A,entree,Hot Brown w/ Sausage (343g),930.0,40.0,28.0,72.0
+Chick-fil-A,entree,Hot Brown w/ Grilled Nuggets (335g),610.0,46.0,28.0,33.0
+Chick-fil-A,entree,Hot Brown w/ Spicy Filet (361g),760.0,44.0,43.0,44.0
+Chick-fil-A,salad,Cobb Salad (411g),830.0,42.0,31.0,60.0
+Chick-fil-A,salad,Cobb Salad w/ Nuggets (411g),830.0,42.0,31.0,60.0
+Chick-fil-A,salad,Cobb Salad w/ Spicy Grilled Filet (Cold) (383g),690.0,34.0,23.0,51.0
+Chick-fil-A,salad,Cobb Salad w/ Grilled Nuggets (392g),710.0,40.0,22.0,52.0
+Chick-fil-A,salad,Cobb Salad w/ Chick-fil-A Chick-n-Strips® (434g),890.0,44.0,37.0,63.0
+Chick-fil-A,salad,Cobb Salad w/ Grilled Filet (Cold) (383g),690.0,36.0,22.0,50.0
+Chick-fil-A,salad,Cobb Salad w/ Chick-fil-A® Filet (413g),830.0,39.0,33.0,60.0
+Chick-fil-A,salad,Cobb Salad w/ Spicy Filet (418g),860.0,38.0,37.0,62.0
+Chick-fil-A,salad,Cobb Salad w/ Grilled Filet (Warm) (382g),690.0,36.0,22.0,50.0
+Chick-fil-A,salad,Cobb Salad w/ No Chicken (298g),580.0,15.0,21.0,49.0
+Chick-fil-A,salad,Spicy Southwest Salad (424g),680.0,33.0,27.0,49.0
+Chick-fil-A,salad,Spicy Southwest Salad w/ Spicy Grilled Filet (Cold) (424g),680.0,33.0,27.0,49.0
+Chick-fil-A,salad,Spicy Southwest Salad w/ Grilled Filet (Cold) (424g),680.0,35.0,26.0,48.0
+Chick-fil-A,salad,Spicy Southwest Salad w/ Nuggets (448g),800.0,39.0,35.0,56.0
+Chick-fil-A,salad,Spicy Southwest Salad w/ Grilled Nuggets (434g),700.0,39.0,26.0,49.0
+Chick-fil-A,salad,Spicy Southwest Salad w/ Chick-fil-A Chick-n-Strips® (475g),880.0,43.0,41.0,60.0
+Chick-fil-A,salad,Spicy Southwest Salad w/ Chick-fil-A® Filet (450g),800.0,36.0,37.0,56.0
+Chick-fil-A,salad,Spicy Southwest Salad w/ Spicy Filet (459g),850.0,37.0,41.0,60.0
+Chick-fil-A,salad,Spicy Southwest Salad w/ Grilled Filet (Warm) (423g),680.0,35.0,26.0,48.0
+Chick-fil-A,salad,Spicy Southwest Salad w/ No Chicken (339g),570.0,14.0,25.0,47.0
+Chick-fil-A,salad,Market Salad (326g),550.0,28.0,42.0,31.0
+Chick-fil-A,salad,Market Salad w/ Grilled Filet (Cold) (326g),550.0,28.0,42.0,31.0
+Chick-fil-A,salad,Market Salad w/ Spicy Grilled Filet (Cold) (326g),540.0,26.0,42.0,31.0
+Chick-fil-A,salad,Market Salad w/ Chick-fil-A Chick-n-Strips® (377g),750.0,36.0,57.0,43.0
+Chick-fil-A,salad,Market Salad w/ Nuggets (354g),700.0,34.0,51.0,40.0
+Chick-fil-A,salad,Market Salad w/ Grilled Nuggets (335g),570.0,32.0,41.0,32.0
+Chick-fil-A,salad,Market Salad w/ Chick-fil-A® Filet (356g),690.0,31.0,53.0,41.0
+Chick-fil-A,salad,Market Salad w/ Spicy Filet (361g),720.0,30.0,56.0,42.0
+Chick-fil-A,salad,Market Salad w/ Grilled Filet (Warm) (325g),550.0,28.0,42.0,31.0
+Chick-fil-A,salad,Market Salad w/ No Chicken (241g),440.0,7.0,40.0,29.0
+Chick-fil-A,salad,Chick-fil-A Waffle Potato Fries® (125g),420.0,5.0,45.0,24.0
+Chick-fil-A,sides,Small Chick-fil-A Waffle Potato Fries® (96g),320.0,4.0,35.0,19.0
+Chick-fil-A,sides,Medium Chick-fil-A Waffle Potato Fries® (125g),420.0,5.0,45.0,24.0
+Chick-fil-A,sides,Large Chick-fil-A Waffle Potato Fries® (179g),600.0,7.0,65.0,35.0
+Chick-fil-A,sides,Fruit Cup (125g),70.0,1.0,16.0,0.0
+Chick-fil-A,sides,Small Fruit Cup (107g),60.0,1.0,14.0,0.0
+Chick-fil-A,sides,Medium Fruit Cup (125g),70.0,1.0,16.0,0.0
+Chick-fil-A,sides,Large Fruit Cup (215g),120.0,1.0,28.0,0.0
+Chick-fil-A,sides,Side Salad (166g),470.0,6.0,14.0,42.0
+Chick-fil-A,sides,Mac & Cheese (227g),450.0,20.0,28.0,29.0
+Chick-fil-A,sides,Small Mac & Cheese (136g),270.0,12.0,17.0,17.0
+Chick-fil-A,sides,Medium Mac & Cheese (227g),450.0,20.0,28.0,29.0
+Chick-fil-A,sides,Large Mac & Cheese (425g),840.0,38.0,53.0,53.0
+Chick-fil-A,sides,Chicken Noodle Soup (233g),170.0,10.0,25.0,4.0
+Chick-fil-A,sides,Cup of Chicken Noodle Soup (233g),170.0,10.0,25.0,4.0
+Chick-fil-A,sides,Bowl of Chicken Noodle Soup (422g),280.0,17.0,38.0,6.0
+Chick-fil-A,sides,Kale Crunch Side (112g),170.0,4.0,13.0,12.0
+Chick-fil-A,sides,Berry Parfait (206g),270.0,13.0,35.0,9.0
+Chick-fil-A,sides,Berry Parfait w/ Granola (206g),270.0,13.0,35.0,9.0
+Chick-fil-A,sides,Berry Parfait w/ Cookie Crumbs (195g),240.0,12.0,31.0,8.0
+Chick-fil-A,sides,Original Flavor Waffle Potato Chips (43g),220.0,3.0,25.0,13.0
+Chick-fil-A,other,Buddy Fruits® Apple Sauce (90g),45.0,0.0,12.0,0.0
+Chick-fil-A,other,5 Ct Nuggets Kid's Meal (71g),160.0,17.0,7.0,7.0
+Chick-fil-A,other,5 ct Chick-fil-A® Nuggets (71g),160.0,17.0,7.0,7.0
+Chick-fil-A,other,Kid's Meal Sides (0g),0.0,0.0,0.0,0.0
+Chick-fil-A,other,Meal Beverages (0g),0.0,0.0,0.0,0.0
+Chick-fil-A,other,Prize (0g),0.0,0.0,0.0,0.0
+Chick-fil-A,other,2 Ct Chick-n-Strips® Kid's Meal (91g),200.0,19.0,11.0,9.0
+Chick-fil-A,other,2 ct Chick-fil-A Chick-n-Strips® (91g),200.0,19.0,11.0,9.0
+Chick-fil-A,other,Kid's Meal Sides (0g),0.0,0.0,0.0,0.0
+Chick-fil-A,other,Meal Beverages (0g),0.0,0.0,0.0,0.0
+Chick-fil-A,other,Prize (0g),0.0,0.0,0.0,0.0
+Chick-fil-A,other,5 Ct Grilled Nuggets Kid's Meal (59g),80.0,16.0,1.0,2.0
+Chick-fil-A,other,5 ct Grilled Nuggets (59g),80.0,16.0,1.0,2.0
+Chick-fil-A,other,Kid's Meal Sides (0g),0.0,0.0,0.0,0.0
+Chick-fil-A,other,Meal Beverages (0g),0.0,0.0,0.0,0.0
+Chick-fil-A,other,Prize (0g),0.0,0.0,0.0,0.0
+Chick-fil-A,drink,Cherry Berry Frosted Lemonade (376g),370.0,7.0,71.0,7.0
+Chick-fil-A,drink,Cherry Berry Frosted Lemonade (376g),370.0,7.0,71.0,7.0
+Chick-fil-A,drink,Cherry Berry Frosted Diet Lemonade (376g),300.0,7.0,55.0,7.0
+Chick-fil-A,drink,Frosted Lemonade (383g),350.0,7.0,67.0,7.0
+Chick-fil-A,drink,Frosted Lemonade (383g),350.0,7.0,67.0,7.0
+Chick-fil-A,drink,Frosted Lemonade w/ Diet Lemonade (383g),280.0,7.0,50.0,7.0
+Chick-fil-A,drink,Frosted Coffee (374g),260.0,7.0,45.0,7.0
+Chick-fil-A,treat,Chocolate Chunk Cookie (78g),370.0,5.0,49.0,17.0
+Chick-fil-A,treat,Chocolate Chunk Cookie (78g),370.0,5.0,49.0,17.0
+Chick-fil-A,treat,6 pack Chocolate Chunk Cookie (78g),370.0,5.0,49.0,17.0
+Chick-fil-A,treat,Chocolate Fudge Brownie (85g),370.0,4.0,47.0,21.0
+Chick-fil-A,treat,Cookies & Cream Milkshake (409g),630.0,13.0,91.0,25.0
+Chick-fil-A,treat,Chocolate Milkshake (409g),600.0,12.0,93.0,22.0
+Chick-fil-A,treat,Strawberry Milkshake (409g),560.0,10.0,92.0,18.0
+Chick-fil-A,treat,Vanilla Milkshake (409g),580.0,13.0,82.0,23.0
+Chick-fil-A,treat,Chick-fil-A® Icedream® Cone (135g),180.0,4.0,32.0,4.0
+Chick-fil-A,treat,Chick-fil-A® Icedream® Cup (122g),140.0,4.0,24.0,3.5
+Chick-fil-A,drink,Cherry Berry & Sprite® (683g),200.0,0.0,52.0,0.0
+Chick-fil-A,drink,Cherry Berry Beverages (655g),230.0,0.0,58.0,0.0
+Chick-fil-A,drink,"Cherry Berry Sunjoy® (Sweet Tea, Lemonade) (655g)",230.0,0.0,58.0,0.0
+Chick-fil-A,drink,"Cherry Berry Sunjoy® (Sweet Tea, Diet Lemonade) (655g)",130.0,0.0,33.0,0.0
+Chick-fil-A,drink,"Cherry Berry Sunjoy® (Unsweet Tea, Lemonade) (655g)",170.0,0.0,41.0,0.0
+Chick-fil-A,drink,"Cherry Berry Sunjoy® (Unsweet Tea, Diet Lemonade) (655g)",70.0,0.0,16.0,0.0
+Chick-fil-A,drink,Cherry Berry Lemonade (655g),260.0,0.0,66.0,0.0
+Chick-fil-A,drink,Cherry Berry Diet Lemonade (655g),90.0,0.0,22.0,0.0
+Chick-fil-A,drink,Cherry Berry Sweet Tea (655g),190.0,0.0,47.0,0.0
+Chick-fil-A,drink,Cherry Berry Unsweet Tea (655g),40.0,0.0,9.0,0.0
+Chick-fil-A,drink,Freshly-Brewed Iced Tea Sweetened (604g),120.0,0.0,31.0,0.0
+Chick-fil-A,drink,Small Freshly-Brewed Iced Tea Sweetened (451g),90.0,0.0,22.0,0.0
+Chick-fil-A,drink,Medium Freshly-Brewed Iced Tea Sweetened (604g),120.0,0.0,31.0,0.0
+Chick-fil-A,drink,Large Freshly-Brewed Iced Tea Sweetened (893g),170.0,0.0,44.0,0.0
+Chick-fil-A,drink,Freshly-Brewed Iced Tea Unsweetened (604g),0.0,0.0,0.0,0.0
+Chick-fil-A,drink,Small Freshly-Brewed Iced Tea Unsweetened (451g),0.0,0.0,0.0,0.0
+Chick-fil-A,drink,Medium Freshly-Brewed Iced Tea Unsweetened (604g),0.0,0.0,0.0,0.0
+Chick-fil-A,drink,Large Freshly-Brewed Iced Tea Unsweetened (893g),0.0,0.0,0.0,0.0
+Chick-fil-A,drink,Chick-fil-A® Lemonade (612g),260.0,0.0,66.0,0.0
+Chick-fil-A,drink,Small Chick-fil-A® Lemonade (465g),190.0,0.0,49.0,0.0
+Chick-fil-A,drink,Medium Chick-fil-A® Lemonade (612g),260.0,0.0,66.0,0.0
+Chick-fil-A,drink,Large Chick-fil-A® Lemonade (916g),380.0,1.0,98.0,0.0
+Chick-fil-A,drink,Chick-fil-A® Diet Lemonade (612g),60.0,0.0,15.0,0.0
+Chick-fil-A,drink,Small Chick-fil-A® Diet Lemonade (465g),40.0,0.0,12.0,0.0
+Chick-fil-A,drink,Medium Chick-fil-A® Diet Lemonade (612g),60.0,0.0,15.0,0.0
+Chick-fil-A,drink,Large Chick-fil-A® Diet Lemonade (916g),80.0,0.0,23.0,0.0
+Chick-fil-A,drink,"Sunjoy® (1/2 Sweet Tea, 1/2 Lemonade) (641g)",240.0,0.0,60.0,0.0
+Chick-fil-A,drink,"Small Sunjoy® (1/2 Sweet Tea, 1/2 Lemonade) (479g)",180.0,0.0,45.0,0.0
+Chick-fil-A,drink,"Medium Sunjoy® (1/2 Sweet Tea, 1/2 Lemonade) (641g)",240.0,0.0,60.0,0.0
+Chick-fil-A,drink,"Large Sunjoy® (1/2 Sweet Tea, 1/2 Lemonade) (944g)",350.0,0.0,91.0,0.0
+Chick-fil-A,drink,"Sunjoy® (1/2 Sweet Tea, 1/2 Diet Lemonade) (641g)",110.0,0.0,29.0,0.0
+Chick-fil-A,drink,"Small Sunjoy® (1/2 Sweet Tea, 1/2 Diet Lemonade) (479g)",80.0,0.0,20.0,0.0
+Chick-fil-A,drink,"Medium Sunjoy® (1/2 Sweet Tea, 1/2 Diet Lemonade) (641g)",110.0,0.0,29.0,0.0
+Chick-fil-A,drink,"Large Sunjoy® (1/2 Sweet Tea, 1/2 Diet Lemonade) (944g)",150.0,0.0,40.0,0.0
+Chick-fil-A,drink,"Sunjoy® (1/2 Unsweet Tea, 1/2 Lemonade) (641g)",160.0,0.0,41.0,0.0
+Chick-fil-A,drink,"Small Sunjoy® (1/2 Unsweet Tea, 1/2 Lemonade) (479g)",130.0,0.0,33.0,0.0
+Chick-fil-A,drink,"Medium Sunjoy® (1/2 Unsweet Tea, 1/2 Lemonade) (641g)",160.0,0.0,41.0,0.0
+Chick-fil-A,drink,"Large Sunjoy® (1/2 Unsweet Tea, 1/2 Lemonade) (944g)",260.0,0.0,66.0,0.0
+Chick-fil-A,drink,"Sunjoy® (1/2 Unsweet Tea, 1/2 Diet Lemonade) (641g)",35.0,0.0,10.0,0.0
+Chick-fil-A,drink,"Small Sunjoy® (1/2 Unsweet Tea, 1/2 Diet Lemonade) (479g)",30.0,0.0,8.0,0.0
+Chick-fil-A,drink,"Medium Sunjoy® (1/2 Unsweet Tea, 1/2 Diet Lemonade) (641g)",35.0,0.0,10.0,0.0
+Chick-fil-A,drink,"Large Sunjoy® (1/2 Unsweet Tea, 1/2 Diet Lemonade) (944g)",60.0,0.0,15.0,0.0
+Chick-fil-A,drink,CranLime Lemonade (641g),250.0,0.0,65.0,0.0
+Chick-fil-A,drink,CranLime Lemonade (641g),250.0,0.0,65.0,0.0
+Chick-fil-A,drink,CranLime Diet Lemonade (641g),70.0,0.0,19.0,0.0
+Chick-fil-A,drink,Iced Coffee (661g),200.0,7.0,34.0,4.0
+Chick-fil-A,drink,Iced Coffee (661g),200.0,7.0,34.0,4.0
+Chick-fil-A,drink,Vanilla Iced Coffee (661g),200.0,7.0,34.0,4.0
+Chick-fil-A,drink,Coca-Cola® (584g),170.0,0.0,46.0,0.0
+Chick-fil-A,drink,Small Coca-Cola® (451g),130.0,0.0,35.0,0.0
+Chick-fil-A,drink,Medium Coca-Cola® (584g),170.0,0.0,46.0,0.0
+Chick-fil-A,drink,Large Coca-Cola® (859g),250.0,0.0,68.0,0.0
+Chick-fil-A,drink,Dr Pepper® (584g),170.0,0.0,44.0,0.0
+Chick-fil-A,drink,Small Dr Pepper® (451g),130.0,0.0,34.0,0.0
+Chick-fil-A,drink,Medium Dr Pepper® (584g),170.0,0.0,44.0,0.0
+Chick-fil-A,drink,Large Dr Pepper® (859g),250.0,0.0,64.0,0.0
+Chick-fil-A,drink,Red Flash (584g),180.0,0.0,48.0,0.0
+Chick-fil-A,drink,Small Red Flash (451g),140.0,0.0,36.0,0.0
+Chick-fil-A,drink,Medium Red Flash (584g),180.0,0.0,48.0,0.0
+Chick-fil-A,drink,Large Red Flash (859g),260.0,0.0,70.0,0.0
+Chick-fil-A,drink,DASANI® Bottled Water (479g),0.0,0.0,0.0,0.0
+Chick-fil-A,drink,Honest Kids® Apple Juice (170g),35.0,0.0,9.0,0.0
+Chick-fil-A,drink,Simply Orange® (326g),160.0,2.0,34.0,0.0
+Chick-fil-A,drink,1% Chocolate Milk (198g),140.0,7.0,23.0,2.0
+Chick-fil-A,drink,1% Milk (213g),90.0,7.0,10.0,2.0
+Chick-fil-A,drink,Coffee (340g),0.0,0.0,0.0,0.0
+Chick-fil-A,drink,Seasonal Gallon Beverages (3941g),2080.0,2.0,522.0,0.0
+Chick-fil-A,drink,"Gallon Cherry Berry Sunjoy® (1/2 Sweet Tea, 1/2 Lemonade) (3941g)",2080.0,2.0,522.0,0.0
+Chick-fil-A,drink,"Gallon Cherry Berry Sunjoy® (1/2 Unsweet Tea, 1/2 Lemonade) (3941g)",1270.0,2.0,314.0,0.0
+Chick-fil-A,drink,"Gallon Cherry Berry Sunjoy® (1/2 Sweet Tea, 1/2 Diet Lemonade) (3941g)",1310.0,2.0,331.0,1.0
+Chick-fil-A,drink,"Gallon Cherry Berry Sunjoy® (1/2 Unsweet Tea, 1/2 Diet Lemonade) (3941g)",510.0,2.0,123.0,1.0
+Chick-fil-A,drink,Gallon Cherry Berry Iced Tea (Sweet) (3941g),1760.0,0.0,442.0,0.0
+Chick-fil-A,drink,Gallon Cherry Berry Iced Tea (Unsweet) (3941g),290.0,0.0,64.0,0.0
+Chick-fil-A,drink,Gallon Cherry Berry Lemonade (3941g),2470.0,4.0,622.0,0.0
+Chick-fil-A,drink,Gallon Cherry Berry Diet Lemonade (3941g),770.0,3.0,195.0,1.5
+Chick-fil-A,drink,Gallon Beverages (3884g),2190.0,4.0,562.0,0.0
+Chick-fil-A,drink,Gallon Chick-fil-A® Lemonade (3884g),2190.0,4.0,562.0,0.0
+Chick-fil-A,drink,Gallon Chick-fil-A® Diet Lemonade (3716g),460.0,3.0,126.0,1.5
+Chick-fil-A,drink,"Gallon Chick-fil-A® Lemonade (1/2 Lemonade, 1/2 Diet Lemonade) (3989g)",1390.0,1.0,389.0,0.5
+Chick-fil-A,drink,Gallon Freshly-Brewed Iced Tea Sweetened (3996g),1510.0,0.0,391.0,0.0
+Chick-fil-A,drink,Gallon Freshly-Brewed Iced Tea Unsweetened (3808g),0.0,0.0,0.0,0.0
+Chick-fil-A,drink,"Gallon Chick-fil-A® Iced Tea (1/2 Sweet Tea, 1/2 Unsweet Tea) (3904g)",790.0,0.0,205.0,0.0
+Chick-fil-A,drink,"Gallon Sunjoy® (1/2 Sweet Tea, 1/2 Lemonade) (4176g)",1970.0,2.0,506.0,0.0
+Chick-fil-A,drink,"Gallon Sunjoy® (1/2 Sweet Tea, 1/2 Diet Lemonade) (3997g)",1030.0,1.0,270.0,1.0
+Chick-fil-A,drink,"Gallon Sunjoy® (1/2 Unsweet Tea, 1/2 Lemonade) (3898g)",1170.0,2.0,301.0,0.0
+Chick-fil-A,drink,"Gallon Sunjoy® (1/2 Unsweet Tea, 1/2 Diet Lemonade) (3719g)",240.0,1.0,65.0,1.0
+Chick-fil-A,other,Bag of Ice (28g),0.0,0.0,0.0,0.0
+Chick-fil-A,other,Ice Products (298g),0.0,0.0,0.0,0.0
+Chick-fil-A,other,Medium Cup of Ice (298g),0.0,0.0,0.0,0.0
+Chick-fil-A,other,Bag of Ice (28g),0.0,0.0,0.0,0.0
+Chick-fil-A,other,Peach Tea Beverages (654g),160.0,0.0,42.0,0.0
+Chick-fil-A,other,Peach Tea (654g),160.0,0.0,42.0,0.0
+Chick-fil-A,other,Peach Unsweet Tea (654g),15.0,0.0,4.0,0.0
+Chick-fil-A,other,Barbeque Sauce (28g),45.0,0.0,11.0,0.0
+Chick-fil-A,other,Chick-fil-A® Sauce (28g),140.0,0.0,6.0,13.0
+Chick-fil-A,other,Garden Herb Ranch Sauce (21g),100.0,0.0,1.0,11.0
+Chick-fil-A,other,Honey Mustard Sauce (28g),50.0,0.0,11.0,0.0
+Chick-fil-A,other,Polynesian Sauce (28g),110.0,0.0,14.0,6.0
+Chick-fil-A,other,Sweet & Spicy Sriracha Sauce (28g),45.0,0.0,11.0,0.0
+Chick-fil-A,other,Zesty Buffalo Sauce (21g),25.0,0.0,1.0,2.5
+Chick-fil-A,other,Honey Roasted BBQ Sauce (12g),60.0,0.0,3.0,5.0
+Chick-fil-A,other,Avocado Lime Ranch Dressing (57g),310.0,1.0,3.0,32.0
+Chick-fil-A,other,Creamy Salsa Dressing (57g),290.0,1.0,2.0,31.0
+Chick-fil-A,other,Fat-Free Honey Mustard Dressing (57g),90.0,0.0,22.0,0.0
+Chick-fil-A,other,Garden Herb Ranch Dressing (57g),280.0,1.0,2.0,29.0
+Chick-fil-A,other,Light Balsamic Vinaigrette Dressing (57g),80.0,0.0,10.0,4.0
+Chick-fil-A,other,Light Italian Dressing (57g),25.0,0.0,3.0,1.0
+Chick-fil-A,other,Zesty Apple Cider Vinaigrette Dressing (56g),230.0,0.0,16.0,19.0
+Chick-fil-A,other,Gluten Free Bun (79g),180.0,3.0,37.0,3.5
+Chick-fil-A,other,Buttery White Bun (60g),180.0,5.0,29.0,6.0
+Chick-fil-A,other,Multigrain Brioche Bun (71g),210.0,7.0,38.0,4.5
+Chick-fil-A,other,White Bun (Unbuttered) (54g),150.0,5.0,28.0,1.0
+Chick-fil-A,other,Grilled Breakfast Filet (50g),60.0,13.0,0.0,1.0
+Chick-fil-A,other,Bacon (10g),50.0,4.0,0.0,3.5
+Chick-fil-A,other,Chick-fil-A® Breakfast Filet (71g),160.0,15.0,8.0,8.0
+Chick-fil-A,other,Sausage (57g),240.0,11.0,1.0,22.0
+Chick-fil-A,other,Spicy Breakfast Filet (71g),150.0,15.0,7.0,7.0
+Chick-fil-A,other,Grilled Filet (84g),110.0,21.0,1.0,2.0
+Chick-fil-A,other,Spicy Filet (120g),280.0,23.0,16.0,13.0
+Chick-fil-A,other,Chick-fil-A® Filet (115g),250.0,24.0,12.0,12.0
+Chick-fil-A,other,Blue Cheese Crumbles (9g),30.0,2.0,0.0,2.5
+Chick-fil-A,other,Chili Lime Pepitas (14g),80.0,4.0,2.0,7.0
+Chick-fil-A,other,Crispy Bell Peppers (14g),80.0,1.0,6.0,6.0
+Chick-fil-A,other,Harvest Nut Granola (14g),70.0,1.0,10.0,2.0
+Chick-fil-A,other,Roasted Nut Blend (10g),70.0,1.0,2.0,6.0
+Chick-fil-A,other,Seasoned Tortilla Strips (14g),70.0,1.0,8.0,4.0
+Chick-fil-A,other,Bacon (10g),50.0,4.0,0.0,3.5
+Chick-fil-A,other,Lettuce (20g),5.0,0.0,1.0,0.0
+Chick-fil-A,other,Tomato (30g),5.0,0.0,1.0,0.0
+Chick-fil-A,other,American Cheese (14g),50.0,3.0,1.0,4.5
+Chick-fil-A,other,Colby Jack Cheese (21g),80.0,5.0,0.0,7.0
+Chick-fil-A,other,Pepper Jack Cheese (21g),80.0,4.0,0.0,6.0
+Chick-fil-A,other,Saltines (12g),50.0,1.0,9.0,1.0
+Chick-fil-A,other,Grilled Chicken Bundle  (per sandwich) (234g),460.0,41.0,32.0,18.0
+Chick-fil-A,other,Pretzel Cheddar Club Grilled Bundle  (per bundle) (262g),500.0,38.0,46.0,18.0
+Chick-fil-A,other,Hot Chick-fil-A® Nugget Trays (14g),30.0,3.0,1.0,1.5
+Chick-fil-A,other,Small Hot Chick-fil-A® Nuggets Tray  (per nugget) (14g),30.0,3.0,1.0,1.5
+Chick-fil-A,other,Medium Hot Chick-fil-A® Nuggets Tray  (per nugget) (14g),30.0,3.0,1.0,1.5
+Chick-fil-A,other,Large Hot Chick-fil-A® Nuggets Tray  (per nugget) (14g),30.0,3.0,1.0,1.5
+Chick-fil-A,other,30 ct Chick-fil-A® Nuggets Heart-Shaped Tray  (per tray) (425g),950.0,100.0,41.0,43.0
+Chick-fil-A,other,Chilled Chick-fil-A® Nugget Trays (14g),30.0,3.0,1.0,1.5
+Chick-fil-A,other,Small Chilled Chick-fil-A® Nuggets Tray  (per nugget) (14g),30.0,3.0,1.0,1.5
+Chick-fil-A,other,Medium Chilled Chick-fil-A® Nuggets Tray  (per nugget) (14g),30.0,3.0,1.0,1.5
+Chick-fil-A,other,Large Chilled Chick-fil-A® Nuggets Tray  (per nugget) (14g),30.0,3.0,1.0,1.5
+Chick-fil-A,other,Hot Chick-n-Strips® Trays (47g),110.0,10.0,6.0,5.0
+Chick-fil-A,other,Small Hot Chick-n-Strips® Tray  (per chick-n-strip) (47g),110.0,10.0,6.0,5.0
+Chick-fil-A,other,Medium Hot Chick-n-Strips® Tray  (per chick-n-strip) (47g),110.0,10.0,6.0,5.0
+Chick-fil-A,other,Large Hot Chick-n-Strips® Tray  (per chick-n-strip) (47g),110.0,10.0,6.0,5.0
+Chick-fil-A,other,Chilled Chick-n-Strips® Trays (47g),110.0,10.0,6.0,5.0
+Chick-fil-A,other,Small Chilled Chick-n-Strips® (Cooked & Chilled for Later) Tray  (per chick-n-strip) (47g),110.0,10.0,6.0,5.0
+Chick-fil-A,other,Medium Chilled Chick-n-Strips® (Cooked & Chilled for Later) Tray  (per chick-n-strip) (47g),110.0,10.0,6.0,5.0
+Chick-fil-A,other,Large Chilled Chick-n-Strips® (Cooked & Chilled for Later) Tray  (per chick-n-strip) (47g),110.0,10.0,6.0,5.0
+Chick-fil-A,other,Chilled Grilled Chicken Sub Sandwich Tray (115g),220.0,18.0,25.0,6.0
+Chick-fil-A,other,Small Chilled Grilled Chicken Sub Sandwich Tray  (per half sandwich) (115g),220.0,18.0,25.0,6.0
+Chick-fil-A,other,Medium Chilled Grilled Chicken Sub Sandwich Tray  (per half sandwich) (115g),220.0,18.0,25.0,6.0
+Chick-fil-A,other,Large Chilled Grilled Chicken Sub Sandwich Tray  (per half sandwich) (115g),220.0,18.0,25.0,6.0
+Chick-fil-A,other,Spicy Chilled Grilled Chicken Sub Sandwich Tray (115g),220.0,16.0,25.0,6.0
+Chick-fil-A,other,Small Spicy Chilled Grilled Chicken Sub Sandwich Tray  (per half sandwich) (115g),220.0,16.0,25.0,6.0
+Chick-fil-A,other,Medium Spicy Chilled Grilled Chicken Sub Sandwich Tray  (per half sandwich) (115g),220.0,16.0,25.0,6.0
+Chick-fil-A,other,Large Spicy Chilled Grilled Chicken Sub Sandwich Tray  (per half sandwich) (115g),220.0,16.0,25.0,6.0
+Chick-fil-A,other,Chick-fil-A® Cool Wrap Trays (116g),170.0,21.0,15.0,7.0
+Chick-fil-A,other,Small Chick-fil-A® Cool Wrap Tray  (per half wrap) (116g),170.0,21.0,15.0,7.0
+Chick-fil-A,other,Medium Chick-fil-A® Cool Wrap Tray  (per half wrap) (116g),170.0,21.0,15.0,7.0
+Chick-fil-A,other,Large Chick-fil-A® Cool Wrap Tray  (per half wrap) (116g),170.0,21.0,15.0,7.0
+Chick-fil-A,other,Southwest Veggie Wrap Trays (128g),170.0,13.0,17.0,8.0
+Chick-fil-A,other,Small Southwest Veggie Wrap Tray  (per half wrap) (128g),170.0,13.0,17.0,8.0
+Chick-fil-A,other,Medium Southwest Veggie Wrap Tray  (per half wrap) (128g),170.0,13.0,17.0,8.0
+Chick-fil-A,other,Large Southwest Veggie Wrap Tray  (per half wrap) (128g),170.0,13.0,17.0,8.0
+Chick-fil-A,other,Spicy Cool Wrap® Trays (116g),170.0,20.0,15.0,7.0
+Chick-fil-A,other,Small Spicy Cool Wrap® Tray  (per half wrap) (116g),170.0,20.0,15.0,7.0
+Chick-fil-A,other,Medium Spicy Cool Wrap® Tray  (per half wrap) (116g),170.0,20.0,15.0,7.0
+Chick-fil-A,other,Large Spicy Cool Wrap® Tray  (per half wrap) (116g),170.0,20.0,15.0,7.0
+Chick-fil-A,other,Fruit Tray (1446g),780.0,8.0,182.0,0.0
+Chick-fil-A,other,Small Fruit Tray  (per tray) (1446g),780.0,8.0,182.0,0.0
+Chick-fil-A,other,Large Fruit Tray  (per tray) (2948g),1580.0,16.0,369.0,0.0
+Chick-fil-A,other,Mac & Cheese Tray (2482g),4930.0,221.0,308.0,312.0
+Chick-fil-A,other,Small Mac & Cheese Tray  (per tray) (2482g),4930.0,221.0,308.0,312.0
+Chick-fil-A,other,Large Mac & Cheese Tray  (per tray) (4964g),9850.0,442.0,616.0,625.0
+Chick-fil-A,other,Garden Salad Tray (595g),310.0,19.0,20.0,18.0
+Chick-fil-A,other,Small Garden Salad Tray  (per tray) (595g),310.0,19.0,20.0,18.0
+Chick-fil-A,other,Large Garden Salad Tray  (per tray) (1191g),630.0,38.0,41.0,36.0
+Chick-fil-A,other,Kale Crunch Side Tray (610g),1160.0,30.0,77.0,87.0
+Chick-fil-A,other,Small Kale Crunch Side Tray  (per tray) (610g),1160.0,30.0,77.0,87.0
+Chick-fil-A,other,Large Kale Crunch Side Tray  (per tray) (1332g),2440.0,63.0,166.0,182.0
+Chick-fil-A,other,Chocolate Chunk Cookie Tray (78g),370.0,5.0,49.0,17.0
+Chick-fil-A,other,Small Chocolate Chunk Cookie Tray  (per cookie) (78g),370.0,5.0,49.0,17.0
+Chick-fil-A,other,Large Chocolate Chunk Cookie Tray  (per cookie) (78g),370.0,5.0,49.0,17.0
+Chick-fil-A,other,Chocolate Fudge Brownie Tray (43g),190.0,2.0,23.0,10.0
+Chick-fil-A,other,Small Chocolate Fudge Brownie Tray  (per brownie half) (43g),190.0,2.0,23.0,10.0
+Chick-fil-A,other,Large Chocolate Fudge Brownie Tray  (per brownie half) (43g),190.0,2.0,23.0,10.0
+Chick-fil-A,other,Cookie & Brownie Tray (60g),280.0,3.0,36.0,14.0
+Chick-fil-A,other,Small Chocolate Chunk Cookie and Chocolate Fudge Brownie Tray  (per cookie/ per brownie half) (60g),280.0,3.0,36.0,14.0
+Chick-fil-A,other,Large Chocolate Chunk Cookie and Chocolate Fudge Brownie Tray  (per cookie/ per brownie half) (60g),280.0,3.0,36.0,14.0
+Chick-fil-A,other,Chick-fil-A® Chicken Sandwich (183g),420.0,29.0,41.0,18.0
+Chick-fil-A,other,Spicy Chicken Sandwich (188g),450.0,28.0,45.0,19.0
+Chick-fil-A,other,Chick-fil-A® Nuggets (113g),250.0,27.0,11.0,11.0
+Chick-fil-A,other,5 ct Chick-fil-A® Nuggets (71g),160.0,17.0,7.0,7.0
+Chick-fil-A,other,8 ct Chick-fil-A® Nuggets (113g),250.0,27.0,11.0,11.0
+Chick-fil-A,other,12 ct Chick-fil-A® Nuggets (170g),380.0,40.0,16.0,17.0
+Chick-fil-A,other,Chilled Grilled Chicken Sub Sandwich (230g),500.0,36.0,52.0,17.0
+Chick-fil-A,other,Spicy Chilled Grilled Chicken Sub Sandwich (230g),500.0,34.0,53.0,17.0
+Chick-fil-A,other,Seasonal Gallon Beverages (3941g),2080.0,2.0,522.0,0.0
+Chick-fil-A,other,Gallon Cherry Berry Lemonade (3941g),2470.0,4.0,622.0,0.0
+Chick-fil-A,other,Gallon Cherry Berry Diet Lemonade (3941g),770.0,3.0,195.0,1.5
+Chick-fil-A,other,"Gallon Cherry Berry Sunjoy® (1/2 Sweet Tea, 1/2 Lemonade) (3941g)",2080.0,2.0,522.0,0.0
+Chick-fil-A,other,"Gallon Cherry Berry Sunjoy® (1/2 Unsweet Tea, 1/2 Lemonade) (3941g)",1270.0,2.0,314.0,0.0
+Chick-fil-A,other,"Gallon Cherry Berry Sunjoy® (1/2 Sweet Tea, 1/2 Diet Lemonade) (3941g)",1310.0,2.0,331.0,1.0
+Chick-fil-A,other,"Gallon Cherry Berry Sunjoy® (1/2 Unsweet Tea, 1/2 Diet Lemonade) (3941g)",510.0,2.0,123.0,1.0
+Chick-fil-A,other,Gallon Cherry Berry Iced Tea (Sweet) (3941g),1760.0,0.0,442.0,0.0
+Chick-fil-A,other,Gallon Cherry Berry Iced Tea (Unsweet) (3941g),290.0,0.0,64.0,0.0
+Chick-fil-A,other,Gallon Freshly-Brewed Iced Tea Sweetened (3996g),1510.0,0.0,391.0,0.0
+Chick-fil-A,other,Gallon Freshly-Brewed Iced Tea Unsweetened (3808g),0.0,0.0,0.0,0.0
+Chick-fil-A,other,"Gallon Chick-fil-A® Iced Tea (1/2 Sweet Tea, 1/2 Unsweet Tea) (3904g)",790.0,0.0,205.0,0.0
+Chick-fil-A,other,Gallon Chick-fil-A® Lemonade (3884g),2190.0,4.0,562.0,0.0
+Chick-fil-A,other,Gallon Chick-fil-A® Diet Lemonade (3716g),460.0,3.0,126.0,1.5
+Chick-fil-A,other,"Gallon Chick-fil-A® Lemonade (1/2 Lemonade, 1/2 Diet Lemonade) (3989g)",1390.0,1.0,389.0,0.5
+Chick-fil-A,other,"Gallon Sunjoy® (1/2 Sweet Tea, 1/2 Lemonade) (4176g)",1970.0,2.0,506.0,0.0
+Chick-fil-A,other,"Gallon Sunjoy® (1/2 Sweet Tea, 1/2 Diet Lemonade) (3997g)",1030.0,1.0,270.0,1.0
+Chick-fil-A,other,"Gallon Sunjoy® (1/2 Unsweet Tea, 1/2 Lemonade) (3898g)",1170.0,2.0,301.0,0.0
+Chick-fil-A,other,"Gallon Sunjoy® (1/2 Unsweet Tea, 1/2 Diet Lemonade) (3719g)",240.0,1.0,65.0,1.0
+Chick-fil-A,other,DASANI® Bottled Water (479g),0.0,0.0,0.0,0.0
+Chick-fil-A,other,Simply Orange® (326g),160.0,2.0,34.0,0.0
+Chick-fil-A,other,Bottled Sweet Tea (506g),190.0,0.0,50.0,0.0
+Chick-fil-A,other,Bottled Unsweet Tea (486g),30.0,0.0,9.0,0.0
+Chick-fil-A,other,Bottled Lemonade (520g),280.0,0.0,73.0,0.0
+Chick-fil-A,other,Bottled Diet Lemonade (492g),60.0,0.0,17.0,0.0
+Chick-fil-A,other,Honest Kids® Apple Juice (170g),35.0,0.0,9.0,0.0
+Chick-fil-A,other,1% Milk (213g),90.0,7.0,10.0,2.0
+Chick-fil-A,other,1% Chocolate Milk (198g),140.0,7.0,23.0,2.0
+Chick-fil-A,other,Bag of Ice (28g),0.0,0.0,0.0,0.0
+Chick-fil-A,other,Ice Scoop (0g),0.0,0.0,0.0,0.0
+Chick-fil-A,other,Ice Bucket and Scoop (0g),0.0,0.0,0.0,0.0
+Chick-fil-A,other,Catering Coffee (2722g),0.0,0.0,0.0,0.0

@@ -1,0 +1,61 @@
+#:kivy 2.3.0
+
+<CfaOptionsScreen>:
+    name: "cfa_options"
+
+    BoxLayout:
+        orientation: "vertical"
+        padding: 16
+        spacing: 10
+
+        # Top bar with X and centered title
+        BoxLayout:
+            size_hint_y: None
+            height: "44dp"
+            spacing: 10
+
+            Button:
+                size_hint_x: None
+                width: "44dp"
+                text: "X"
+                background_normal: ""
+                background_down: ""
+                background_color: 0, 0, 0, 0  # fully transparent background
+                color: 1, 1, 1, 1              # white "X" text
+                on_release: root.go_back()
+
+
+            Label:
+                id: title
+                text: "Chick-fil-A — Categories"
+                bold: True
+                font_size: "16sp"
+                halign: "center"
+                valign: "middle"
+                text_size: self.size
+
+            Widget:
+                size_hint_x: None
+                width: "44dp"
+
+        # Message / errors
+        Label:
+            id: message
+            size_hint_y: None
+            height: "22dp"
+            text: ""
+            color: 1, 0.3, 0.3, 1
+            markup: True
+            font_size: "12sp"
+
+        # Grid of categories
+        ScrollView:
+            do_scroll_x: False
+            bar_width: 6
+            GridLayout:
+                id: grid
+                cols: 2
+                spacing: 12
+                padding: 2, 2
+                size_hint_y: None
+                height: self.minimum_height

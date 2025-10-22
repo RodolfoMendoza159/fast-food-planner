@@ -1,0 +1,84 @@
+
+#:kivy 2.3.0
+#:import TOP_BUN ui_common.TOP_BUN
+#:import BOTTOM_BUN ui_common.BOTTOM_BUN
+#:import OutlinedText ui_common.OutlinedText
+
+<CreateAccountScreen>:
+    FloatLayout:
+        OutlinedText:
+            text: "Create Account"
+            font_size: 25
+            color: 1,1,1,1
+            outline_color: 0,0,0,0
+            outline_width: 2
+            size_hint: None, None
+            pos_hint: {"center_x": 0.40, "top": 0.95}
+
+        Image:
+            id: top_bun
+            source: TOP_BUN
+            size_hint: None, None
+            size: 350, 350
+            pos_hint: {"center_x": 0.5, "center_y": 0.70}
+
+        TextInput:
+            id: email
+            hint_text: "EMAIL"
+            multiline: False
+            size_hint: 0.8, None
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.63}
+
+        TextInput:
+            id: username
+            hint_text: "USERNAME"
+            multiline: False
+            size_hint: 0.8, None
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.55}
+
+        TextInput:
+            id: password
+            hint_text: "CREATE PASSWORD"
+            password: True
+            multiline: False
+            size_hint: 0.8, None
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.47}
+
+        TextInput:
+            id: confirm_password
+            hint_text: "CONFIRM PASSWORD"
+            password: True
+            multiline: False
+            size_hint: 0.8, None
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.39}
+
+        Image:
+            id: bottom_bun
+            source: BOTTOM_BUN
+            size_hint: None, None
+            size: 350, 350
+            pos_hint: {"center_x": 0.5, "center_y": 0.32}
+
+        Label:
+            id: message
+            markup: True
+            text: ""
+            font_size: "16sp"
+            size_hint: None, None
+            pos_hint: {"center_x": 0.5, "center_y": 0.25}
+
+        BoxLayout:
+            size_hint: 0.8, None
+            height: 50
+            spacing: 12
+            pos_hint: {"center_x": 0.5, "center_y": 0.12}
+            Button:
+                text: "SIGN UP"
+                on_release: root.submit()
+            Button:
+                text: "BACK TO LOGIN"
+                on_release: root.back_to_login()

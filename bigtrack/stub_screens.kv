@@ -1,0 +1,177 @@
+#:kivy 2.3.0
+
+<CalcScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: 16
+        spacing: 10
+
+        Label:
+            size_hint_y: None
+            height: "24dp"
+            text: "Calculator"
+            bold: True
+            halign: "center"
+            valign: "middle"
+            text_size: self.size
+
+        ScrollView:
+            id: items_scroll
+            do_scroll_x: False
+            do_scroll_y: True
+            bar_width: 6
+            size_hint_y: 0.55
+            GridLayout:
+                id: calc_items
+                cols: 1
+                spacing: 4
+                padding: 0, 0
+                size_hint_y: None
+                size_hint_x: 1
+                width: self.parent.width
+                height: self.minimum_height
+
+        Label:
+            id: totals
+            size_hint_y: None
+            height: "28dp"
+            text: "Total:  0 kcal   •   0g protein   •   0g carbs   •   0g fat"
+            halign: "center"
+            valign: "middle"
+            text_size: self.size
+
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            bar_width: 6
+            size_hint_y: 0.45
+            GridLayout:
+                id: nutri_table
+                cols: 2
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: "44dp"
+                row_force_default: True
+                spacing: 6
+                padding: 6, 6
+
+                Label:
+                    text: "Protein"
+                    halign: "left"
+                Label:
+                    id: val_protein
+                    text: "0"
+                    halign: "right"
+                Label:
+                    text: "Carbohydrates"
+                Label:
+                    id: val_carbs
+                    text: "0"
+                    halign: "right"
+                Label:
+                    text: "Fiber"
+                Label:
+                    id: val_fiber
+                    text: "0"
+                    halign: "right"
+                Label:
+                    text: "Sugar"
+                Label:
+                    id: val_sugar
+                    text: "0"
+                    halign: "right"
+                Label:
+                    text: "Fat"
+                Label:
+                    id: val_fat
+                    text: "0"
+                    halign: "right"
+                Label:
+                    text: "Saturated Fat"
+                Label:
+                    id: val_sat_fat
+                    text: "0"
+                    halign: "right"
+                Label:
+                    text: "Polyunsaturated Fat"
+                Label:
+                    id: val_poly_fat
+                    text: "0"
+                    halign: "right"
+                Label:
+                    text: "Monounsaturated Fat"
+                Label:
+                    id: val_mono_fat
+                    text: "0"
+                    halign: "right"
+                Label:
+                    text: "Trans Fat"
+                Label:
+                    id: val_trans_fat
+                    text: "0"
+                    halign: "right"
+                Label:
+                    text: "Cholesterol"
+                Label:
+                    id: val_cholesterol
+                    text: "0"
+                    halign: "right"
+                Label:
+                    text: "Sodium"
+                Label:
+                    id: val_sodium
+                    text: "0"
+                    halign: "right"
+                Label:
+                    text: "Potassium"
+                Label:
+                    id: val_potassium
+                    text: "0"
+                    halign: "right"
+                Label:
+                    text: "Vitamin A"
+                Label:
+                    id: val_vitamin_a
+                    text: "0"
+                    halign: "right"
+                Label:
+                    text: "Vitamin C"
+                Label:
+                    id: val_vitamin_c
+                    text: "0"
+                    halign: "right"
+                Label:
+                    text: "Calcium"
+                Label:
+                    id: val_calcium
+                    text: "0"
+                    halign: "right"
+                Label:
+                    text: "Iron"
+                Label:
+                    id: val_iron
+                    text: "0"
+                    halign: "right"
+
+
+<ListScreen>:
+    name: "list"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 16
+        Label:
+            text: "list"
+            halign: "center"
+            valign: "middle"
+            text_size: self.size
+
+<HistoryScreen>:
+    name: "history"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 16
+        Label:
+            text: "history"
+            halign: "center"
+            valign: "middle"
+            text_size: self.size

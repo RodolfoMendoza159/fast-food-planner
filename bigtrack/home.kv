@@ -1,0 +1,175 @@
+#:kivy 2.3.0
+
+# ------------- Helpers ----------------
+
+<CircleImageButton@ButtonBehavior+Widget>:
+    source: ""
+    size_hint: None, None
+    size: 60, 60
+    on_release: None
+    canvas:
+        StencilPush
+        Ellipse:
+            pos: self.pos
+            size: self.size
+        StencilUse
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: root.source
+        StencilUnUse
+        StencilPop
+        Color:
+            rgba: 1, 1, 1, 0.12
+        Line:
+            width: 1.2
+            circle: (self.center_x, self.center_y, min(self.width, self.height)/2)
+
+<IconRowButton@ButtonBehavior+BoxLayout>:
+    icon_source: ""
+    text: ""
+    spacing: 12
+    padding: 12, 10
+    size_hint_y: None
+    height: 52
+    canvas.before:
+        Color:
+            rgba: 0.23, 0.24, 0.26, 1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [6, 6, 6, 6]
+    Image:
+        source: root.icon_source
+        size_hint: None, None
+        size: 28, 28
+        allow_stretch: True
+        keep_ratio: True
+    Label:
+        text: root.text
+        color: 1, 1, 1, 1
+        font_size: 14
+        halign: "left"
+        valign: "middle"
+        text_size: self.size
+
+# ------------- Screen -----------------
+
+<HomeScreen>:
+    name: "home"
+
+    canvas.before:
+        Color:
+            rgba: (0.078, 0.082, 0.086, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20, 16, 20, 18
+        spacing: 2
+
+        # Top bar: profile + three category pills (with highlight)
+        BoxLayout:
+            size_hint_y: None
+            height: 64
+            spacing: 5
+
+            CircleImageButton:
+                source: "C:/Users/alexj/Pictures/blankpfp.png"
+                on_release: root.on_profile()
+
+            Widget:
+
+            # --- Burgers pill ---
+            Button:
+                text: "Burgers"
+                background_normal: ""
+                background_down: ""
+                background_color: 0, 0, 0, 0
+                size_hint: None, None
+                height: 44
+                width: 80
+                padding: 14, 10
+                color: 1, 1, 1, 1
+                on_release: root.on_category("Burgers")
+                canvas.before:
+                    Color:
+                        rgba: (0.30, 0.32, 0.36, 1) if root.selected_category == "burgers" else (0.18, 0.20, 0.23, 1)
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [8, 8, 8, 8]
+
+            # --- Tacos pill ---
+            Button:
+                text: "Tacos"
+                background_normal: ""
+                background_down: ""
+                background_color: 0, 0, 0, 0
+                size_hint: None, None
+                height: 44
+                width: 80
+                padding: 14, 10
+                color: 1, 1, 1, 1
+                on_release: root.on_category("Tacos")
+                canvas.before:
+                    Color:
+                        rgba: (0.30, 0.32, 0.36, 1) if root.selected_category == "tacos" else (0.18, 0.20, 0.23, 1)
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [8, 8, 8, 8]
+
+            # --- Sandwiches pill ---
+            Button:
+                text: "Sandwiches"
+                background_normal: ""
+                background_down: ""
+                background_color: 0, 0, 0, 0
+                size_hint: None, None
+                height: 44
+                width: 120
+                padding: 14, 10
+                color: 1, 1, 1, 1
+                on_release: root.on_category("Sandwiches")
+                canvas.before:
+                    Color:
+                        rgba: (0.30, 0.32, 0.36, 1) if root.selected_category == "sandwiches" else (0.18, 0.20, 0.23, 1)
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [8, 8, 8, 8]
+
+        # Restaurants grid — ids MUST match Python restaurants_meta
+        GridLayout:
+            id: restaurants_grid
+            cols: 2
+            size_hint_y: None
+            height: self.minimum_height
+            row_default_height: 56
+            row_force_default: True
+            spacing: 16
+
+            IconRowButton:
+                id: cf_btn
+                icon_source: "C:/Users/alexj/Pictures/chicfila.png"
+                text: "CHIK-FIL-A"
+                on_release: root.on_restaurant("CHIK-FIL-A")
+
+            IconRowButton:
+                id: mcd_btn
+                icon_source: "C:/Users/alexj/Pictures/mcd.png"
+                text: "MCDONALD'S"
+                on_release: root.on_restaurant("MCDONALD'S")
+
+            IconRowButton:
+                id: sub_btn
+                icon_source: "C:/Users/alexj/Pictures/subway.png"
+                text: "SUBWAY"
+                on_release: root.on_restaurant("SUBWAY")
+
+        Widget:

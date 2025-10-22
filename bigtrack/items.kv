@@ -1,0 +1,96 @@
+#:kivy 2.3.0
+
+<ListRow>:
+    padding: 12
+    spacing: 6
+    size_hint_y: None
+    height: "66dp"
+    orientation: "vertical"
+    canvas.before:
+        Color:
+            rgba: 0.20, 0.21, 0.22, 1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [12,]
+
+    Label:
+        text: root.title
+        bold: True
+        color: 1,1,1,1
+        font_size: "14sp"
+        halign: "left"
+        valign: "middle"
+        text_size: self.size
+
+    Label:
+        text: root.subtitle
+        color: 0.9,0.9,0.9,1
+        font_size: "12sp"
+        halign: "left"
+        valign: "middle"
+        text_size: self.size
+
+<ItemsScreen>:
+    name: "items"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 16
+        spacing: 10
+
+        # Top bar with X and centered dynamic title
+        BoxLayout:
+            size_hint_y: None
+            height: "40dp"
+
+            Button:
+                size_hint_x: None
+                width: "44dp"
+                text: "X"
+                background_normal: ""
+                background_down: ""
+                background_color: 0, 0, 0, 0  # fully transparent background
+                color: 1, 1, 1, 1              # white "X" text
+                on_release: root.go_back()
+
+
+            Label:
+                id: title
+                text: "Chick-fil-A — Category"
+                bold: True
+                font_size: "16sp"
+                halign: "center"
+                valign: "middle"
+                text_size: self.size
+
+            Widget:
+                size_hint_x: None
+                width: "44dp"
+
+        Label:
+            id: message
+            size_hint_y: None
+            height: "18dp"
+            markup: True
+            color: 1,1,1,1
+            font_size: "12sp"
+            text: ""
+
+        TextInput:
+            id: search
+            size_hint_y: None
+            height: "40dp"
+            hint_text: "Search items"
+            multiline: False
+            on_text: root.filter_items(self.text)
+
+        ScrollView:
+            do_scroll_x: False
+            bar_width: 6
+            GridLayout:
+                id: items_container
+                cols: 1
+                spacing: 8
+                padding: 2, 2
+                size_hint_y: None
+                height: self.minimum_height

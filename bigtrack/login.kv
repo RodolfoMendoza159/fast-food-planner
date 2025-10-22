@@ -1,0 +1,85 @@
+
+#:kivy 2.3.0
+#:import TOP_BUN ui_common.TOP_BUN
+#:import BOTTOM_BUN ui_common.BOTTOM_BUN
+#:import GOOGLE_ICON ui_common.GOOGLE_ICON
+#:import APPLE_ICON ui_common.APPLE_ICON
+#:import OutlinedText ui_common.OutlinedText
+#:import IconButton ui_common.IconButton
+
+<LoginScreen>:
+    FloatLayout:
+        OutlinedText:
+            text: "Big Track"
+            font_size: 25
+            color: 1,1,1,1
+            outline_color: 0,0,0,0
+            outline_width: 2
+            size_hint: None, None
+            pos_hint: {"center_x": 0.50, "top": 0.91}
+
+        Image:
+            id: top_bun
+            source: TOP_BUN
+            size_hint: None, None
+            size: 350, 350
+            pos_hint: {"center_x": 0.5, "center_y": 0.62}
+
+        Image:
+            id: bottom_bun
+            source: BOTTOM_BUN
+            size_hint: None, None
+            size: 350, 350
+            pos_hint: {"center_x": 0.5, "center_y": 0.445}
+
+        TextInput:
+            id: username
+            hint_text: "USERNAME"
+            multiline: False
+            size_hint: 0.8, None
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.55}
+
+        TextInput:
+            id: password
+            hint_text: "PASSWORD"
+            password: True
+            multiline: False
+            on_text_validate: root.do_login()
+            size_hint: 0.8, None
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.49}
+
+        Label:
+            id: result
+            text: ""
+            markup: True
+            font_size: "16sp"
+            color: 1, 0, 0, 1
+            size_hint: None, None
+            height: 24
+
+        Label:
+            text: "OR"
+            font_size: "18sp"
+            size_hint: None, None
+            pos_hint: {"center_x": 0.5, "center_y": 0.25}
+
+        IconButton:
+            pos_hint: {"center_x": 0.5, "center_y": 0.15}
+            icon_source: GOOGLE_ICON
+            label_text: "Continue with Google"
+
+        IconButton:
+            pos_hint: {"center_x": 0.5, "center_y": 0.09}
+            icon_source: APPLE_ICON
+            label_text: "Continue with Apple"
+            bg_rgba: 0,0,0,1
+            text_rgba: 1,1,1,1
+            
+        Button:
+            text: "CREATE AN ACCOUNT"
+            size_hint: 0.8, None
+            height: 50
+            pos_hint: {"center_x": 0.5, "center_y": 0.03}
+            on_release: root.go_to_create()
