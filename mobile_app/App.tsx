@@ -62,7 +62,7 @@ const Tab = createBottomTabNavigator();
 
 function AppNavigator() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen name="Dashboard" component={PlaceholderDashboardScreen} />
       <Tab.Screen name="History" component={PlaceholderHistoryScreen} />
       <Tab.Screen name="Favorites" component={PlaceholderFavoritesScreen} />
