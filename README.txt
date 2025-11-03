@@ -64,7 +64,7 @@ python manage.py createsuperuser
 
 # Start the backend server.
 //
-python manage.py runserver
+python manage.py runserver 0.0.0.0:8000
 //
 
 If it's working, you'll see a message that the server is running at http://127.0.0.1:8000/admin/ .
@@ -72,30 +72,86 @@ Keep this terminal window open.
   
 
 ## Step 3: Set Up the Frontend (React)
-The frontend is the user interface that you see and interact with in your browser.
 
-Open a new terminal window. It's important to keep the backend server running in the first one.
+Project Setup Guide for New Developers
+A. Find Your Local IP Address
+You will need your computer's local IP address for both the backend and mobile app.
 
-Navigate to the frontend directory:
+Windows: Open Command Prompt and type ipconfig. Find the "IPv4 Address" (e.g., 192.168.1.10).
 
-# From the project's root folder
-//
-cd frontend
-//
+macOS: Open Terminal and type ifconfig | grep "inet ". Find the address that is not 127.0.0.1.
 
-Install the required Node.js packages. The package.json file tells npm what to install.
+B. Setup Backend (Terminal 1)
+Navigate to Backend:
 
-//
+Bash
+
+cd fastfood_tracker
+Create & Activate Virtual Environment:
+
+Bash
+
+python -m venv venv
+.\venv\Scripts\activate
+Install Dependencies:
+
+Bash
+
+pip install -r requirements.txt
+Configure Local IP:
+
+Open fastfood_tracker/fastfood_tracker/settings.py.
+
+Find the ALLOWED_HOSTS list and add your IP address (as a string):
+
+ALLOWED_HOSTS = ['YOUR_IP_HERE']
+
+Setup Database (Everyone does this once):
+
+This creates your local db.sqlite3 file and fills it with the restaurant data.
+
+```bash
+python manage.py migrate
+python manage.py load_menu_data
+```
+Run Server:
+
+This command is required. It makes your server visible on your network.
+
+```bash
+python manage.py runserver 0.0.0.0:8000
+```
+
+*Keep this terminal running.*
+C. Setup Mobile App (Terminal 2)
+Navigate to Mobile App:
+
+Bash
+
+cd mobile_app
+Install Dependencies:
+
+This will install all packages from package.json.
+
+```bash
 npm install
-//
+```
+Configure Local IP:
 
-Start the frontend development server.
+Copy the example file:
 
-//
-npm run dev
-//
+cp src/constants.example.ts src/constants.ts
 
-Now you see the local host link, probably something like this: 
-http://localhost:5173
+Open the new src/constants.ts and set the API_BASE_URL to your IP:
 
-Now to login, just use the superuser account previously created, or register a new one.
+export const API_BASE_URL = 'http://YOUR_IP_HERE:8000/api';
+
+Run App:
+
+Install the "Expo Go" app on your phone.
+
+```bash
+npx expo start
+```
+
+  * Scan the QR code with the Expo Go app. You're all set\!

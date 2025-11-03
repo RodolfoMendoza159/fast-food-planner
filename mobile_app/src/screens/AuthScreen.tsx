@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuth } from '../context/AuthContext';
-import { API_BASE_URL } from '../constants';
+import { API_BASE_URL } from '../constants.example';
 import { styles } from '../styles'; // We will create this file next
 
 export default function AuthNavigator() {

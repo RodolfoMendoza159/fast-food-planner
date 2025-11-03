@@ -11,7 +11,7 @@ import {
   Alert, // We'll use this for confirmation
 } from 'react-native';
 import { useAuth } from '../context/AuthContext';
-import { API_BASE_URL } from '../constants';
+import { API_BASE_URL } from '../constants.example';
 import { styles } from '../styles';
 import { MenuItem } from '../context/MealContext'; // Reuse our existing interface
 import { useIsFocused } from '@react-navigation/native'; // Import this hook

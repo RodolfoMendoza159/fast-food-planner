@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import { useMeal, MealItem } from '../context/MealContext';
-import { API_BASE_URL } from '../constants';
+import { API_BASE_URL } from '../constants.example';
 import { styles } from '../styles';
 
 const formatNumber = (num: number, digits: number = 0) => num.toFixed(digits);

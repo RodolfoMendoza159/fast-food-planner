@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useAuth } from '../context/AuthContext';
-import { API_BASE_URL } from '../constants';
+import { API_BASE_URL } from '../constants.example';
 import { styles } from '../styles';
 
 // Interfaces are identical to your old MealHistory.tsx

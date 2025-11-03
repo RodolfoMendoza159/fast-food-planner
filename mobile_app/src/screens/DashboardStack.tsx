@@ -17,7 +17,7 @@ import {
   MenuItem,
   MealItem
 } from '../context/MealContext';
-import { API_BASE_URL } from '../constants';
+import { API_BASE_URL } from '../constants.example';
 import { styles } from '../styles';
 import MealReviewScreen from './MealReviewScreen'; 
 import LogSuccessScreen from './LogSuccessScreen'; 

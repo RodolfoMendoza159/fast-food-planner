@@ -5,7 +5,7 @@ import { View, Text, SafeAreaView, Pressable, Alert } from 'react-native';
 import { styles } from '../styles';
 import { useAuth } from '../context/AuthContext';
 import { useMeal } from '../context/MealContext'; // <-- Import useMeal
-import { API_BASE_URL } from '../constants';
+import { API_BASE_URL } from '../constants.example';
 
 // Remove 'route' from the props, we don't need it
 export default function LogSuccessScreen({ navigation }: any) {
