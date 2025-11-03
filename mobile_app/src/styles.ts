@@ -157,6 +157,51 @@ export const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
+  backButton: {
+    fontSize: 18,
+    color: '#007bff',
+    marginBottom: 10,
+    fontWeight: '500',
+  },
+  // --- MenuItemListScreen ---
+  menuItemCard: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    marginBottom: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
+    overflow: 'hidden', // Ensures rounded corners apply to children
+  },
+  menuItemHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 16,
+  },
+  menuItemName: {
+    fontSize: 16,
+    fontWeight: '500',
+    flex: 1, // Allows text to wrap
+    paddingRight: 10,
+  },
+  menuItemCals: {
+    fontSize: 16,
+    color: '#333',
+  },
+  menuItemDetails: {
+    padding: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#f0f0f0',
+  },
+  addButton: {
+    backgroundColor: '#28a745', // Green "Add" button
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginTop: 10,
+  },
 });
 
 //new  

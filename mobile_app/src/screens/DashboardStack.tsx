@@ -1,6 +1,6 @@
 // In mobile_app/src/screens/DashboardStack.tsx
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   View,
   Text,
@@ -15,16 +15,17 @@ import {
   MealProvider,
   useMeal,
   Restaurant,
+  MenuItem,
 } from '../context/MealContext';
 import { API_BASE_URL } from '../constants';
 import { styles } from '../styles';
 
 // --- (1) Define the Screens in our Stack ---
-// We'll add more to this later
 type DashboardStackParamList = {
   RestaurantList: undefined;
-  // CategoryList: { restaurant: Restaurant };
-  // MenuItemList: { restaurantId: number; category: string };
+  CategoryList: { restaurant: Restaurant };
+  // This screen will receive the category name and the list of items
+  MenuItemList: { category: string; items: MenuItem[] };
   // MealReview: undefined;
   // LogSuccess: undefined;
 };
@@ -32,33 +33,55 @@ type DashboardStackParamList = {
 const Stack = createNativeStackNavigator<DashboardStackParamList>();
 
 // --- (2) The Stack Navigator ---
-// This component is the new "main" export for the Dashboard tab.
-// It wraps all screens in the MealProvider.
 export default function DashboardStack() {
   return (
     <MealProvider>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
         <Stack.Screen
           name="RestaurantList"
           component={RestaurantListScreen}
         />
-        {/* We'll add the other screens here later */}
+        <Stack.Screen name="CategoryList" component={CategoryListScreen} />
+        {/* ADD THE NEW SCREEN */}
+        <Stack.Screen name="MenuItemList" component={MenuItemListScreen} />
       </Stack.Navigator>
     </MealProvider>
   );
 }
 
-// --- (3) Restaurant List Screen ---
-// This is the first screen the user sees on this tab.
+// --- (3) Shared Floating Meal Button ---
+// We can move this outside the screens so it's reusable
+const MealTrackerButton = ({ navigation }: { navigation: any }) => {
+  const { mealTotals } = useMeal();
+  if (mealTotals.count === 0) return null; // Don't show if meal is empty
+
+  return (
+    <Pressable
+      style={styles.floatingButton}
+      // onPress={() => navigation.navigate('MealReview')} // We'll enable this last
+    >
+      <Text style={styles.buttonText}>
+        View Meal ({mealTotals.count}) - {mealTotals.calories.toFixed(0)} Cal
+      </Text>
+    </Pressable>
+  );
+};
+
+// --- (4) Restaurant List Screen (UPDATED) ---
 function RestaurantListScreen({ navigation }: any) {
   const { authToken } = useAuth();
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  // ... (loading and error states are the same)
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // This logic is from your old Dashboard.tsx
   useEffect(() => {
     const fetchRestaurants = async () => {
+      // ... (fetch logic is the same)
       if (!authToken) return;
       try {
         const res = await fetch(`${API_BASE_URL}/restaurants/`, {
@@ -75,23 +98,6 @@ function RestaurantListScreen({ navigation }: any) {
     };
     fetchRestaurants();
   }, [authToken]);
-
-  // This is the floating button that shows the current meal
-  const MealTrackerButton = () => {
-    const { mealTotals } = useMeal();
-    if (mealTotals.count === 0) return null;
-
-    return (
-      <Pressable
-        style={styles.floatingButton}
-        // onPress={() => navigation.navigate('MealReview')} // We'll enable this later
-      >
-        <Text style={styles.buttonText}>
-          View Meal ({mealTotals.count}) - {mealTotals.calories.toFixed(0)} Cal
-        </Text>
-      </Pressable>
-    );
-  };
 
   if (loading) {
     return (
@@ -112,14 +118,128 @@ function RestaurantListScreen({ navigation }: any) {
           renderItem={({ item }) => (
             <Pressable
               style={styles.listItem}
-              // onPress={() => navigation.navigate('CategoryList', { restaurant: item })} // We'll enable this later
+              onPress={() =>
+                navigation.navigate('CategoryList', { restaurant: item })
+              }
             >
               <Text style={styles.listItemText}>{item.name}</Text>
             </Pressable>
           )}
         />
       </View>
-      <MealTrackerButton />
+      {/* Show the floating button */}
+      <MealTrackerButton navigation={navigation} />
+    </SafeAreaView>
+  );
+}
+
+// --- (5) Category List Screen (UPDATED) ---
+function CategoryListScreen({ navigation, route }: any) {
+  const { restaurant } = route.params as { restaurant: Restaurant };
+
+  const groupedMenu = useMemo(() => {
+    // ... (grouping logic is the same)
+    return restaurant.menu_items.reduce((acc, item) => {
+      const category = item.category || 'Other';
+      if (!acc[category]) {
+        acc[category] = [];
+      }
+      acc[category].push(item);
+      return acc;
+    }, {} as { [key: string]: MenuItem[] });
+  }, [restaurant.menu_items]);
+
+  const categories = Object.keys(groupedMenu);
+
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <Pressable onPress={() => navigation.goBack()}>
+          <Text style={styles.backButton}>&larr; Back to Restaurants</Text>
+        </Pressable>
+        <Text style={styles.title}>Categories for {restaurant.name}</Text>
+        <FlatList
+          data={categories}
+          keyExtractor={(item) => item}
+          renderItem={({ item: category }) => (
+            <Pressable
+              style={styles.listItem}
+              // ENABLE THIS ONPRESS
+              onPress={() =>
+                navigation.navigate('MenuItemList', {
+                  category: category,
+                  items: groupedMenu[category], // Pass the items for this category
+                })
+              }
+            >
+              <Text style={styles.listItemText}>{category}</Text>
+            </Pressable>
+          )}
+        />
+      </View>
+      {/* Show the floating button */}
+      <MealTrackerButton navigation={navigation} />
+    </SafeAreaView>
+  );
+}
+
+// --- (6) NEW: Menu Item List Screen ---
+function MenuItemListScreen({ navigation, route }: any) {
+  const { category, items } = route.params as {
+    category: string;
+    items: MenuItem[];
+  };
+  const { addToMeal } = useMeal();
+  const [activeItem, setActiveItem] = useState<MenuItem | null>(null);
+
+  // This is the render function for each item in the list
+  const renderMenuItem = ({ item }: { item: MenuItem }) => {
+    const isActive = activeItem?.id === item.id;
+    return (
+      <View style={styles.menuItemCard}>
+        <Pressable
+          style={styles.menuItemHeader}
+          onPress={() => setActiveItem(isActive ? null : item)}
+        >
+          <Text style={styles.menuItemName}>{item.name}</Text>
+          <Text style={styles.menuItemCals}>{item.calories.toFixed(0)} cal</Text>
+        </Pressable>
+        {/* This is the expandable detail section */}
+        {isActive && (
+          <View style={styles.menuItemDetails}>
+            <Text>
+              Protein: {item.protein}g, Fat: {item.fat}g, Carbs: {item.carbohydrates}g
+            </Text>
+            <Pressable
+              style={styles.addButton}
+              onPress={() => addToMeal(item)}
+            >
+              <Text style={styles.buttonText}>Add to Meal</Text>
+            </Pressable>
+          </View>
+        )}
+      </View>
+    );
+  };
+
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <Pressable onPress={() => navigation.goBack()}>
+          <Text style={styles.backButton}>&larr; Back to Categories</Text>
+        </Pressable>
+        <Text style={styles.title}>{category}</Text>
+        <FlatList
+          data={items}
+          renderItem={renderMenuItem}
+          keyExtractor={(item) => item.id.toString()}
+          // Add some space at the bottom so the list can scroll
+          // above the floating button
+          contentContainerStyle={{ paddingBottom: 100 }}
+        />
+      </View>
+      {/* Show the floating button */}
+      <MealTrackerButton navigation={navigation} />
     </SafeAreaView>
   );
 }
