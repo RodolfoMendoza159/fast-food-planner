@@ -16,6 +16,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AuthContext } from './src/context/AuthContext';
 import AuthNavigator from './src/screens/AuthScreen'; // We will create this
 import ProfileScreen from './src/screens/ProfileScreen'; // We will create this
+import MealHistoryScreen from './src/screens/MealHistoryScreen'; // <-- ADDED HISTORY SCREEN
+import DashboardStack from './src/screens/DashboardStack'; // ADDED DASHBOARD STACK
+
+
 
 // --- (1) Main App Entry Point ---
 export default function App() {
@@ -62,24 +66,23 @@ const Tab = createBottomTabNavigator();
 
 function AppNavigator() {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
-      <Tab.Screen name="Dashboard" component={PlaceholderDashboardScreen} />
-      <Tab.Screen name="History" component={PlaceholderHistoryScreen} />
+  <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen name="Dashboard" component={DashboardStack} />
+      <Tab.Screen name="History" component={MealHistoryScreen} />
       <Tab.Screen name="Favorites" component={PlaceholderFavoritesScreen} />
-      {/* This now points to our real ProfileScreen */}
       <Tab.Screen name="Profile" component={ProfileScreen} />
-    </Tab.Navigator>
+  </Tab.Navigator>
   );
 }
 
 // --- (3) Placeholders ---
 // We'll move these out soon
-function PlaceholderDashboardScreen() {
-  return <SafeAreaView><View><Text>Dashboard Screen</Text></View></SafeAreaView>;
-}
-function PlaceholderHistoryScreen() {
-  return <SafeAreaView><View><Text>History Screen</Text></View></SafeAreaView>;
-}
+//function PlaceholderDashboardScreen() {
+//  return <SafeAreaView><View><Text>Dashboard Screen</Text></View></SafeAreaView>;
+//}
+//function PlaceholderHistoryScreen() {
+//  return <SafeAreaView><View><Text>History Screen</Text></View></SafeAreaView>;
+//}
 function PlaceholderFavoritesScreen() {
   return <SafeAreaView><View><Text>Favorites Screen</Text></View></SafeAreaView>;
 }

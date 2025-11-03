@@ -82,4 +82,81 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
   },
+  // --- MealHistoryScreen ---
+  historyCard: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2, // for Android
+  },
+  historyDate: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+    paddingBottom: 8,
+    marginBottom: 8,
+  },
+  historyCardBody: {
+    flexDirection: 'row', // This is the key: macros on left, items on right
+    justifyContent: 'space-between',
+  },
+  historyMacros: {
+    flex: 1, // Takes up 1/2 of the space
+  },
+  historyItems: {
+    flex: 1, // Takes up 1/2 of the space
+    paddingLeft: 10,
+  },
+  macroText: {
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  itemsTitle: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
+  itemText: {
+    fontSize: 14,
+    color: '#333',
+  },
+  // --- Dashboard Stack (RestaurantList) ---
+  listItem: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 8,
+    marginBottom: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  listItemText: {
+    fontSize: 18,
+    fontWeight: '500',
+  },
+  floatingButton: {
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    right: 20,
+    backgroundColor: '#007bff',
+    padding: 18,
+    borderRadius: 10,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+  },
 });
+
+//new  
