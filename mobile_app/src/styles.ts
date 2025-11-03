@@ -202,40 +202,58 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
   },
-  // --- MealReviewScreen ---
-  reviewHeader: {
-    flexDirection: 'row',
-    paddingBottom: 8,
-    borderBottomWidth: 2,
-    borderBottomColor: '#333',
-    marginBottom: 8,
+
+ // --- MealReviewScreen --- NEW
+  reviewCard: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    marginBottom: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
   },
-  reviewHeaderText: {
-    flex: 1,
-    fontWeight: 'bold',
-    fontSize: 14,
-  },
-  reviewRow: {
-    flexDirection: 'row',
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-  },
-  reviewCell: {
-    flex: 1,
-    fontSize: 14,
-  },
-  reviewTotalRow: {
+  reviewCardHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 10,
-    borderTopWidth: 2,
-    borderTopColor: '#333',
-    marginTop: 8,
+    padding: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
   },
-  reviewTotalText: {
+  reviewItemName: {
     fontSize: 16,
     fontWeight: 'bold',
+    flex: 1,
+    paddingRight: 10,
+  },
+  reviewItemCals: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  macroGridContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap', // This makes it a grid
+    padding: 12,
+  },
+  macroGridItem: {
+    width: '33.33%', // 3 items per row
+    paddingVertical: 8,
+    alignItems: 'center',
+  },
+  macroGridLabel: {
+    fontSize: 12,
+    color: '#666',
+  },
+  macroGridValue: {
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  reviewTotalsContainer: {
+    marginTop: 20,
+    padding: 16,
+    backgroundColor: '#fff',
+    borderRadius: 8,
   },
   summaryContainer: {
     padding: 16,
