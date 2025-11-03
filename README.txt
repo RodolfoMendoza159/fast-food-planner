@@ -9,7 +9,7 @@ or any other method of choice for Github setup.
 (I recommend installing the Github extension on Visual Studio Code)
 
 CURENT ACTIVE BRANCH:
-Version 3.2
+Version 4.0
 
 # Go to the project
 //
@@ -81,23 +81,7 @@ Windows: Open Command Prompt and type ipconfig. Find the "IPv4 Address" (e.g., 1
 
 macOS: Open Terminal and type ifconfig | grep "inet ". Find the address that is not 127.0.0.1.
 
-B. Setup Backend (Terminal 1)
-Navigate to Backend:
 
-Bash
-
-cd fastfood_tracker
-Create & Activate Virtual Environment:
-
-Bash
-
-python -m venv venv
-.\venv\Scripts\activate
-Install Dependencies:
-
-Bash
-
-pip install -r requirements.txt
 Configure Local IP:
 
 Open fastfood_tracker/fastfood_tracker/settings.py.
@@ -108,22 +92,8 @@ ALLOWED_HOSTS = ['YOUR_IP_HERE']
 
 Setup Database (Everyone does this once):
 
-This creates your local db.sqlite3 file and fills it with the restaurant data.
 
-```bash
-python manage.py migrate
-python manage.py load_menu_data
-```
-Run Server:
-
-This command is required. It makes your server visible on your network.
-
-```bash
-python manage.py runserver 0.0.0.0:8000
-```
-
-*Keep this terminal running.*
-C. Setup Mobile App (Terminal 2)
+B. Setup Mobile App (Terminal 2)
 Navigate to Mobile App:
 
 Bash
@@ -138,11 +108,7 @@ npm install
 ```
 Configure Local IP:
 
-Copy the example file:
-
-cp src/constants.example.ts src/constants.ts
-
-Open the new src/constants.ts and set the API_BASE_URL to your IP:
+inside "mobile_app/src/contanst/example.ts" enter the IP adress
 
 export const API_BASE_URL = 'http://YOUR_IP_HERE:8000/api';
 
