@@ -12,7 +12,6 @@ import {
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAuth } from '../context/AuthContext';
 import {
-  MealProvider,
   useMeal,
   Restaurant,
   MenuItem,
@@ -38,7 +37,6 @@ const Stack = createNativeStackNavigator<DashboardStackParamList>();
 // --- (2) The Stack Navigator ---
 export default function DashboardStack() {
   return (
-    <MealProvider>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
@@ -53,7 +51,6 @@ export default function DashboardStack() {
         <Stack.Screen name="MealReview" component={MealReviewScreen} />
         <Stack.Screen name="LogSuccess" component={LogSuccessScreen} />
       </Stack.Navigator>
-    </MealProvider>
   );
 }
 

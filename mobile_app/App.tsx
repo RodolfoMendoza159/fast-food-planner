@@ -14,6 +14,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 // Our new imports
 import { AuthContext } from './src/context/AuthContext';
+import { MealProvider } from './src/context/MealContext';
 import AuthNavigator from './src/screens/AuthScreen'; // We will create this
 import ProfileScreen from './src/screens/ProfileScreen'; // We will create this
 import MealHistoryScreen from './src/screens/MealHistoryScreen'; // <-- ADDED HISTORY SCREEN
@@ -67,12 +68,14 @@ const Tab = createBottomTabNavigator();
 
 function AppNavigator() {
   return (
-  <Tab.Navigator screenOptions={{ headerShown: false }}>
-      <Tab.Screen name="Dashboard" component={DashboardStack} />
-      <Tab.Screen name="History" component={MealHistoryScreen} />
-      <Tab.Screen name="Favorites" component={FavoritesScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
-  </Tab.Navigator>
+    <MealProvider>
+      <Tab.Navigator screenOptions={{ headerShown: false }}>
+          <Tab.Screen name="Dashboard" component={DashboardStack} />
+          <Tab.Screen name="History" component={MealHistoryScreen} />
+          <Tab.Screen name="Favorites" component={FavoritesScreen} />
+          <Tab.Screen name="Profile" component={ProfileScreen} />
+      </Tab.Navigator>
+    </MealProvider>
   );
 }
 
