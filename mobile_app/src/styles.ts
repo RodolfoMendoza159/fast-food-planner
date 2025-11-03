@@ -202,6 +202,102 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
   },
+  // --- MealReviewScreen ---
+  reviewHeader: {
+    flexDirection: 'row',
+    paddingBottom: 8,
+    borderBottomWidth: 2,
+    borderBottomColor: '#333',
+    marginBottom: 8,
+  },
+  reviewHeaderText: {
+    flex: 1,
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
+  reviewRow: {
+    flexDirection: 'row',
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  reviewCell: {
+    flex: 1,
+    fontSize: 14,
+  },
+  reviewTotalRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    borderTopWidth: 2,
+    borderTopColor: '#333',
+    marginTop: 8,
+  },
+  reviewTotalText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  summaryContainer: {
+    padding: 16,
+    backgroundColor: '#f8f9fa',
+    borderRadius: 8,
+    marginVertical: 16,
+  },
+  summaryTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  summaryText: {
+    fontSize: 16,
+    lineHeight: 22,
+    textAlign: 'center',
+  },
+  summaryFinal: {
+    fontSize: 16,
+    lineHeight: 22,
+    marginTop: 8,
+    textAlign: 'center',
+    color: '#28a745',
+  },
+  logButton: {
+    width: '100%',
+    padding: 15,
+    backgroundColor: '#007bff',
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+
+  // --- LogSuccessScreen ---
+  successContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  successTitle: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#28a745',
+    marginBottom: 16,
+  },
+  successButtonContainer: {
+    width: '100%',
+    marginTop: 30,
+  },
+  secondaryButton: {
+    backgroundColor: '#f0f0f0',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    marginTop: 10,
+  },
+  secondaryButtonText: {
+    color: '#333',
+  },
+  saveButton: {
+    backgroundColor: '#17a2b8', // Blue-green
+    marginTop: 10,
+  },
 });
 
 //new  

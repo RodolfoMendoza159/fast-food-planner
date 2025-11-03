@@ -19,6 +19,8 @@ import {
 } from '../context/MealContext';
 import { API_BASE_URL } from '../constants';
 import { styles } from '../styles';
+import MealReviewScreen from './MealReviewScreen'; 
+import LogSuccessScreen from './LogSuccessScreen'; 
 
 // --- (1) Define the Screens in our Stack ---
 type DashboardStackParamList = {
@@ -26,8 +28,8 @@ type DashboardStackParamList = {
   CategoryList: { restaurant: Restaurant };
   // This screen will receive the category name and the list of items
   MenuItemList: { category: string; items: MenuItem[] };
-  // MealReview: undefined;
-  // LogSuccess: undefined;
+  MealReview: undefined; 
+  LogSuccess: undefined; 
 };
 
 const Stack = createNativeStackNavigator<DashboardStackParamList>();
@@ -46,8 +48,9 @@ export default function DashboardStack() {
           component={RestaurantListScreen}
         />
         <Stack.Screen name="CategoryList" component={CategoryListScreen} />
-        {/* ADD THE NEW SCREEN */}
         <Stack.Screen name="MenuItemList" component={MenuItemListScreen} />
+        <Stack.Screen name="MealReview" component={MealReviewScreen} />
+        <Stack.Screen name="LogSuccess" component={LogSuccessScreen} />
       </Stack.Navigator>
     </MealProvider>
   );
@@ -62,7 +65,7 @@ const MealTrackerButton = ({ navigation }: { navigation: any }) => {
   return (
     <Pressable
       style={styles.floatingButton}
-      // onPress={() => navigation.navigate('MealReview')} // We'll enable this last
+      onPress={() => navigation.navigate('MealReview')} // ENABLED
     >
       <Text style={styles.buttonText}>
         View Meal ({mealTotals.count}) - {mealTotals.calories.toFixed(0)} Cal
