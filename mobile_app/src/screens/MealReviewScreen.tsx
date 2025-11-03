@@ -19,7 +19,7 @@ const formatNumber = (num: number, digits: number = 0) => num.toFixed(digits);
 
 export default function MealReviewScreen({ navigation }: any) {
   const { authToken } = useAuth();
-  const { currentMeal, clearMeal } = useMeal();
+  const { currentMeal, clearMeal, setLastLoggedMeal } = useMeal();
 
   const [calorieGoal, setCalorieGoal] = useState(2000);
   const [dailyCalories, setDailyCalories] = useState(0);
@@ -108,8 +108,15 @@ export default function MealReviewScreen({ navigation }: any) {
       });
       if (!response.ok) throw new Error('Failed to log meal.');
       
+      // --- THIS IS THE FIX ---
+      // 1. Save the meal to the context
+      setLastLoggedMeal(currentMeal);
+      // 2. Clear the *current* meal
       clearMeal();
+      // 3. Navigate *without* params
       navigation.navigate('LogSuccess');
+      // --- END FIX ---
+
     } catch (error: any) {
       setError(error.message);
     }

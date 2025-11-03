@@ -1,24 +1,71 @@
 // In mobile_app/src/screens/LogSuccessScreen.tsx
 
 import React from 'react';
-import { View, Text, SafeAreaView, Pressable } from 'react-native';
+import { View, Text, SafeAreaView, Pressable, Alert } from 'react-native';
 import { styles } from '../styles';
+import { useAuth } from '../context/AuthContext';
+import { useMeal } from '../context/MealContext'; // <-- Import useMeal
+import { API_BASE_URL } from '../constants';
 
+// Remove 'route' from the props, we don't need it
 export default function LogSuccessScreen({ navigation }: any) {
+  const { authToken } = useAuth();
+  // --- GET THE MEAL FROM CONTEXT ---
+  const { lastLoggedMeal } = useMeal();
+
   const handleHistory = () => {
-    // This goes back to the Restaurant List, then jumps to the History tab.
     navigation.popToTop();
     navigation.getParent()?.jumpTo('History');
   };
 
   const handleNewMeal = () => {
-    // This sends the user all the way back to the start of the stack
     navigation.popToTop();
   };
-  
-  const handleFavorites = () => {
-    // TODO: We will add the "Save as Favorite" logic from Dashboard.tsx here
-    alert('Save as Favorite - Coming Soon!');
+
+  const handleSaveFavorite = () => {
+    // --- THIS WILL NOW WORK ---
+    if (!lastLoggedMeal || lastLoggedMeal.length === 0 || !authToken) {
+      Alert.alert('Error', 'Could not find the last logged meal to save.');
+      return;
+    }
+
+    Alert.prompt(
+      'Save Favorite',
+      'Please enter a name for this favorite meal:',
+      async (mealName) => {
+        if (!mealName) return;
+
+        const itemIds = lastLoggedMeal.flatMap((mealItem) =>
+          Array(mealItem.quantity).fill(mealItem.item.id)
+        );
+
+        try {
+          const response = await fetch(`${API_BASE_URL}/favorites/`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Token ${authToken}`,
+            },
+            body: JSON.stringify({ name: mealName, item_ids: itemIds }),
+          });
+
+          if (!response.ok) throw new Error('Failed to save favorite.');
+          
+          Alert.alert(
+            'Success!',
+            `Meal "${mealName}" saved. Going to favorites...`,
+            [
+              { text: 'OK', onPress: () => {
+                navigation.popToTop();
+                navigation.getParent()?.jumpTo('Favorites');
+              }}
+            ]
+          );
+        } catch (err) {
+          Alert.alert('Error', 'Failed to save favorite meal.');
+        }
+      }
+    );
   };
 
   return (
@@ -43,7 +90,7 @@ export default function LogSuccessScreen({ navigation }: any) {
           </Pressable>
           <Pressable
             style={[styles.button, styles.saveButton]}
-            onPress={handleFavorites}
+            onPress={handleSaveFavorite}
           >
             <Text style={styles.buttonText}>Save as Favorite</Text>
           </Pressable>

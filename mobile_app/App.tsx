@@ -18,6 +18,7 @@ import AuthNavigator from './src/screens/AuthScreen'; // We will create this
 import ProfileScreen from './src/screens/ProfileScreen'; // We will create this
 import MealHistoryScreen from './src/screens/MealHistoryScreen'; // <-- ADDED HISTORY SCREEN
 import DashboardStack from './src/screens/DashboardStack'; // ADDED DASHBOARD STACK
+import FavoritesScreen from './src/screens/FavoritesScreen';
 
 
 
@@ -69,7 +70,7 @@ function AppNavigator() {
   <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen name="Dashboard" component={DashboardStack} />
       <Tab.Screen name="History" component={MealHistoryScreen} />
-      <Tab.Screen name="Favorites" component={PlaceholderFavoritesScreen} />
+      <Tab.Screen name="Favorites" component={FavoritesScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
   </Tab.Navigator>
   );
@@ -83,9 +84,9 @@ function AppNavigator() {
 //function PlaceholderHistoryScreen() {
 //  return <SafeAreaView><View><Text>History Screen</Text></View></SafeAreaView>;
 //}
-function PlaceholderFavoritesScreen() {
-  return <SafeAreaView><View><Text>Favorites Screen</Text></View></SafeAreaView>;
-}
+//function PlaceholderFavoritesScreen() {
+//  return <SafeAreaView><View><Text>Favorites Screen</Text></View></SafeAreaView>;
+//}
 
 // --- (4) Styles ---
 const styles = StyleSheet.create({

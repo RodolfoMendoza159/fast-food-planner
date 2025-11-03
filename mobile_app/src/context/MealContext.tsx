@@ -3,7 +3,7 @@
 import React, { createContext, useState, useContext, useMemo } from 'react';
 
 // --- (1) Interfaces ---
-// These are from your original Dashboard.tsx
+// (These are all the same)
 export interface MenuItem {
   id: number;
   name: string;
@@ -37,18 +37,24 @@ interface MealContextType {
   removeFromMeal: (itemToRemove: MenuItem) => void;
   clearMeal: () => void;
   mealTotals: { calories: number; count: number };
+  
+  // --- ADD THESE TWO LINES ---
+  lastLoggedMeal: MealItem[] | null;
+  setLastLoggedMeal: (meal: MealItem[] | null) => void;
 }
 
 const MealContext = createContext<MealContextType | null>(null);
 
 // --- (3) Context Provider ---
-// This component will wrap our entire Dashboard stack
 export const MealProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [currentMeal, setCurrentMeal] = useState<MealItem[]>([]);
+  
+  // --- ADD THIS STATE ---
+  const [lastLoggedMeal, setLastLoggedMeal] = useState<MealItem[] | null>(null);
 
-  // These functions are translated directly from your Dashboard.tsx
+  // ... (addToMeal and removeFromMeal are the same)
   const addToMeal = (itemToAdd: MenuItem) => {
     setCurrentMeal((prevMeal) => {
       const existingItem = prevMeal.find(
@@ -89,7 +95,7 @@ export const MealProvider: React.FC<{ children: React.ReactNode }> = ({
     setCurrentMeal([]);
   };
 
-  // This logic is also from your Dashboard.tsx
+  // ... (mealTotals is the same)
   const mealTotals = useMemo(() => {
     return currentMeal.reduce(
       (totals, mealItem) => {
@@ -109,6 +115,9 @@ export const MealProvider: React.FC<{ children: React.ReactNode }> = ({
         removeFromMeal,
         clearMeal,
         mealTotals,
+        // --- ADD THESE TWO LINES ---
+        lastLoggedMeal,
+        setLastLoggedMeal,
       }}
     >
       {children}
@@ -117,7 +126,7 @@ export const MealProvider: React.FC<{ children: React.ReactNode }> = ({
 };
 
 // --- (4) Custom Hook ---
-// This lets any screen easily access the meal
+// (This is the same)
 export const useMeal = () => {
   const context = useContext(MealContext);
   if (!context) {

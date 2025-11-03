@@ -16,6 +16,7 @@ import {
   useMeal,
   Restaurant,
   MenuItem,
+  MealItem
 } from '../context/MealContext';
 import { API_BASE_URL } from '../constants';
 import { styles } from '../styles';
@@ -29,7 +30,7 @@ type DashboardStackParamList = {
   // This screen will receive the category name and the list of items
   MenuItemList: { category: string; items: MenuItem[] };
   MealReview: undefined; 
-  LogSuccess: undefined; 
+  LogSuccess: undefined;
 };
 
 const Stack = createNativeStackNavigator<DashboardStackParamList>();

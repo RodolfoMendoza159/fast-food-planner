@@ -316,6 +316,48 @@ export const styles = StyleSheet.create({
     backgroundColor: '#17a2b8', // Blue-green
     marginTop: 10,
   },
+  // --- FavoritesScreen ---
+  favoriteCard: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    marginBottom: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  favoriteCardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  favoriteCardTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  favoriteCardActions: {
+    flexDirection: 'row',
+  },
+  logFavButton: {
+    backgroundColor: '#007bff',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 5,
+    marginRight: 8,
+  },
+  deleteFavButton: {
+    backgroundColor: '#dc3545',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 5,
+  },
+  favoriteCardBody: {
+    padding: 12,
+  },
 });
 
 //new  
