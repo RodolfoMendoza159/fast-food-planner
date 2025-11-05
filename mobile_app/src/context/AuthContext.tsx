@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext } from 'react';
 
-// This is the exact same code from App.tsx
+// This is the exact same code from old App.tsx
 interface AuthContextType {
   authToken: string | null;
   setAuthToken: (token: string | null) => void;

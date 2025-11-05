@@ -9,7 +9,7 @@ or any other method of choice for Github setup.
 (I recommend installing the Github extension on Visual Studio Code)
 
 CURENT ACTIVE BRANCH:
-Version 4.0
+Version 4.0 - Mobile
 
 # Go to the project
 //

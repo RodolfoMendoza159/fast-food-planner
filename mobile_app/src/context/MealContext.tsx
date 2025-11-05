@@ -8,7 +8,7 @@ export interface MenuItem {
   id: number;
   name: string;
   category: string;
-  serving_size: string;
+  serving_size: string; // R:[FIX] Should Update to fit data (e.g. of data '450g')
   calories: number;
   fat: number;
   sat_fat: number;
@@ -38,7 +38,7 @@ interface MealContextType {
   clearMeal: () => void;
   mealTotals: { calories: number; count: number };
   
-  // --- ADD THESE TWO LINES ---
+  // --- ADDed THESE TWO  ---
   lastLoggedMeal: MealItem[] | null;
   setLastLoggedMeal: (meal: MealItem[] | null) => void;
 }
@@ -51,7 +51,7 @@ export const MealProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [currentMeal, setCurrentMeal] = useState<MealItem[]>([]);
   
-  // --- ADD THIS STATE ---
+  // --- ADDED THIS STATE ---
   const [lastLoggedMeal, setLastLoggedMeal] = useState<MealItem[] | null>(null);
 
   // ... (addToMeal and removeFromMeal are the same)
@@ -115,7 +115,7 @@ export const MealProvider: React.FC<{ children: React.ReactNode }> = ({
         removeFromMeal,
         clearMeal,
         mealTotals,
-        // --- ADD THESE TWO LINES ---
+        // --- ADDED THESE TWO LINES ---
         lastLoggedMeal,
         setLastLoggedMeal,
       }}
