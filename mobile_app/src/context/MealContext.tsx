@@ -1,135 +1,91 @@
 // In mobile_app/src/context/MealContext.tsx
 
-import React, { createContext, useState, useContext, useMemo } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { Alert } from 'react-native';
+import { API_BASE_URL } from '../constants.example';
 
-// --- (1) Interfaces ---
-// (These are all the same)
-export interface MenuItem {
+type MenuItem = {
   id: number;
   name: string;
   category: string;
-  serving_size: string; // R:[FIX] Should Update to fit data (e.g. of data '450g')
   calories: number;
-  fat: number;
-  sat_fat: number;
-  trans_fat: number;
-  cholesterol: number;
-  sodium: number;
-  carbohydrates: number;
-  fiber: number;
-  sugar: number;
   protein: number;
-}
-export interface Restaurant {
-  id: number;
-  name: string;
-  menu_items: MenuItem[];
-}
-export interface MealItem {
-  item: MenuItem;
-  quantity: number;
-}
+  carbohydrates: number;
+  fat: number;
+};
 
-// --- (2) Context Definition ---
 interface MealContextType {
-  currentMeal: MealItem[];
-  addToMeal: (itemToAdd: MenuItem) => void;
-  removeFromMeal: (itemToRemove: MenuItem) => void;
+  currentMeal: MenuItem[];
+  addItemToMeal: (item: MenuItem) => void;
   clearMeal: () => void;
-  mealTotals: { calories: number; count: number };
-  
-  // --- ADDed THESE TWO  ---
-  lastLoggedMeal: MealItem[] | null;
-  setLastLoggedMeal: (meal: MealItem[] | null) => void;
+  logCurrentMeal: (authToken: string | null) => Promise<boolean>;
 }
 
-const MealContext = createContext<MealContextType | null>(null);
+const MealContext = createContext<MealContextType | undefined>(undefined);
 
-// --- (3) Context Provider ---
-export const MealProvider: React.FC<{ children: React.ReactNode }> = ({
+export const MealProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [currentMeal, setCurrentMeal] = useState<MealItem[]>([]);
-  
-  // --- ADDED THIS STATE ---
-  const [lastLoggedMeal, setLastLoggedMeal] = useState<MealItem[] | null>(null);
+  const [currentMeal, setCurrentMeal] = useState<MenuItem[]>([]);
 
-  // ... (addToMeal and removeFromMeal are the same)
-  const addToMeal = (itemToAdd: MenuItem) => {
-    setCurrentMeal((prevMeal) => {
-      const existingItem = prevMeal.find(
-        (mealItem) => mealItem.item.id === itemToAdd.id
-      );
-      if (existingItem) {
-        return prevMeal.map((mealItem) =>
-          mealItem.item.id === itemToAdd.id
-            ? { ...mealItem, quantity: mealItem.quantity + 1 }
-            : mealItem
-        );
-      } else {
-        return [...prevMeal, { item: itemToAdd, quantity: 1 }];
-      }
-    });
-  };
-
-  const removeFromMeal = (itemToRemove: MenuItem) => {
-    setCurrentMeal((prevMeal) => {
-      const existingItem = prevMeal.find(
-        (mealItem) => mealItem.item.id === itemToRemove.id
-      );
-      if (existingItem && existingItem.quantity > 1) {
-        return prevMeal.map((mealItem) =>
-          mealItem.item.id === itemToRemove.id
-            ? { ...mealItem, quantity: mealItem.quantity - 1 }
-            : mealItem
-        );
-      } else {
-        return prevMeal.filter(
-          (mealItem) => mealItem.item.id !== itemToRemove.id
-        );
-      }
-    });
+  const addItemToMeal = (item: MenuItem) => {
+    setCurrentMeal((prev) => [...prev, item]);
   };
 
   const clearMeal = () => {
     setCurrentMeal([]);
   };
 
-  // ... (mealTotals is the same)
-  const mealTotals = useMemo(() => {
-    return currentMeal.reduce(
-      (totals, mealItem) => {
-        totals.calories += mealItem.item.calories * mealItem.quantity;
-        totals.count += mealItem.quantity;
-        return totals;
-      },
-      { calories: 0, count: 0 }
-    );
-  }, [currentMeal]);
+  const logCurrentMeal = async (authToken: string | null): Promise<boolean> => {
+    if (!authToken) {
+      Alert.alert('Error', 'You are not logged in.');
+      return false;
+    }
+    if (currentMeal.length === 0) {
+      Alert.alert('Error', 'Your meal is empty.');
+      return false;
+    }
 
-  return (
-    <MealContext.Provider
-      value={{
-        currentMeal,
-        addToMeal,
-        removeFromMeal,
-        clearMeal,
-        mealTotals,
-        // --- ADDED THESE TWO LINES ---
-        lastLoggedMeal,
-        setLastLoggedMeal,
-      }}
-    >
-      {children}
-    </MealContext.Provider>
-  );
+    const item_ids = currentMeal.map((item) => item.id);
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/log_meal/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${authToken}`,
+        },
+        body: JSON.stringify({ item_ids }),
+      });
+
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.error || 'Failed to log meal');
+      }
+
+      clearMeal();
+      return true;
+    } catch (e: any) {
+      Alert.alert('Log Failed', e.message);
+      return false;
+    }
+  };
+
+  // --- THIS IS THE FIX ---
+  // The 'value' object was missing addItemToMeal
+  const value = {
+    currentMeal,
+    addItemToMeal, // <-- This line was missing
+    clearMeal,
+    logCurrentMeal,
+  };
+
+  return <MealContext.Provider value={value}>{children}</MealContext.Provider>;
 };
 
-// --- (4) Custom Hook ---
-// (This is the same)
 export const useMeal = () => {
   const context = useContext(MealContext);
-  if (!context) {
+  if (context === undefined) {
     throw new Error('useMeal must be used within a MealProvider');
   }
   return context;

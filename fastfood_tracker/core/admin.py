@@ -2,6 +2,7 @@
 from django.contrib import admin
 
 # --- UPDATED IMPORTS ---
+# We've removed MacroTracker and added the new models
 from .models import (
     User, 
     Restaurant, 
@@ -19,7 +20,6 @@ class LoggedMealItemInline(admin.TabularInline):
     """
     model = LoggedMealItem
     extra = 0 # Don't show extra empty forms
-    readonly_fields = ('menu_item', 'quantity') # Make them read-only in the admin
 
 class LoggedMealAdmin(admin.ModelAdmin):
     """
@@ -28,7 +28,6 @@ class LoggedMealAdmin(admin.ModelAdmin):
     list_display = ('user', 'name', 'created_at')
     inlines = [LoggedMealItemInline] # Nests the items inside the meal
     list_filter = ('user', 'created_at')
-    readonly_fields = ('user', 'name', 'created_at')
 
 # --- Register your models here ---
 admin.site.register(User)
@@ -39,6 +38,3 @@ admin.site.register(FavoriteMeal)
 
 # --- NEW REGISTRATIONS ---
 admin.site.register(LoggedMeal, LoggedMealAdmin) # Use the custom admin class
-
-# We don't need to register LoggedMealItem separately 
-# because it's now an "inline" in LoggedMealAdmin.

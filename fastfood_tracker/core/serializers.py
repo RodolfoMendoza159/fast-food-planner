@@ -1,10 +1,13 @@
 # In core/serializers.py
 
 from rest_framework import serializers
-# R: Make sure FavoriteMeal is included in this import list
-from .models import User, Restaurant, MenuItem, Profile, FavoriteMeal, LoggedMeal, LoggedMealItem
+# R: Make sure all models, including the new ones, are imported
+from .models import (
+    User, Restaurant, MenuItem, Profile, 
+    FavoriteMeal, LoggedMeal, LoggedMealItem
+)
 
-# --- User & Profile Serializers ---
+# --- User & Profile Serializers (No Change) ---
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -16,7 +19,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = ['calorie_goal']
 
-# --- Restaurant & Menu Serializers ---
+# --- Restaurant & Menu Serializers (No Change) ---
 class MenuItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = MenuItem
@@ -28,21 +31,18 @@ class RestaurantSerializer(serializers.ModelSerializer):
         model = Restaurant
         fields = ['id', 'name', 'menu_items']
 
-# --- Tracker & History Serializer ---
-#class MacroTrackerSerializer(serializers.ModelSerializer):
-#   items = MenuItemSerializer(many=True, read_only=True)
-#   class Meta:
-#       model = MacroTracker
-#        fields = ['id', 'date', 'calories_consumed', 'protein_consumed', 'fat_consumed', 'carbs_consumed', 'items']
-
-
-# --- Favorite Meal Serializer ---
+# --- Favorite Meal Serializer (No Change) ---
 class FavoriteMealSerializer(serializers.ModelSerializer):
     items = MenuItemSerializer(many=True, read_only=True)
     
     class Meta:
-        model = FavoriteMeal # This line requires the import at the top of the file
+        model = FavoriteMeal
         fields = ['id', 'name', 'items']
+
+
+# --- (REMOVED) Old Tracker Serializer ---
+# The MacroTrackerSerializer is no longer needed.
+
 
 # --- (NEW) Serializers for New History/Logging Models ---
 

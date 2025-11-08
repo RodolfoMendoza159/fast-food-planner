@@ -34,7 +34,7 @@ class Profile(models.Model):
     calorie_goal = models.IntegerField(default=2000)
     def __str__(self):
         return self.user.username
-    
+
 class FavoriteMeal(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)

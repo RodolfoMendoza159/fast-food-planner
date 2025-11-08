@@ -9,23 +9,25 @@ from django.contrib.auth import authenticate
 from datetime import date
 from django.db.models import F, Sum
 from django.db import models
-from django.utils import timezone # <-- NEW IMPORT
+from django.utils import timezone 
 
 # --- NEW IMPORTS for Search/Sort ---
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 
 # --- UPDATED MODEL IMPORTS ---
+# Replaced MacroTracker with LoggedMeal and LoggedMealItem
 from .models import (
     User, Restaurant, MenuItem, Profile, 
-    FavoriteMeal, LoggedMeal, LoggedMealItem # <-- Replaced MacroTracker
+    FavoriteMeal, LoggedMeal, LoggedMealItem
 )
 
 # --- UPDATED SERIALIZER IMPORTS ---
+# Added new serializers
 from .serializers import (
     UserSerializer, RestaurantSerializer, ProfileSerializer, 
-    FavoriteMealSerializer, MenuItemSerializer, # <-- Added MenuItemSerializer
-    LoggedMealSerializer, LoggedMealItemSerializer # <-- New Serializers
+    FavoriteMealSerializer, MenuItemSerializer, 
+    LoggedMealSerializer, LoggedMealItemSerializer
 )
 
 
@@ -74,13 +76,13 @@ def manage_user_profile(request):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# --- Restaurant and Menu Views ---
+# --- Restaurant View (No Change) ---
 class RestaurantViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
     permission_classes = [IsAuthenticated]
 
-# --- NEW: (Task 1) MenuItem ViewSet for Search/Sort ---
+# --- NEW: MenuItem ViewSet for Search/Sort/Filter ---
 class MenuItemViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint for searching, filtering, and sorting menu items.
@@ -100,7 +102,7 @@ class MenuItemViewSet(viewsets.ReadOnlyModelViewSet):
     ordering_fields = ['name', 'calories', 'protein', 'fat', 'carbohydrates']
 
 
-# --- (REPLACED) Meal Logging and Tracking Views (Task 3) ---
+# --- (REPLACED) Meal Logging and Tracking Views ---
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -110,7 +112,6 @@ def get_daily_tracker(request):
     """
     today = timezone.now().date()
     
-    # Get all meal items logged today by this user
     items_today = LoggedMealItem.objects.filter(
         logged_meal__user=request.user,
         logged_meal__created_at__date=today
@@ -152,7 +153,6 @@ def log_meal(request):
         return Response({'error': 'No items to log.'}, status=status.HTTP_400_BAD_REQUEST)
 
     try:
-        # Create the parent meal "event"
         new_meal = LoggedMeal.objects.create(user=request.user, name=meal_name)
         
         items_to_create = []
@@ -162,11 +162,10 @@ def log_meal(request):
                 LoggedMealItem(
                     logged_meal=new_meal,
                     menu_item=menu_item,
-                    quantity=item_data.get('quantity', 1) # Default to 1
+                    quantity=item_data.get('quantity', 1)
                 )
             )
         
-        # Create all meal items in one efficient query
         LoggedMealItem.objects.bulk_create(items_to_create)
         
         serializer = LoggedMealSerializer(new_meal)
@@ -187,7 +186,7 @@ def get_meal_history(request):
     serializer = LoggedMealSerializer(history, many=True)
     return Response(serializer.data)
 
-# --- (Task 2) Favorite Meal ViewSet (Updated log action) ---
+# --- Favorite Meal ViewSet (Updated log action) ---
 class FavoriteMealViewSet(viewsets.ModelViewSet):
     queryset = FavoriteMeal.objects.all()
     serializer_class = FavoriteMealSerializer
@@ -201,6 +200,7 @@ class FavoriteMealViewSet(viewsets.ModelViewSet):
         favorite_meal = serializer.save(user=self.request.user)
         favorite_meal.items.set(item_ids)
 
+    # --- THIS FUNCTION IS NOW FIXED ---
     @action(detail=True, methods=['post'])
     def log(self, request, pk=None):
         """
