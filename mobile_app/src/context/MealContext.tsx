@@ -17,8 +17,12 @@ type MenuItem = {
 interface MealContextType {
   currentMeal: MenuItem[];
   addItemToMeal: (item: MenuItem) => void;
+  removeItemFromMeal: (itemId: number) => void; // <-- NEW: We'll add this
   clearMeal: () => void;
-  logCurrentMeal: (authToken: string | null) => Promise<boolean>;
+  logCurrentMeal: (
+    authToken: string | null,
+    mealName: string // <-- UPDATED: Now takes a meal name
+  ) => Promise<boolean>;
 }
 
 const MealContext = createContext<MealContextType | undefined>(undefined);
@@ -32,11 +36,30 @@ export const MealProvider: React.FC<{ children: ReactNode }> = ({
     setCurrentMeal((prev) => [...prev, item]);
   };
 
+  // --- NEW FUNCTION ---
+  // This lets us remove an item from the review screen
+  // It only removes *one* instance of the item
+  const removeItemFromMeal = (itemId: number) => {
+    setCurrentMeal((prev) => {
+      const index = prev.findIndex((item) => item.id === itemId);
+      if (index > -1) {
+        // This removes just the first instance of the item
+        return [...prev.slice(0, index), ...prev.slice(index + 1)];
+      }
+      return prev;
+    });
+  };
+
   const clearMeal = () => {
     setCurrentMeal([]);
   };
 
-  const logCurrentMeal = async (authToken: string | null): Promise<boolean> => {
+  // --- (THE BIG UPDATE) ---
+  // This is the new function that sends quantities
+  const logCurrentMeal = async (
+    authToken: string | null,
+    mealName: string
+  ): Promise<boolean> => {
     if (!authToken) {
       Alert.alert('Error', 'You are not logged in.');
       return false;
@@ -46,8 +69,26 @@ export const MealProvider: React.FC<{ children: ReactNode }> = ({
       return false;
     }
 
-    const item_ids = currentMeal.map((item) => item.id);
+    // 1. Count quantities
+    // Create a "map" to count how many of each item we have
+    // e.g., { 5: 1, 22: 2 } (item 5 has quantity 1, item 22 has quantity 2)
+    const itemCounts = new Map<number, number>();
+    currentMeal.forEach((item) => {
+      const count = itemCounts.get(item.id) || 0;
+      itemCounts.set(item.id, count + 1);
+    });
 
+    // 2. Format for the API
+    // Convert the map into the array format our backend needs:
+    // e.g., [{ id: 5, quantity: 1 }, { id: 22, quantity: 2 }]
+    const itemsToLog = Array.from(itemCounts.entries()).map(
+      ([itemId, quantity]) => ({
+        id: itemId,
+        quantity: quantity,
+      })
+    );
+
+    // 3. Send to the new backend endpoint
     try {
       const response = await fetch(`${API_BASE_URL}/log_meal/`, {
         method: 'POST',
@@ -55,7 +96,10 @@ export const MealProvider: React.FC<{ children: ReactNode }> = ({
           'Content-Type': 'application/json',
           'Authorization': `Token ${authToken}`,
         },
-        body: JSON.stringify({ item_ids }),
+        body: JSON.stringify({
+          name: mealName || 'Meal', // Send the meal name
+          items: itemsToLog,       // Send the new items array
+        }),
       });
 
       if (!response.ok) {
@@ -63,7 +107,8 @@ export const MealProvider: React.FC<{ children: ReactNode }> = ({
         throw new Error(err.error || 'Failed to log meal');
       }
 
-      clearMeal();
+      // Success!
+      clearMeal(); // Clear the meal from context
       return true;
     } catch (e: any) {
       Alert.alert('Log Failed', e.message);
@@ -71,11 +116,10 @@ export const MealProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
-  // --- THIS IS THE FIX ---
-  // The 'value' object was missing addItemToMeal
   const value = {
     currentMeal,
-    addItemToMeal, // <-- This line was missing
+    addItemToMeal,
+    removeItemFromMeal, // <-- NEW: Added to value
     clearMeal,
     logCurrentMeal,
   };
