@@ -13,6 +13,8 @@ router.register(r'restaurants', views.RestaurantViewSet, basename='restaurant')
 # --- NEW: Register the FavoriteMeal ViewSet ---
 router.register(r'favorites', views.FavoriteMealViewSet, basename='favorite')
 
+router.register(r'items', views.MenuItemViewSet, basename='menuitem')
+
 # The API URLs are now determined automatically by the router.
 # We still need to manually add the paths for our function-based views.
 urlpatterns = [
@@ -27,9 +29,8 @@ urlpatterns = [
     path('profile/', views.manage_user_profile, name='manage-profile'),
 
     # Core logic endpoints for the tracker
-    path('tracker/', views.get_daily_tracker, name='get-daily-tracker'),
-    path('log-meal/', views.log_meal, name='log-meal'),
+    path('tracker/', views.get_daily_tracker, name='tracker'),
+    path('log_meal/', views.log_meal, name='log_meal'),
+    path('history/', views.get_meal_history, name='history'),
 
-    # --- NEW: Meal History endpoint ---
-    path('history/', views.get_meal_history, name='get-meal-history'),
 ]

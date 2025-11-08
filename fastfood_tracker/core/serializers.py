@@ -2,7 +2,7 @@
 
 from rest_framework import serializers
 # R: Make sure FavoriteMeal is included in this import list
-from .models import User, Restaurant, MenuItem, Profile, MacroTracker, FavoriteMeal
+from .models import User, Restaurant, MenuItem, Profile, FavoriteMeal, LoggedMeal, LoggedMealItem
 
 # --- User & Profile Serializers ---
 class UserSerializer(serializers.ModelSerializer):
@@ -29,11 +29,11 @@ class RestaurantSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'menu_items']
 
 # --- Tracker & History Serializer ---
-class MacroTrackerSerializer(serializers.ModelSerializer):
-    items = MenuItemSerializer(many=True, read_only=True)
-    class Meta:
-        model = MacroTracker
-        fields = ['id', 'date', 'calories_consumed', 'protein_consumed', 'fat_consumed', 'carbs_consumed', 'items']
+#class MacroTrackerSerializer(serializers.ModelSerializer):
+#   items = MenuItemSerializer(many=True, read_only=True)
+#   class Meta:
+#       model = MacroTracker
+#        fields = ['id', 'date', 'calories_consumed', 'protein_consumed', 'fat_consumed', 'carbs_consumed', 'items']
 
 
 # --- Favorite Meal Serializer ---
@@ -43,3 +43,28 @@ class FavoriteMealSerializer(serializers.ModelSerializer):
     class Meta:
         model = FavoriteMeal # This line requires the import at the top of the file
         fields = ['id', 'name', 'items']
+
+# --- (NEW) Serializers for New History/Logging Models ---
+
+class LoggedMealItemSerializer(serializers.ModelSerializer):
+    """
+    Serializes a single item within a logged meal, showing its
+    quantity and full menu item details.
+    """
+    menu_item = MenuItemSerializer(read_only=True)
+    
+    class Meta:
+        model = LoggedMealItem
+        fields = ['menu_item', 'quantity']
+
+class LoggedMealSerializer(serializers.ModelSerializer):
+    """
+    Serializes a "meal event," including the time it was created
+    and all the items + quantities that were part of it.
+    """
+    # 'logged_items' is the 'related_name' from the LoggedMealItem model
+    logged_items = LoggedMealItemSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = LoggedMeal
+        fields = ['id', 'name', 'created_at', 'logged_items']

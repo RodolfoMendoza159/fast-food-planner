@@ -34,30 +34,7 @@ class Profile(models.Model):
     calorie_goal = models.IntegerField(default=2000)
     def __str__(self):
         return self.user.username
-
-# --- UPDATED MODEL ---
-class MacroTracker(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    date = models.DateField()
     
-    # R: This is the key change. We now store a list of all items eaten
-    # during the day directly on the tracker itself.
-    items = models.ManyToManyField(MenuItem)
-    
-    calories_consumed = models.IntegerField(default=0)
-    protein_consumed = models.FloatField(default=0)
-    fat_consumed = models.FloatField(default=0)
-    carbs_consumed = models.FloatField(default=0)
-
-    class Meta:
-        unique_together = ('user', 'date')
-
-    def __str__(self):
-        return f"Tracker for {self.user.username} on {self.date}"
-    
-# --- NEW MODEL: Add this at the end of the file ---
-# R: This model represents a user's saved "favorite" meal.
-# It's stored permanently and is separate from the daily tracker.
 class FavoriteMeal(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
@@ -65,3 +42,30 @@ class FavoriteMeal(models.Model):
 
     def __str__(self):
         return f"'{self.name}' by {self.user.username}"
+        
+
+# --- (REMOVED) The old MacroTracker model is gone ---
+
+
+# --- (NEW) Models for New History/Logging ---
+
+class LoggedMeal(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="logged_meals")
+    name = models.CharField(max_length=100, blank=True, null=True, help_text="Optional name, e.g., 'Lunch'")
+    # This automatically captures the exact date and time
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Meal for {self.user.username} at {self.created_at.strftime('%Y-%m-%d %H:%M')}"
+
+class LoggedMealItem(models.Model):
+    # This links a LoggedMeal to a MenuItem AND stores the quantity
+    logged_meal = models.ForeignKey(LoggedMeal, on_delete=models.CASCADE, related_name="logged_items")
+    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        unique_together = ('logged_meal', 'menu_item') # Prevents duplicate items in the *same* meal
+
+    def __str__(self):
+        return f"{self.quantity} x {self.menu_item.name}"
