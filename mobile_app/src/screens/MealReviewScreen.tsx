@@ -6,17 +6,18 @@ import {
   Text,
   FlatList,
   Button,
-  StyleSheet, // <-- We will use this
+  StyleSheet,
   TouchableOpacity,
   TextInput,
   ActivityIndicator,
+  Alert, // <-- NEW: To show success/error alerts
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useMeal } from '../context/MealContext';
 import { useAuth } from '../context/AuthContext';
-// --- (REMOVED) The bad import is gone ---
+import { API_BASE_URL } from '../constants.example'; // <-- NEW: Need this for API calls
 
-// --- (NEW) Define a type for our grouped items ---
+// Type definitions
 type MenuItem = {
   id: number;
   name: string;
@@ -38,12 +39,12 @@ export default function MealReviewScreen() {
   const { authToken } = useAuth();
 
   const [mealName, setMealName] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLogging, setIsLogging] = useState(false); // Renamed for clarity
+  const [isSavingFavorite, setIsSavingFavorite] = useState(false); // <-- NEW
 
-  // --- (NEW) Group the items from context to show quantity ---
+  // (No change) Group items to show quantity
   const groupedMeal: MealItemWithQuantity[] = useMemo(() => {
     const itemMap = new Map<number, MealItemWithQuantity>();
-    
     currentMeal.forEach((item) => {
       const existing = itemMap.get(item.id);
       if (existing) {
@@ -55,24 +56,61 @@ export default function MealReviewScreen() {
     return Array.from(itemMap.values());
   }, [currentMeal]);
 
-  // --- (UPDATED) Handle the log meal button press ---
+  // (No change) Handle the log meal button press
   const handleLogMeal = async () => {
-    setIsLoading(true);
-    const success = await logCurrentMeal(authToken, mealName); 
-    setIsLoading(false);
-
+    setIsLogging(true);
+    const success = await logCurrentMeal(authToken, mealName);
+    setIsLogging(false);
     if (success) {
       navigation.navigate('LogSuccess');
     }
   };
 
+  // --- (NEW) Function to save the current meal as a favorite ---
+  const handleSaveFavorite = async () => {
+    if (!mealName) {
+      Alert.alert(
+        'Name Required',
+        'Please enter a name for your favorite meal.'
+      );
+      return;
+    }
+    setIsSavingFavorite(true);
+
+    // Get all item IDs from the current meal
+    const item_ids = currentMeal.map((item) => item.id);
+
+    try {
+      // --- Call the /api/favorites/ endpoint ---
+      const response = await fetch(`${API_BASE_URL}/favorites/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${authToken}`,
+        },
+        body: JSON.stringify({
+          name: mealName,
+          item_ids: item_ids,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save favorite meal.');
+      }
+
+      // Success!
+      Alert.alert('Saved!', `'${mealName}' has been saved to your favorites.`);
+    } catch (error: any) {
+      Alert.alert('Error', error.message);
+    } finally {
+      setIsSavingFavorite(false);
+    }
+  };
+
   return (
-    // --- (UPDATED) Using 'styles.container' (local) ---
     <View style={styles.container}>
-      {/* --- (UPDATED) Using 'styles.header' (local) --- */}
       <Text style={styles.header}>Review Your Meal</Text>
 
-      {/* --- (NEW) Meal Name Input --- */}
       <TextInput
         style={styles.textInput}
         placeholder="Enter meal name (e.g., 'Lunch')"
@@ -81,19 +119,15 @@ export default function MealReviewScreen() {
         placeholderTextColor="#999"
       />
 
-      {/* --- (UPDATED) List now shows grouped items --- */}
       <FlatList
         data={groupedMeal}
         keyExtractor={(entry) => entry.item.id.toString()}
         renderItem={({ item: entry }) => (
-          // --- (UPDATED) Using 'styles.listItem' (local) ---
           <View style={styles.listItem}>
             <View style={{ flex: 1 }}>
-              {/* --- (UPDATED) Using 'styles.title' (local) --- */}
               <Text style={styles.title}>
                 {entry.quantity} x {entry.item.name}
               </Text>
-              {/* --- (UPDATED) Using 'styles.subtitle' (local) --- */}
               <Text style={styles.subtitle}>
                 {`Cals: ${entry.item.calories} | Prot: ${entry.item.protein}g`}
               </Text>
@@ -107,13 +141,23 @@ export default function MealReviewScreen() {
         )}
       />
 
-      {/* --- (UPDATED) Log Meal Button --- */}
-      <Button
-        title="Log Meal"
-        onPress={handleLogMeal}
-        disabled={isLoading || currentMeal.length === 0}
-      />
-      {isLoading && <ActivityIndicator size="large" style={{ margin: 10 }} />}
+      {/* --- (NEW) Button container for side-by-side buttons --- */}
+      <View style={styles.buttonContainer}>
+        <Button
+          title="Log Meal"
+          onPress={handleLogMeal}
+          disabled={isLogging || isSavingFavorite || currentMeal.length === 0}
+        />
+        <Button
+          title="Save as Favorite"
+          onPress={handleSaveFavorite}
+          disabled={isLogging || isSavingFavorite || currentMeal.length === 0}
+          color="#007AFF" // iOS blue
+        />
+      </View>
+      {(isLogging || isSavingFavorite) && (
+        <ActivityIndicator size="large" style={{ margin: 10 }} />
+      )}
     </View>
   );
 }
@@ -132,9 +176,9 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     borderRadius: 8,
     elevation: 1,
-    flexDirection: 'row', // <-- Added this for the remove button
-    justifyContent: 'space-between', // <-- Added this
-    alignItems: 'center', // <-- Added this
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   header: {
     fontSize: 24,
@@ -167,5 +211,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     backgroundColor: '#fff',
     fontSize: 16,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginVertical: 10,
   },
 });
