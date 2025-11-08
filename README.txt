@@ -45,7 +45,7 @@ Set up the database.
 
 # This command creates your local db.sqlite3 file and preparesit with the correct tables.
 //
-python manage.py migrate
+python manage.py migrate core
 //
 
 Load the initial data. 
