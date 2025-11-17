@@ -29,6 +29,13 @@ DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 ALLOWED_HOSTS = [os.environ.get('RAILWAY_PUBLIC_DOMAIN', '127.0.0.1')]
 
+# Also trust the Railway domain for CSRF
+CSRF_TRUSTED_ORIGINS = [f"https://{os.environ.get('RAILWAY_PUBLIC_DOMAIN')}"]
+
+# Ensure cookies are sent securely over HTTPS
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
 
 # Application definition
 
@@ -150,13 +157,10 @@ AUTH_USER_MODEL = 'core.User' #Added custom User model
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-# This tells Django to look for static files in a folder named 'frontend'
-# at the root of your project.
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'frontend')
+    os.path.join(BASE_DIR.parent, 'frontend')
 ]
 
-# In fastfood_tracker/settings.py
 
 # ... (add this entire block at the end of the file)
 
