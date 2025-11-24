@@ -1,363 +1,151 @@
-// In mobile_app/src/styles.ts
+// mobile_app/src/styles.ts
 
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform, StatusBar } from 'react-native';
+
+// Define your brand colors here for consistency
+export const COLORS = {
+  primary: '#007bff',    // Standard Blue
+  secondary: '#6c757d',  // Gray
+  success: '#28a745',    // Green
+  danger: '#dc3545',     // Red
+  warning: '#FF9F1C',    // Orange (Matches Home Button)
+  info: '#2EC4B6',       // Teal (Matches Home Button)
+  dark: '#011627',       // Navy (Matches Home Button)
+  background: '#F4F7F6', // Light Gray Background
+  white: '#ffffff',
+  text: '#333333',
+  textLight: '#666666',
+  border: '#cccccc',
+};
 
 export const styles = StyleSheet.create({
-  // --- Global ---
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f4f7f6',
-  },
+  // --- Layout Containers ---
   safeArea: {
     flex: 1,
-    backgroundColor: '#f4f7f6',
+    backgroundColor: COLORS.background,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   container: {
     flex: 1,
     padding: 16,
+    backgroundColor: COLORS.background,
   },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.background,
+  },
+  
+  // --- Typography ---
   title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: COLORS.text,
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  header: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 15,
+    color: COLORS.text,
   },
+  label: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 8,
+    color: COLORS.text,
+    marginLeft: 4,
+  },
+  
+  // --- Inputs ---
   input: {
     width: '100%',
     padding: 15,
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
+    borderColor: COLORS.border,
+    borderRadius: 12, // Rounded corners for modern look
     marginBottom: 15,
-    backgroundColor: 'white',
+    backgroundColor: COLORS.white,
     fontSize: 16,
+    color: COLORS.text,
   },
+
+  // --- Buttons ---
   button: {
     width: '100%',
     padding: 15,
-    backgroundColor: '#007bff',
-    borderRadius: 8,
+    backgroundColor: COLORS.primary,
+    borderRadius: 12,
     alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    marginVertical: 5,
   },
   buttonText: {
-    color: 'white',
+    color: COLORS.white,
     fontWeight: 'bold',
     fontSize: 16,
   },
-  errorText: {
-    color: '#dc3545', // Red
-    marginBottom: 10,
-    textAlign: 'center',
+  secondaryButton: {
+    backgroundColor: COLORS.white,
+    borderWidth: 1,
+    borderColor: COLORS.border,
   },
-  successText: {
-    color: '#28a745', // Green
-    marginBottom: 10,
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-
-  // --- AuthScreen ---
-  authContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 16,
-  },
-  toggleText: {
-    color: '#007bff',
-    marginTop: 20,
-  },
-
-  // --- ProfileScreen ---
-  label: {
-    fontSize: 16,
-    fontWeight: '500',
-    marginBottom: 8,
+  secondaryButtonText: {
+    color: COLORS.text,
   },
   logoutButton: {
     width: '100%',
     padding: 15,
-    backgroundColor: '#dc3545', // Red for logout
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  // --- MealHistoryScreen ---
-  historyCard: {
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2, // for Android
-  },
-  historyDate: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-    paddingBottom: 8,
-    marginBottom: 8,
-  },
-  historyCardBody: {
-    flexDirection: 'row', // This is the key: macros on left, items on right
-    justifyContent: 'space-between',
-  },
-  historyMacros: {
-    flex: 1, // Takes up 1/2 of the space
-  },
-  historyItems: {
-    flex: 1, // Takes up 1/2 of the space
-    paddingLeft: 10,
-  },
-  macroText: {
-    fontSize: 14,
-    lineHeight: 20,
-  },
-  itemsTitle: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    marginBottom: 4,
-  },
-  itemText: {
-    fontSize: 14,
-    color: '#333',
-  },
-  // --- Dashboard Stack (RestaurantList) ---
-  listItem: {
-    backgroundColor: '#fff',
-    padding: 20,
-    borderRadius: 8,
-    marginBottom: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 1,
-  },
-  listItemText: {
-    fontSize: 18,
-    fontWeight: '500',
-  },
-  floatingButton: {
-    position: 'absolute',
-    bottom: 20,
-    left: 20,
-    right: 20,
-    backgroundColor: '#007bff',
-    padding: 18,
-    borderRadius: 10,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  backButton: {
-    fontSize: 18,
-    color: '#007bff',
-    marginBottom: 10,
-    fontWeight: '500',
-  },
-  // --- MenuItemListScreen ---
-  menuItemCard: {
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    marginBottom: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 1,
-    overflow: 'hidden', // Ensures rounded corners apply to children
-  },
-  menuItemHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 16,
-  },
-  menuItemName: {
-    fontSize: 16,
-    fontWeight: '500',
-    flex: 1, // Allows text to wrap
-    paddingRight: 10,
-  },
-  menuItemCals: {
-    fontSize: 16,
-    color: '#333',
-  },
-  menuItemDetails: {
-    padding: 16,
-    borderTopWidth: 1,
-    borderTopColor: '#f0f0f0',
-  },
-  addButton: {
-    backgroundColor: '#28a745', // Green "Add" button
-    padding: 10,
-    borderRadius: 5,
+    backgroundColor: COLORS.danger,
+    borderRadius: 12,
     alignItems: 'center',
     marginTop: 10,
   },
-
- // --- MealReviewScreen --- NEW
-  reviewCard: {
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    marginBottom: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 1,
-  },
-  reviewCardHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
-  },
-  reviewItemName: {
-    fontSize: 16,
-    fontWeight: 'bold',
+  
+  // --- Auth Screen Specific ---
+  authContainer: {
     flex: 1,
-    paddingRight: 10,
-  },
-  reviewItemCals: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  macroGridContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap', // This makes it a grid
-    padding: 12,
-  },
-  macroGridItem: {
-    width: '33.33%', // 3 items per row
-    paddingVertical: 8,
-    alignItems: 'center',
-  },
-  macroGridLabel: {
-    fontSize: 12,
-    color: '#666',
-  },
-  macroGridValue: {
-    fontSize: 14,
-    fontWeight: 'bold',
-  },
-  reviewTotalsContainer: {
-    marginTop: 20,
-    padding: 16,
-    backgroundColor: '#fff',
-    borderRadius: 8,
-  },
-  summaryContainer: {
-    padding: 16,
-    backgroundColor: '#f8f9fa',
-    borderRadius: 8,
-    marginVertical: 16,
-  },
-  summaryTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  summaryText: {
-    fontSize: 16,
-    lineHeight: 22,
-    textAlign: 'center',
-  },
-  summaryFinal: {
-    fontSize: 16,
-    lineHeight: 22,
-    marginTop: 8,
-    textAlign: 'center',
-    color: '#28a745',
-  },
-  logButton: {
-    width: '100%',
-    padding: 15,
-    backgroundColor: '#007bff',
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-
-  // --- LogSuccessScreen ---
-  successContainer: {
-    flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
   },
-  successTitle: {
-    fontSize: 28,
+  toggleText: {
+    color: COLORS.primary,
+    marginTop: 20,
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  errorText: {
+    color: COLORS.danger,
+    marginBottom: 15,
+    textAlign: 'center',
+    fontSize: 14,
+  },
+  successText: {
+    color: COLORS.success,
+    marginBottom: 15,
+    textAlign: 'center',
     fontWeight: 'bold',
-    color: '#28a745',
-    marginBottom: 16,
+    fontSize: 16,
   },
-  successButtonContainer: {
-    width: '100%',
-    marginTop: 30,
-  },
-  secondaryButton: {
-    backgroundColor: '#f0f0f0',
-    borderWidth: 1,
-    borderColor: '#ccc',
-    marginTop: 10,
-  },
-  secondaryButtonText: {
-    color: '#333',
-  },
-  saveButton: {
-    backgroundColor: '#17a2b8', // Blue-green
-    marginTop: 10,
-  },
-  // --- FavoritesScreen ---
-  favoriteCard: {
-    backgroundColor: '#fff',
-    borderRadius: 8,
+
+  // --- List Items (Dashboard/History/Favorites) ---
+  listItem: {
+    backgroundColor: COLORS.white,
+    padding: 20,
+    borderRadius: 12,
     marginBottom: 12,
-    shadowColor: '#000',
+    elevation: 2, // Android shadow
+    shadowColor: '#000', // iOS shadow
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 2,
-  },
-  favoriteCardHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-  },
-  favoriteCardTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  favoriteCardActions: {
-    flexDirection: 'row',
-  },
-  logFavButton: {
-    backgroundColor: '#007bff',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 5,
-    marginRight: 8,
-  },
-  deleteFavButton: {
-    backgroundColor: '#dc3545',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 5,
-  },
-  favoriteCardBody: {
-    padding: 12,
   },
 });
-
-//new  
