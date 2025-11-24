@@ -1,123 +1,71 @@
-## Step 1: Clone the Project from GitHub
+Fast Food Planner
+A full-stack application for tracking fast food meals and macros.
 
-# First, get the project code from the repository. Open your terminal or command prompt and run this command:
+Tech Stack
+
+Backend: Django (Python) with PostgreSQL (Hosted on Railway) 
+
+
+Frontend: React Native (Expo) (Running locally) 
+
+Backend (Railway)
+The backend is currently deployed and live on Railway.
+
+
+Project Name: fast-food-planner 
+
+
+Public API URL: https://respectful-flexibility-production.up.railway.app/api 
+
+Deployment & Updates
+Changes pushed to GitHub will automatically trigger a redeploy on Railway.
+
+
+IGNORE THIS FOR NOW
+//Administrative Commands
+//To create a superuser or run other management commands, use the Railway CLI locally.
 //
-git clone https://github.com/RodolfoMendoza159/fast-food-planner.git
+//# Install Railway CLI
+//npm install -g @railway/cli
 //
-
-or any other method of choice for Github setup. 
-(I recommend installing the Github extension on Visual Studio Code)
-
-CURENT ACTIVE BRANCH:
-Version 4.0 - Mobile
-
-# Go to the project
+//# Login to Railway account
+//railway login
 //
-cd fast-food-planner
+//# Link the local folder to the Railway project
+//railway link
 //
-
-## Step 2: Set Up the Backend (Django)
-# The backend server handles all the data and logic.
-
-#Navigate to the backend directory
-//
-cd fastfood_tracker
-//
-
-Create and activate a Python virtual environment. This keeps the project's dependencies isolated.
-
-# Create the virtual environment
-//
-python -m venv venv
-//
-
-# Activate it (Windows)
-//
-.\venv\Scripts\activate
-//
-
-# Install the required Python packages using the requirements.txt file:
-//
-pip install -r requirements.txt
-//
-
-Set up the database.
-
-# This command creates your local db.sqlite3 file and preparesit with the correct tables.
-//
-python manage.py migrate 
-//
-
-Load the initial data. 
-
-#This custom command populates the database with all the restaurant and menu item data.
-//
-python manage.py load_menu_data
-//
-
-Create a superuser, this is the admin account, name it userMaster, use master@email.com
-and password 123456( or anything you want )
-
-//
-python manage.py createsuperuser
-//
-
-# Start the backend server.
-//
-python manage.py runserver 0.0.0.0:8000
-//
-
-If it's working, you'll see a message that the server is running at http://127.0.0.1:8000/admin/ .
-Keep this terminal window open.
-  
-
-## Step 3: Set Up the Frontend (React)
-
-Project Setup Guide for New Developers
-A. Find Your Local IP Address
-You will need your computer's local IP address for both the backend and mobile app.
-
-Windows: Open Command Prompt and type ipconfig. Find the "IPv4 Address" (e.g., 192.168.1.10).
-
-macOS: Open Terminal and type ifconfig | grep "inet ". Find the address that is not 127.0.0.1.
+//# Run a command on the live server (example: create superuser)
+//railway run --service="respectful-flexibility" python manage.py createsuperuser
+IGNORE
 
 
-Configure Local IP:
+''
+Frontend (Mobile App)
+Follow these steps to run the mobile app locally and connect it to the live backend.
+''
+1. Setup
+Navigate to the mobile app folder and install the required packages.
 
-Open fastfood_tracker/fastfood_tracker/settings.py.
+cd mobile_app
+npm install
 
-Find the ALLOWED_HOSTS list and add your IP address (as a string):
+2. Configuration
+Ensure the app is pointed to the correct backend URL.
 
-ALLOWED_HOSTS = ['YOUR_IP_HERE']
+Open src/constants.examples.ts 
+Verify the API_BASE_URL matches the Railway backend:
 
-Setup Database (Everyone does this once):
+TypeScript
 
-
-B. Setup Mobile App (Terminal 2)
-Navigate to Mobile App:
+export const API_BASE_URL = 'https://respectful-flexibility-production.up.railway.app/api';
+3. Running the App
+Start the development server.
 
 Bash
 
-cd mobile_app
-Install Dependencies:
-
-This will install all packages from package.json.
-
-```bash
-npm install
-```
-Configure Local IP:
-
-inside "mobile_app/src/contanst/example.ts" enter the IP adress
-
-export const API_BASE_URL = 'http://YOUR_IP_HERE:8000/api';
-
-Run App:
-
-Install the "Expo Go" app on your phone.
-
-```bash
 npx expo start
-```
 
-  * Scan the QR code with the Expo Go app. You're all set\!
+Physical Device: Scan the QR code with the Expo Go app (Android or iOS).
+
+
+Emulator: Press a to run on Android Emulator or i for iOS Simulator.
