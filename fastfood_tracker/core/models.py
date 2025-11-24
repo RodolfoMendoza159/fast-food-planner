@@ -32,6 +32,10 @@ class MenuItem(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     calorie_goal = models.IntegerField(default=2000)
+    # --- NEW FIELDS ---
+    about_me = models.TextField(blank=True, null=True, help_text="Short bio")
+    favorite_food = models.CharField(max_length=100, blank=True, null=True)
+
     def __str__(self):
         return self.user.username
 

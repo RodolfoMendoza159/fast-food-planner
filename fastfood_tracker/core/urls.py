@@ -26,4 +26,6 @@ urlpatterns = [
     path('tracker/', views.get_daily_tracker, name='tracker'),
     path('log_meal/', views.log_meal, name='log_meal'),
     path('history/', views.get_meal_history, name='history'),
+    # --- NEW URL ---
+    path('random_meal/', views.generate_random_meal, name='random_meal'),
 ]

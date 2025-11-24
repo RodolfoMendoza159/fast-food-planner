@@ -10,6 +10,7 @@ from datetime import date
 from django.db.models import F, Sum
 from django.db import models
 from django.utils import timezone 
+import random
 
 # --- NEW IMPORTS for Search/Sort ---
 from django_filters.rest_framework import DjangoFilterBackend
@@ -227,3 +228,57 @@ class FavoriteMealViewSet(viewsets.ModelViewSet):
         
         serializer = LoggedMealSerializer(new_meal)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+# --- NEW VIEW: Random Meal Generator ---
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def generate_random_meal(request):
+    """
+    Picks a random Entree, Side, and Drink attempting to stay near the target calories.
+    Usage: /api/random_meal/?target=800
+    """
+    try:
+        target = int(request.query_params.get('target', 700))
+    except ValueError:
+        target = 700
+
+    # 1. Filter items by broad categories (adjust strings if your CSV data differs)
+    entrees = MenuItem.objects.filter(category__icontains='entree')
+    sides = MenuItem.objects.filter(category__icontains='side')
+    drinks = MenuItem.objects.filter(category__icontains='drink')
+
+    chosen_items = []
+    current_cals = 0
+
+    # 2. Logic: Always pick an entree
+    if entrees.exists():
+        entree = random.choice(entrees)
+        chosen_items.append(entree)
+        current_cals += entree.calories
+
+    # 3. Pick a side if we have room (leave 100 cal buffer for drink)
+    if sides.exists() and current_cals < (target - 100):
+        # Find sides that roughly fit
+        remaining = target - current_cals
+        valid_sides = [s for s in sides if s.calories <= remaining + 100]
+        if valid_sides:
+            side = random.choice(valid_sides)
+            chosen_items.append(side)
+            current_cals += side.calories
+
+    # 4. Pick a drink if we have room
+    if drinks.exists() and current_cals < target:
+        remaining = target - current_cals
+        # Try to find a non-zero calorie drink if we are under target, else diet
+        valid_drinks = [d for d in drinks if d.calories <= remaining + 50]
+        if valid_drinks:
+            drink = random.choice(valid_drinks)
+            chosen_items.append(drink)
+            current_cals += drink.calories
+
+    # 5. Serialize and return
+    serializer = MenuItemSerializer(chosen_items, many=True)
+    return Response({
+        'items': serializer.data,
+        'total_calories': current_cals
+    })

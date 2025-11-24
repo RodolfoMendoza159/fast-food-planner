@@ -17,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ['calorie_goal']
+        fields = ['calorie_goal', 'about_me', 'favorite_food']
 
 # --- Restaurant & Menu Serializers (No Change) ---
 class MenuItemSerializer(serializers.ModelSerializer):
