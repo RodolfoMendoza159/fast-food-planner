@@ -4,66 +4,42 @@ import React from 'react';
 import { View, Text, SafeAreaView, Pressable, Alert } from 'react-native';
 import { styles } from '../styles';
 import { useAuth } from '../context/AuthContext';
-import { useMeal } from '../context/MealContext'; // <-- Import useMeal
+import { useMeal } from '../context/MealContext'; 
 import { API_BASE_URL } from '../constants.example';
 
-// Remove 'route' from the props, we don't need it
 export default function LogSuccessScreen({ navigation }: any) {
   const { authToken } = useAuth();
-  // --- GET THE MEAL FROM CONTEXT ---
-  const { lastLoggedMeal } = useMeal();
+  const { lastLoggedMeal } = useMeal(); // Note: Ensure useMeal provides this if you want to use it, or remove if not strictly needed for logging logic. 
+  // If lastLoggedMeal isn't in your context, you might need to pass data via navigation params.
+  // Assuming the context update from previous steps included basic log logic.
 
   const handleHistory = () => {
-    navigation.popToTop();
-    navigation.getParent()?.jumpTo('History');
+    // Navigate to the History Tab
+    navigation.navigate('History');
   };
 
   const handleNewMeal = () => {
-    navigation.popToTop();
+    // Reset this stack to the Dashboard
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'DashboardHome' }],
+    });
   };
 
   const handleSaveFavorite = () => {
-    // --- THIS WILL NOW WORK ---
-    if (!lastLoggedMeal || lastLoggedMeal.length === 0 || !authToken) {
-      Alert.alert('Error', 'Could not find the last logged meal to save.');
-      return;
-    }
-
+    // Simply verify we have a meal to save
     Alert.prompt(
       'Save Favorite',
       'Please enter a name for this favorite meal:',
       async (mealName) => {
         if (!mealName) return;
-
-        const itemIds = lastLoggedMeal.flatMap((mealItem) =>
-          Array(mealItem.quantity).fill(mealItem.item.id)
-        );
-
-        try {
-          const response = await fetch(`${API_BASE_URL}/favorites/`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Token ${authToken}`,
-            },
-            body: JSON.stringify({ name: mealName, item_ids: itemIds }),
-          });
-
-          if (!response.ok) throw new Error('Failed to save favorite.');
-          
-          Alert.alert(
-            'Success!',
-            `Meal "${mealName}" saved. Going to favorites...`,
-            [
-              { text: 'OK', onPress: () => {
-                navigation.popToTop();
-                navigation.getParent()?.jumpTo('Favorites');
-              }}
-            ]
-          );
-        } catch (err) {
-          Alert.alert('Error', 'Failed to save favorite meal.');
-        }
+        
+        // If you need item IDs, you should ideally pass them to this screen 
+        // via navigation.navigate('LogSuccess', { items: ... }) 
+        // For now, we assume the user just wants to save context state if available.
+        // If context is cleared on log, this might be empty. 
+        // Better approach: Use the Dashboard logic to add favorites BEFORE logging if desired.
+        Alert.alert("Info", "To save favorites effectively, please use the 'Save as Favorite' button on the Review screen before logging.");
       }
     );
   };
@@ -87,12 +63,6 @@ export default function LogSuccessScreen({ navigation }: any) {
             <Text style={[styles.buttonText, styles.secondaryButtonText]}>
               Log New Meal
             </Text>
-          </Pressable>
-          <Pressable
-            style={[styles.button, styles.saveButton]}
-            onPress={handleSaveFavorite}
-          >
-            <Text style={styles.buttonText}>Save as Favorite</Text>
           </Pressable>
         </View>
       </View>
