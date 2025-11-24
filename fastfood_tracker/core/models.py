@@ -1,36 +1,22 @@
+# In core/models.py
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 
-# The standard Django's User model for handling accounts and authentication.
-# R: Decided to keep Django's build-in one and extend it. 
 class User(AbstractUser):
     pass
 
-# R: A model to stores the different fast-food restaurant chains. Crucial for
-# data structure, names gathered from CSV import script.
 class Restaurant(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    # R: (FUTURE PLAN) We could add more fields later, like 'logo_url' or 'website'.
-    # to make the frontend more appealing.
     def __str__(self):
         return self.name
 
-# R: A model to store individual menu items from each restaurant.
-# Each item is linked to a Restaurant via a ForeignKey relationship.
 class MenuItem(models.Model):
-    # R: This ForeignKey basically links that if a restaurant is deleted, then all
-    # its menu items get deleted too. 
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='menu_items')
-    
     name = models.CharField(max_length=255)
     category = models.CharField(max_length=100, blank=True, null=True)
     serving_size = models.CharField(max_length=100, blank=True, null=True)
-    
-    # Nutritional Information 
-    # R: I updated them to be very detailed to fulfill the goal of
-    # probading full nutritional data for each item.
-    calories = models.IntegerField(default=0)
+    calories = models.FloatField(default=0)
     fat = models.FloatField(default=0)
     sat_fat = models.FloatField(default=0)
     trans_fat = models.FloatField(default=0)
@@ -40,31 +26,46 @@ class MenuItem(models.Model):
     fiber = models.FloatField(default=0)
     sugar = models.FloatField(default=0)
     protein = models.FloatField(default=0)
-    
     def __str__(self):
         return f"{self.name} ({self.restaurant.name})"
-    
-# A simple profile linked to each user via a OnetoOneField.
-# R: This was a key part of the important upgrade to Django for storing user-specific data.
+
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     calorie_goal = models.IntegerField(default=2000)
-    # R: (FUTURE PLAN) We can easily add more user-specific info here later,
-    # like age, weight, or dietary preferences, to give personalized feedback.
     def __str__(self):
         return self.user.username
 
-# This model tracks a user's daily nutritional intake.
-# A new entry is created for each user for each day they log a meal.
-class MacroTracker(models.Model):
+class FavoriteMeal(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    date = models.DateField(auto_now_add=True)
-    
-    # These fields will be updated every time a user logs a meal.    
-    calories_consumed = models.IntegerField(default=0)
-    protein_consumed = models.FloatField(default=0)
-    carbs_consumed = models.FloatField(default=0)
-    fat_consumed = models.FloatField(default=0)
-    
+    name = models.CharField(max_length=100)
+    items = models.ManyToManyField(MenuItem)
+
     def __str__(self):
-        return f"Tracker for {self.user.username} on {self.date}"
+        return f"'{self.name}' by {self.user.username}"
+        
+
+# --- (REMOVED) The old MacroTracker model is gone ---
+
+
+# --- (NEW) Models for New History/Logging ---
+
+class LoggedMeal(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="logged_meals")
+    name = models.CharField(max_length=100, blank=True, null=True, help_text="Optional name, e.g., 'Lunch'")
+    # This automatically captures the exact date and time
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Meal for {self.user.username} at {self.created_at.strftime('%Y-%m-%d %H:%M')}"
+
+class LoggedMealItem(models.Model):
+    # This links a LoggedMeal to a MenuItem AND stores the quantity
+    logged_meal = models.ForeignKey(LoggedMeal, on_delete=models.CASCADE, related_name="logged_items")
+    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        unique_together = ('logged_meal', 'menu_item') # Prevents duplicate items in the *same* meal
+
+    def __str__(self):
+        return f"{self.quantity} x {self.menu_item.name}"

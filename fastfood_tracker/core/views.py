@@ -1,42 +1,52 @@
-from rest_framework import generics, status, viewsets 
+# In core/views.py
+
+from rest_framework import status, viewsets
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
-from .models import User, Restaurant, MenuItem, Profile, MacroTracker
-from .serializers import UserSerializer, RestaurantSerializer, MenuItemSerializer, ProfileSerializer, MacroTrackerSerializer
-from django.shortcuts import get_object_or_404
 from datetime import date
-from django.views.generic import TemplateView
-from django.db.models import F
+from django.db.models import F, Sum
 from django.db import models
+from django.utils import timezone 
 
-# --- User Management Views ---
+# --- NEW IMPORTS for Search/Sort ---
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
-# This function handles the logic for registering a new user.
+# --- UPDATED MODEL IMPORTS ---
+# Replaced MacroTracker with LoggedMeal and LoggedMealItem
+from .models import (
+    User, Restaurant, MenuItem, Profile, 
+    FavoriteMeal, LoggedMeal, LoggedMealItem
+)
+
+# --- UPDATED SERIALIZER IMPORTS ---
+# Added new serializers
+from .serializers import (
+    UserSerializer, RestaurantSerializer, ProfileSerializer, 
+    FavoriteMealSerializer, MenuItemSerializer, 
+    LoggedMealSerializer, LoggedMealItemSerializer
+)
+
+
+# --- User Management Views (No Change) ---
 @api_view(['POST'])
-@permission_classes([AllowAny]) # R: It's set to [AllowAny] so that anyone can create an account.
+@permission_classes([AllowAny])
 def register_user(request):
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
-        # Using create_user ensures the password gets properly hashed.
         user = User.objects.create_user(
             username=request.data['username'],
             email=request.data['email'],
             password=request.data['password']
         )
-        # R: Upon successful registration, I also create the associated Profile
-        # and MacroTracker objects so they're ready to be used.
         Profile.objects.create(user=user)
-        MacroTracker.objects.create(user=user)
-        token, _ = Token.objects.get_or_create(user=user)
+        token = Token.objects.create(user=user)
         return Response({'token': token.key}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-# This handles the login process. It takes username/password, and if they're
-# valid, it returns the user's authentication token.
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login_user(request):
@@ -45,79 +55,175 @@ def login_user(request):
     user = authenticate(username=username, password=password)
     if user:
         token, _ = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key}, status=status.HTTP_200_OK)
+        return Response({'token': token.key})
     return Response({'error': 'Invalid Credentials'}, status=status.HTTP_400_BAD_REQUEST)
 
-# --- Data Endpoints ---
+# --- Profile Management View (No Change) ---
+@api_view(['GET', 'PUT'])
+@permission_classes([IsAuthenticated])
+def manage_user_profile(request):
+    try:
+        profile = request.user.profile
+    except Profile.DoesNotExist:
+        return Response({'error': 'Profile not found.'}, status=status.HTTP_404_NOT_FOUND)
+    if request.method == 'GET':
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data)
+    elif request.method == 'PUT':
+        serializer = ProfileSerializer(profile, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# R: THIS REPLACES BOTH RestaurantListView AND RestaurantDetailView
-# I used a ViewSet here because it's a very clean and efficient way to provide
-# both a list of all restaurants and the details for a single restaurant.
-# It automatically handles the logic for `/api/restaurants/` and `/api/restaurants/1/`.
+# --- Restaurant View (No Change) ---
 class RestaurantViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    This ViewSet automatically provides `list` and `retrieve` actions.
-    """
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
-    # R: UPDATE: I changed this from IsAuthenticated to AllowAny during debugging.
-    permission_classes = [AllowAny]
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
-# --- Core App Logic ---
+# --- NEW: MenuItem ViewSet for Search/Sort/Filter ---
+class MenuItemViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    API endpoint for searching, filtering, and sorting menu items.
+    """
+    queryset = MenuItem.objects.all().select_related('restaurant')
+    serializer_class = MenuItemSerializer
+    permission_classes = [IsAuthenticated]
+    
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter
+    ]
+    
+    filterset_fields = ['restaurant', 'category']
+    search_fields = ['name', 'category']
+    ordering_fields = ['name', 'calories', 'protein', 'fat', 'carbohydrates']
 
-# This view is for fetching the user's macro data for the current day.
-# R :(FUTURE PLAN) This could be expanded to fetch data for a specific date,
-# allowing for a history/calendar view in the frontend.
+
+# --- (REPLACED) Meal Logging and Tracking Views ---
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_daily_tracker(request):
     """
-    Gets the user's macro tracker for the current day.
+    Calculates and returns the macro totals for the current day.
     """
-    tracker, created = MacroTracker.objects.get_or_create(user=request.user, date=date.today())
-    serializer = MacroTrackerSerializer(tracker)
-    return Response(serializer.data)
+    today = timezone.now().date()
+    
+    items_today = LoggedMealItem.objects.filter(
+        logged_meal__user=request.user,
+        logged_meal__created_at__date=today
+    ).select_related('menu_item')
+    
+    totals = { 'calories': 0, 'protein': 0, 'fat': 0, 'carbs': 0 }
+    
+    for item in items_today:
+        totals['calories'] += item.menu_item.calories * item.quantity
+        totals['protein'] += item.menu_item.protein * item.quantity
+        totals['fat'] += item.menu_item.fat * item.quantity
+        totals['carbs'] += item.menu_item.carbohydrates * item.quantity
 
-# This is the main logic for the app. It receives a list of menu item IDs from the frontend.
+    try:
+        goal = request.user.profile.calorie_goal
+    except Profile.DoesNotExist:
+        goal = 2000 # Default
+
+    return Response({
+        'goal': goal,
+        'consumed': totals,
+    })
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def log_meal(request):
-    menu_item_ids = request.data.get('menu_item_ids', [])
-    if not menu_item_ids:
-        return Response({'error': 'No menu items provided.'}, status=status.HTTP_400_BAD_REQUEST)
+    """
+    Logs a new individual meal with items and quantities.
+    Expects data like: 
+    { 
+      "name": "Lunch", 
+      "items": [{"id": 5, "quantity": 1}, {"id": 22, "quantity": 2}] 
+    }
+    """
+    items_data = request.data.get('items', [])
+    meal_name = request.data.get('name') # Optional
 
-    items_to_log = MenuItem.objects.filter(id__in=menu_item_ids)
+    if not items_data:
+        return Response({'error': 'No items to log.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        new_meal = LoggedMeal.objects.create(user=request.user, name=meal_name)
+        
+        items_to_create = []
+        for item_data in items_data:
+            menu_item = MenuItem.objects.get(id=item_data['id'])
+            items_to_create.append(
+                LoggedMealItem(
+                    logged_meal=new_meal,
+                    menu_item=menu_item,
+                    quantity=item_data.get('quantity', 1)
+                )
+            )
+        
+        LoggedMealItem.objects.bulk_create(items_to_create)
+        
+        serializer = LoggedMealSerializer(new_meal)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
     
-    # Calculate totals from the selected items
-    # R: I'm using .aggregate() here to calculate the sum of all nutritional values
-    # in a single, efficient database query. It's much faster than looping in Python.
-    totals = items_to_log.aggregate(
-        total_calories=models.Sum('calories'),
-        total_protein=models.Sum('protein'),
-        total_carbs=models.Sum('carbohydrates'),
-        total_fat=models.Sum('fat')
-    )
+    except MenuItem.DoesNotExist:
+        return Response({'error': 'One or more menu items not found.'}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-    # Get or create the tracker for today
-    tracker, created = MacroTracker.objects.get_or_create(user=request.user, date=date.today())
-    
-    # Update the tracker's values efficiently
-    # R: I'm using F() expressions to update the tracker. This is a safe way to handle
-    # the update directly in the database, avoiding potential race conditions.
-    tracker.calories_consumed = F('calories_consumed') + (totals['total_calories'] or 0)
-    tracker.protein_consumed = F('protein_consumed') + (totals['total_protein'] or 0)
-    tracker.carbs_consumed = F('carbs_consumed') + (totals['total_carbs'] or 0)
-    tracker.fat_consumed = F('fat_consumed') + (totals['total_fat'] or 0)
-    tracker.save()
-    
-    # Refresh the tracker from the DB to get the updated values
-    tracker.refresh_from_db()
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_meal_history(request):
+    """
+    Returns a list of all LoggedMeal events, newest first.
+    """
+    history = LoggedMeal.objects.filter(user=request.user).order_by('-created_at')
+    serializer = LoggedMealSerializer(history, many=True)
+    return Response(serializer.data)
 
-    # Finally, send the updated tracker data back to the frontend so the UI can update.
-    serializer = MacroTrackerSerializer(tracker)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+# --- Favorite Meal ViewSet (Updated log action) ---
+class FavoriteMealViewSet(viewsets.ModelViewSet):
+    queryset = FavoriteMeal.objects.all()
+    serializer_class = FavoriteMealSerializer
+    permission_classes = [IsAuthenticated]
 
-# This view is for serving the main React index.html file.
-class IndexView(TemplateView):
-    template_name = 'index.html'
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        item_ids = self.request.data.get('item_ids', [])
+        favorite_meal = serializer.save(user=self.request.user)
+        favorite_meal.items.set(item_ids)
+
+    # --- THIS FUNCTION IS NOW FIXED ---
+    @action(detail=True, methods=['post'])
+    def log(self, request, pk=None):
+        """
+        Logs a favorite meal to the new history system.
+        """
+        favorite_meal = self.get_object()
+        items_to_log = favorite_meal.items.all()
+        
+        if not items_to_log:
+            return Response({'error': 'This favorite meal has no items to log.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Create the parent meal "event"
+        new_meal = LoggedMeal.objects.create(user=request.user, name=favorite_meal.name)
+        
+        items_to_create = [
+            LoggedMealItem(
+                logged_meal=new_meal,
+                menu_item=item,
+                quantity=1 # Favorite meals default to quantity 1
+            ) for item in items_to_log
+        ]
+        
+        LoggedMealItem.objects.bulk_create(items_to_create)
+        
+        serializer = LoggedMealSerializer(new_meal)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)

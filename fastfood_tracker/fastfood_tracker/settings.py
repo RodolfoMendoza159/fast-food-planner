@@ -9,9 +9,9 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
 from pathlib import Path
-import os 
+import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,12 +21,24 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret
-SECRET_KEY = 'django-insecure-9eje*lvh((2kzhu77sw1n6m2(812rv)j%w^vj1+x^ml3c$vub='
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = []
+# ALLOW ALL HOSTS: This fixes "Network request failed" by ensuring Railway is never blocked.
+ALLOWED_HOSTS = ['*']
+
+# Trust your Railway URL for CSRF protection (Required for Login/Register)
+# We use a wildcard to ensure it works even if the domain variable misses.
+CSRF_TRUSTED_ORIGINS = [
+    f"https://{os.environ.get('RAILWAY_PUBLIC_DOMAIN')}", 
+    "https://respectful-flexibility-production.up.railway.app"
+]
+
+# Ensure cookies are sent securely over HTTPS
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 
 # Application definition
@@ -38,17 +50,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #added apps
+    # Added apps
     'rest_framework',
     'rest_framework.authtoken',
-    'corsheaders', #Added this for CORS
+    'corsheaders', 
+    'django_filters',
     'core',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware', #CORS
+    'corsheaders.middleware.CorsMiddleware', # CORS must be high up
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -61,10 +75,7 @@ ROOT_URLCONF = 'fastfood_tracker.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        
-        # this line tellS Django where to find your main templates
-        'DIRS': [os.path.join(BASE_DIR, 'frontend')],
-        
+        'DIRS': [], # Removed the reference to the deleted 'frontend' folder
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -81,72 +92,47 @@ WSGI_APPLICATION = 'fastfood_tracker.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
+        conn_max_age=600
+    )
 }
 
 
 # Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    { 'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator' },
+    { 'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator' },
+    { 'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator' },
+    { 'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator' },
 ]
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
-
 STATIC_URL = 'static/'
 
+# This is where collectstatic will gather all static files
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# This tells Django to use WhiteNoise to serve files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTH_USER_MODEL = 'core.User' #Added custom User model
+AUTH_USER_MODEL = 'core.User' 
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-]
+# CORS SETTINGS
+CORS_ALLOW_ALL_ORIGINS = True
 
-# This tells Django to look for static files in a folder named 'frontend'
-# at the root of your project.
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'frontend')
-]
-
-# In fastfood_tracker/settings.py
-
-# ... (add this entire block at the end of the file)
-
+# REST FRAMEWORK SETTINGS
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
@@ -155,4 +141,3 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ]
 }
-

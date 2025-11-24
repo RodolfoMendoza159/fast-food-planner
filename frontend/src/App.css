@@ -78,13 +78,35 @@ header {
 .add-button { background-color: #28a745; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; float: right; }
 
 /* --- Meal Sidebar Styling --- */
+.meal-sidebar {
+  flex: 1;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 1rem;
+  
+  /* NEW: These three lines create the scrolling container */
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh; /* Prevents the sidebar from ever being taller than the screen */
+}
+
 .meal-sidebar h2 {
   margin-top: 0;
+  flex-shrink: 0; /* Prevents the title from shrinking */
 }
+
 .meal-list {
   list-style: none;
   padding: 0;
+  margin: 0; /* Remove default margin */
+  
+  /* NEW: This makes the list scrollable when it overflows */
+  overflow-y: auto;
 }
+
 .meal-list li {
   display: flex;
   justify-content: space-between;
@@ -92,6 +114,7 @@ header {
   padding: 8px 0;
   border-bottom: 1px solid #eee;
 }
+
 .meal-list button {
   background: #dc3545;
   color: white;
@@ -102,12 +125,16 @@ header {
   cursor: pointer;
   line-height: 20px;
   text-align: center;
+  flex-shrink: 0; /* Prevents the button from shrinking */
 }
+
 .meal-totals {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 2px solid #ddd;
+  margin-top: auto; /* Pushes the totals and button to the bottom */
+  padding-top: 1rem; /* Adds some space above the totals */
+  border-top: 1px solid #eee;
+  flex-shrink: 0; /* Prevents this section from shrinking */
 }
+
 .log-button {
   width: 100%;
   padding: 10px;
@@ -115,15 +142,371 @@ header {
   color: white;
   border: none;
   border-radius: 4px;
+  font-size: 1rem;
   cursor: pointer;
-  font-size: 16px;
   margin-top: 1rem;
-}
-.error-message {
-  color: red;
-  text-align: center;
 }
 
 /* (Restaurant list styling is the same) */
 .restaurant-item { cursor: pointer; padding: 15px; background: white; border-radius: 8px; margin-bottom: 10px; }
+
+/* --- ADD THESE NEW STYLES --- */
+
+/* This will style the container for the categories */
+.category-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+/* This will style each individual category button */
+.category-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1.5rem; /* A little more padding to feel substantial */
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+  transition: all 0.2s ease-in-out;
+}
+
+.category-item:hover {
+  transform: translateY(-3px); /* Lifts the card slightly */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Adds a subtle shadow */
+}
+
+/* --- END OF NEW STYLES --- */
+
 .restaurant-item:hover { box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+
+/* --- Meal Review Page Styling --- */
+.meal-review-container {
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin: 1rem;
+}
+
+.meal-review-table-wrapper {
+  overflow-x: auto; /* Ensures the table is scrollable on small screens */
+}
+
+.meal-review-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+}
+
+.meal-review-table th, .meal-review-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.meal-review-table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.meal-review-table tfoot td {
+  border-top: 2px solid #333;
+  font-weight: bold;
+}
+
+.meal-review-summary {
+  text-align: center;
+  padding: 1rem;
+  background-color: #f4f7f6;
+  border-radius: 8px;
+}
+
+.meal-review-summary h3 {
+  margin-top: 0;
+}
+
+.final-message {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #28a745; /* Green for positive reinforcement */
+}
+
+.log-button-review {
+  padding: 12px 25px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.log-button-review:hover {
+  background-color: #0056b3;
+}
+
+/* --- Meal Log Success Screen Styling --- */
+.meal-log-success {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin: 2rem;
+}
+
+.meal-log-success h2 {
+  color: #28a745;
+  font-size: 2rem;
+}
+
+.navigation-buttons {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.navigation-buttons button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.navigation-buttons button:first-child {
+  background-color: #007bff;
+  color: white;
+}
+
+.navigation-buttons button:last-child {
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+/* --- General App Layout --- */
+.App-content {
+  padding: 1rem;
+}
+
+/* --- Meal History Page Styling --- */
+.history-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.history-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.history-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.history-card h3 {
+  margin-top: 0;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.history-card-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.5rem 1rem;
+}
+
+.history-card-body p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* --- UPDATED Meal History Card Styling --- */
+.history-card-body {
+  display: flex; /* Changed to flex for better layout */
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.history-macros {
+  flex: 1;
+  min-width: 180px;
+}
+
+.history-items {
+  flex: 2;
+  min-width: 250px;
+}
+
+.history-items h4 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+.history-items ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin: 0;
+}
+
+.history-items li {
+  margin-bottom: 0.25rem;
+}
+
+/* --- UPDATED Meal History Card Styling --- */
+.history-card-body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.history-macros {
+  flex: 1;
+  min-width: 180px;
+}
+
+.history-items {
+  flex: 2;
+  min-width: 250px;
+}
+
+.history-items h4 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: #555;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+/* This makes the item list scrollable */
+.history-items ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin: 0;
+  max-height: 200px; /* The list will not grow taller than this */
+  overflow-y: auto; /* A scrollbar appears if the list is too long */
+  border: 1px solid #f0f0f0;
+  border-radius: 4px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.history-items li {
+  margin-bottom: 0.25rem;
+  padding-right: 10px;
+}
+
+/* --- Sidebar Actions --- */
+.sidebar-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 1rem;
+}
+.save-button {
+  flex: 1;
+  padding: 10px;
+  background-color: #17a2b8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.save-button:hover {
+  background-color: #138496;
+}
+.log-button {
+  flex: 1;
+}
+
+/* --- Favorites Page Styling --- */
+.favorites-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.favorites-list {
+  display: grid;
+  gap: 1rem;
+}
+.favorite-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.favorite-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+.favorite-card-header h3 {
+  margin: 0;
+}
+.favorite-card-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+.favorite-card-actions button {
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+}
+.favorite-card-actions button.delete {
+  background-color: #dc3545;
+}
+.favorite-card-body {
+  padding: 1rem;
+}
+.favorite-card-body ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin: 0;
+}
+.success-message {
+  color: green;
+  font-weight: bold;
+  text-align: center;
+  padding: 1rem;
+  background-color: #e8f5e9;
+  border-radius: 4px;
+}
+
+
+/* --- Favorites Page Styling --- */
+.favorites-container { max-width: 900px; margin: 0 auto; }
+.favorites-list { display: grid; gap: 1rem; }
+.favorite-card { background: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+.favorite-card-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-bottom: 1px solid #eee; }
+.favorite-card-header h3 { margin: 0; }
+.favorite-card-actions { display: flex; gap: 0.5rem; }
+.favorite-card-actions button { padding: 5px 10px; border-radius: 4px; border: none; cursor: pointer; background-color: #007bff; color: white; }
+.favorite-card-actions button.delete { background-color: #dc3545; }
+.favorite-card-body { padding: 1rem; }
+.favorite-card-body ul { list-style-type: disc; padding-left: 20px; margin: 0; }
+.success-message {
+  color: green;
+  font-weight: bold;
+  text-align: center;
+  padding: 1rem;
+  background-color: #e8f5e9;
+  border-radius: 4px;
+}
+

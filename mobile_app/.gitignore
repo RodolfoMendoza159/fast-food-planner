@@ -1,0 +1,11 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+
+# Expo
+.expo/
+.expo-shared/
+
+# CRITICAL: Ignore the local IP configuration
+src/constants.ts
