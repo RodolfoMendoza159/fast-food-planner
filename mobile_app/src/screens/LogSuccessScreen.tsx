@@ -1,45 +1,96 @@
 // In mobile_app/src/screens/LogSuccessScreen.tsx
 
-import React from 'react';
-import { View, Text, SafeAreaView, Pressable, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, SafeAreaView, Pressable, Alert, ActivityIndicator } from 'react-native';
 import { styles } from '../styles';
 import { useAuth } from '../context/AuthContext';
-import { useMeal } from '../context/MealContext'; 
+import { useMeal } from '../context/MealContext';
 import { API_BASE_URL } from '../constants.example';
 
 export default function LogSuccessScreen({ navigation }: any) {
   const { authToken } = useAuth();
-  const { lastLoggedMeal } = useMeal(); // Note: Ensure useMeal provides this if you want to use it, or remove if not strictly needed for logging logic. 
-  // If lastLoggedMeal isn't in your context, you might need to pass data via navigation params.
-  // Assuming the context update from previous steps included basic log logic.
+  const { lastLoggedMeal } = useMeal();
+
+  // --- NEW: State for calorie calculation ---
+  const [caloriesLeft, setCaloriesLeft] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // --- NEW: Fetch tracker data on mount ---
+  useEffect(() => {
+    const fetchTracker = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/tracker/`, {
+          headers: {
+            'Authorization': `Token ${authToken}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          // Calculate remaining: Goal - Consumed
+          const remaining = data.goal - data.consumed.calories;
+          setCaloriesLeft(remaining);
+        }
+      } catch (error) {
+        console.error("Failed to fetch tracker data", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTracker();
+  }, [authToken]);
 
   const handleHistory = () => {
-    // Navigate to the History Tab
-    navigation.navigate('History');
+    navigation.popToTop();
+    navigation.getParent()?.jumpTo('History');
   };
 
   const handleNewMeal = () => {
-    // Reset this stack to the Dashboard
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'DashboardHome' }],
-    });
+    navigation.popToTop();
   };
 
   const handleSaveFavorite = () => {
-    // Simply verify we have a meal to save
+    if (!lastLoggedMeal || lastLoggedMeal.length === 0 || !authToken) {
+      Alert.alert('Error', 'Could not find the last logged meal to save.');
+      return;
+    }
+
     Alert.prompt(
       'Save Favorite',
       'Please enter a name for this favorite meal:',
       async (mealName) => {
         if (!mealName) return;
-        
-        // If you need item IDs, you should ideally pass them to this screen 
-        // via navigation.navigate('LogSuccess', { items: ... }) 
-        // For now, we assume the user just wants to save context state if available.
-        // If context is cleared on log, this might be empty. 
-        // Better approach: Use the Dashboard logic to add favorites BEFORE logging if desired.
-        Alert.alert("Info", "To save favorites effectively, please use the 'Save as Favorite' button on the Review screen before logging.");
+
+        const itemIds = lastLoggedMeal.flatMap((mealItem) =>
+          Array(mealItem.quantity).fill(mealItem.item.id)
+        );
+
+        try {
+          const response = await fetch(`${API_BASE_URL}/favorites/`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Token ${authToken}`,
+            },
+            body: JSON.stringify({ name: mealName, item_ids: itemIds }),
+          });
+
+          if (!response.ok) throw new Error('Failed to save favorite.');
+          
+          Alert.alert(
+            'Success!',
+            `Meal "${mealName}" saved. Going to favorites...`,
+            [
+              { text: 'OK', onPress: () => {
+                navigation.popToTop();
+                navigation.getParent()?.jumpTo('Favorites');
+              }}
+            ]
+          );
+        } catch (err) {
+          Alert.alert('Error', 'Failed to save favorite meal.');
+        }
       }
     );
   };
@@ -52,6 +103,31 @@ export default function LogSuccessScreen({ navigation }: any) {
           Your meal has been successfully added to your daily tracker.
         </Text>
 
+        {/* --- NEW: Leftover Calories Display --- */}
+        <View style={{ marginVertical: 20, alignItems: 'center', width: '100%' }}>
+          {loading ? (
+            <ActivityIndicator size="small" color="#007bff" />
+          ) : (
+            caloriesLeft !== null && (
+              <>
+                <Text style={{ fontSize: 16, color: '#555', marginBottom: 5 }}>
+                  You have
+                </Text>
+                <Text style={{ 
+                  fontSize: 36, 
+                  fontWeight: 'bold', 
+                  color: caloriesLeft >= 0 ? '#28a745' : '#dc3545' // Green if positive, Red if over
+                }}>
+                  {caloriesLeft}
+                </Text>
+                <Text style={{ fontSize: 16, color: '#555' }}>
+                  calories left for today.
+                </Text>
+              </>
+            )
+          )}
+        </View>
+
         <View style={styles.successButtonContainer}>
           <Pressable style={styles.button} onPress={handleHistory}>
             <Text style={styles.buttonText}>See History</Text>
@@ -63,6 +139,12 @@ export default function LogSuccessScreen({ navigation }: any) {
             <Text style={[styles.buttonText, styles.secondaryButtonText]}>
               Log New Meal
             </Text>
+          </Pressable>
+          <Pressable
+            style={[styles.button, styles.saveButton]}
+            onPress={handleSaveFavorite}
+          >
+            <Text style={styles.buttonText}>Save as Favorite</Text>
           </Pressable>
         </View>
       </View>
