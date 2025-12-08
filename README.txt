@@ -72,7 +72,7 @@ export const API_BASE_URL = 'https://respectful-flexibility-production.up.railwa
 Start the development server.
 
 ''
-npx expo start
+npx expo start --tunnel
 ''
 
 Physical Device: Scan the QR code with the Expo Go app (Android or iOS).
